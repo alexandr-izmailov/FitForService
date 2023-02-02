@@ -6,6 +6,8 @@ FCA_ml = 0.14
 LOSS = 0
 FCA = 0
 type_of_wall_loss = 'internal'
+t_mm = 3.13
+RSF_a = 0.9
 
 
 P = 30
@@ -46,6 +48,8 @@ def f_t_ml(t_nom, FCA_ml):
    text = f't_ml = t_nom - FCA_ml = {t_nom} - {FCA_ml} = {t_ml}'
    return t_ml
 
+# для теста
+t_ml = f_t_ml(t_nom, FCA_ml)
 
 # step 2 ------------------------------------------------
 def f_t_c(t_nom, LOSS, FCA):
@@ -69,7 +73,7 @@ def f_D(D_0, t_nom):
 D = f_D(D_0, t_nom)
 
 # step 3------------------------------------------------
-def D_ml(type_of_wall_loss, D, FCA_ml):
+def f_D_ml(type_of_wall_loss, D, FCA_ml):
     """
     D_ml - Inside diameter of the cylinder corrected for FCA_ml, [mm]
     """
@@ -80,6 +84,34 @@ def D_ml(type_of_wall_loss, D, FCA_ml):
         D_ml = D
     return D_ml
 
+# step 4------------------------------------------------
+def f_R_t(t_mm, FCA_ml,  t_ml):
+    """
+    Remaining thickness ratio R_t, [-]
+    """
+    R_t = (t_mm - FCA_ml) / t_ml
+    text = f'R_t = (t_mm - FCA_ml) / t_ml = {t_mm} - {FCA_ml} / {t_ml} = {R_t}'
+    return R_t
+
+# для теста
+R_t = f_R_t(t_mm, FCA_ml, t_ml)
+
+# step 5------------------------------------------------
+def f_Q(R_t, RSF_a):
+    """
+    Parameter Q - Factor used to determine the length for thickness averaging based on an allowable Remaining Strength Factor
+    and the remaining thickness ratio Rt. Table 4.8 [-].
+
+    RSF_a - Allowable remaining strength factor.
+    Recommended Remaining Strength Factor RSFa is 0.90
+    """
+    if R_t < RSF_a:
+        Q = 1.123 * (((1 - R_t) / (1 - R_t  /  RSF_a))**2 - 1)**(0.5)
+        text = f'Q = 1.123 * (((1 - R_t) / (1 - R_t  /  RSF_a))^2 - 1)^0.5 = 1.123 * (((1 - {R_t}) / (1 - {R_t}  /  {RSF_a}))^2 - 1)^0.5 = {Q}'
+    elif R_t >= RSF_a:
+        Q = 50
+        text = f'Q = 50'
+    return Q
 
 
 
@@ -92,4 +124,8 @@ if __name__ == '__main__':
     print('')
     print('D = ', f_D(D_0, t_nom))
     print('')
-    print('D_ml = ', D_ml(type_of_wall_loss, D, FCA_ml))
+    print('D_ml = ', f_D_ml(type_of_wall_loss, D, FCA_ml))
+    print('')
+    print('R_t = ', f_R_t(t_mm, FCA_ml, t_ml))
+    print('')
+    print('Q = ', f_Q(R_t, RSF_a))
