@@ -196,31 +196,68 @@ def f_MAWP(MAWP_C, MAWP_L):
     return MAWP
 
 # step 9------------------------------------------------
-def check_average_longitudinal_thickness_criteria(t_amS, FCA_ml, t_minL):
+def check_average_longitudinal_thickness_criteria(t_amS, FCA_ml, t_minC):
     """
     Average Measured Thickness from Critical Thickness Profiles based on the
     longitudinal CTP determined at the time of the inspection
     """
-    if (t_amS - FCA_ml) >= t_minL:
+    if (t_amS - FCA_ml) >= t_minC:
         average_longitudinal_thickness_criteria = 'passed'
-        text = f'(t_amS - FCA_ml) >= t_minL |---> ({t_amS} - {FCA_ml}) >= {t_minL} |---> Average longitudinal thickness criteria is -> {average_longitudinal_thickness_criteria} <-'
-    elif (t_amS - FCA_ml) < t_minL:
+        text = f'(t_amS - FCA_ml) >= t_minL |---> ({t_amS} - {FCA_ml}) >= {t_minC} |---> Average longitudinal thickness criteria is -> {average_longitudinal_thickness_criteria} <-'
+    elif (t_amS - FCA_ml) < t_minC:
         average_longitudinal_thickness_criteria = 'failed'
-        text = f'(t_amS - FCA_ml) < t_minL |---> ({t_amS} - {FCA_ml}) < {t_minL} |---> Average longitudinal thickness criteria is -> {average_longitudinal_thickness_criteria} <-'
+        text = f'(t_amS - FCA_ml) < t_minL |---> ({t_amS} - {FCA_ml}) < {t_minC} |---> Average longitudinal thickness criteria is -> {average_longitudinal_thickness_criteria} <-'
     return average_longitudinal_thickness_criteria
 
-def check_average_circumferential_thickness_criteria(t_amC, FCA_ml, t_minC):
+def check_average_circumferential_thickness_criteria(t_amC, FCA_ml, t_minL):
     """
     Average Measured Thickness from Critical Thickness Profiles based on the
     circumferential CTP determined at the time of the inspection
     """
-    if (t_amC - FCA_ml) >= t_minC:
+    if (t_amC - FCA_ml) >= t_minL:
         average_circumferential_thickness_criteria = 'passed'
-        text = f'(t_amC - FCA_ml) >= t_minC |---> ({t_amC} - {FCA_ml}) >= {t_minC} |---> Average circumferential thickness criteria is -> {average_circumferential_thickness_criteria} <-'
-    elif (t_amC - FCA_ml) < t_minC:
+        text = f'(t_amC - FCA_ml) >= t_minL |---> ({t_amC} - {FCA_ml}) >= {t_minL} |---> Average circumferential thickness criteria is -> {average_circumferential_thickness_criteria} <-'
+    elif (t_amC - FCA_ml) < t_minL:
         average_circumferential_thickness_criteria = 'failed'
-        text =  f'(t_amC - FCA_ml) < t_minC |---> ({t_amC} - {FCA_ml}) < {t_minC} |---> Average circumferential thickness criteria is -> {average_circumferential_thickness_criteria} <-'
+        text =  f'(t_amC - FCA_ml) < t_minL |---> ({t_amC} - {FCA_ml}) < {t_minL} |---> Average circumferential thickness criteria is -> {average_circumferential_thickness_criteria} <-'
     return average_circumferential_thickness_criteria
+
+# step 10------------------------------------------------
+def f_MAWP_rC(S, E, t_amS, FCA_ml, D_0, Y_B31):
+    """
+    MAWP_rC - reduced MAWP of a conical or cylindrical shell based on the stresses in the
+    circumferential or hoop direction, [bar]
+    """
+    MAWP_rC = 10 * (2 * S * E * (t_amS - FCA_ml)) / (D_0 - 2 * Y_B31 * (t_amS - FCA_ml))
+    text = f'MAWP_rC = (2 * S * E * (t_amS - FCA_ml)) / (D_0 - 2 * Y_B31 * (t_amS - FCA_ml)) = 10 * (2 * {S} * {E} * ({t_amS} - {FCA_ml})) / ({D_0} - 2 * {Y_B31} * ({t_amS} - {FCA_ml})) = {MAWP_rC}'
+    return MAWP_rC
+
+# для теста
+MAWP_rC = f_MAWP_rC(S, E, t_amS, FCA_ml, D_0, Y_B31)
+
+def f_MAWP_rL(S, E, t_amC, FCA_ml, D_0, Y_B31):
+    """
+    MAWP_rL - reduced MAWP of a conical or cylindrical shell based on the stresses in the
+    longitudinal direction, [bar]
+    """
+    MAWP_rL = 10 * (4 * S * E * (t_amC - FCA_ml)) / (D_0 - 4 * Y_B31 * (t_amC - FCA_ml))
+    text = f'MAWP_rL = (4 * S * E * (t_amC - FCA_ml )) / (D_0 - 4 * Y_B31 * (t_amC - FCA_ml)) = 10 * (4 * {S} * {E} * ({t_amC} - {FCA_ml})) / ({D_0} - 4 * {Y_B31} * ({t_amC} - {FCA_ml})) = {MAWP_rL}'
+    return MAWP_rL
+
+# для теста
+MAWP_rL = f_MAWP_rL(S, E, t_amC, FCA_ml, D_0, Y_B31)
+
+def check_MAWP_criteria(MAWP_rC,MAWP_rL, P):
+    """
+    MAWP criteria from Critical Thickness Profiles
+    """
+    if min(MAWP_rC,MAWP_rL) > P:
+        MAWP_criteria = 'passed'
+        text = f'min(MAWP_rC,MAWP_rL) > P |---> min({MAWP_rC},{MAWP_rL}) > {P} |---> MAWP criteria is -> {MAWP_criteria} <-'
+    elif min(MAWP_rC,MAWP_rL) <= P:
+        MAWP_criteria = 'failed'
+        text = f'min(MAWP_rC,MAWP_rL) <= P |---> min({MAWP_rC},{MAWP_rL}) <= {P} |---> MAWP criteria is -> {MAWP_criteria} <-'
+    return MAWP_criteria
 
 
 if __name__ == '__main__':
@@ -252,7 +289,12 @@ if __name__ == '__main__':
     print('')
     print('MAWP = ', f_MAWP(MAWP_C, MAWP_L))
     print('')
-    print(f'(t_amC - FCA_ml) >= t_minC |---> ({t_amC} - {FCA_ml}) >= {t_minC} |---> Average circumferential thickness criteria is -> ', check_average_longitudinal_thickness_criteria(t_amS, FCA_ml, t_minL))
+    print(f'(t_amS - FCA_ml) >= t_minC |---> ({t_amS} - {FCA_ml}) >= {t_minC} |---> Average longitudinal thickness criteria is -> ', check_average_longitudinal_thickness_criteria(t_amS, FCA_ml, t_minC))
     print('')
-    print(f'(t_amC - FCA_ml) >= t_minC |---> ({t_amC} - {FCA_ml}) >= {t_minC} |---> Average circumferential thickness criteria is -> ',check_average_circumferential_thickness_criteria(t_amC, FCA_ml, t_minC))
+    print(f'(t_amC - FCA_ml) >= t_minL |---> ({t_amC} - {FCA_ml}) >= {t_minL} |---> Average circumferential thickness criteria is -> ',check_average_circumferential_thickness_criteria(t_amC, FCA_ml, t_minL))
     print('')
+    print(f'MAWP_rC = (2 * S * E * (t_amS - FCA_ml)) / (D_0 - 2 * Y_B31 * (t_amS - FCA_ml)) = 10 * (2 * {S} * {E} * ({t_amS} - {FCA_ml})) / ({D_0} - 2 * {Y_B31} * ({t_amS} - {FCA_ml})) = ', MAWP_rC)
+    print('')
+    print(f'MAWP_rL = (4 * S * E * (t_amC - FCA_ml )) / (D_0 - 4 * Y_B31 * (t_amC - FCA_ml)) = 10 * (4 * {S} * {E} * ({t_amC} - {FCA_ml})) / ({D_0} - 4 * {Y_B31} * ({t_amC} - {FCA_ml})) = ', MAWP_rL)
+    print('')
+    print(f'min(MAWP_rC,MAWP_rL) > P |---> min({MAWP_rC},{MAWP_rL}) > {P} |---> MAWP criteria is -> ', check_MAWP_criteria(MAWP_rC,MAWP_rL, P))
