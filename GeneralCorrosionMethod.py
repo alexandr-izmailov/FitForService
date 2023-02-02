@@ -195,6 +195,33 @@ def f_MAWP(MAWP_C, MAWP_L):
     text = f'MAWP = min(MAWP_C; MAWP_L) = min({MAWP_C}; {MAWP_L}) = {MAWP}'
     return MAWP
 
+# step 9------------------------------------------------
+def check_average_longitudinal_thickness_criteria(t_amS, FCA_ml, t_minL):
+    """
+    Average Measured Thickness from Critical Thickness Profiles based on the
+    longitudinal CTP determined at the time of the inspection
+    """
+    if (t_amS - FCA_ml) >= t_minL:
+        average_longitudinal_thickness_criteria = 'passed'
+        text = f'(t_amS - FCA_ml) >= t_minL |---> ({t_amS} - {FCA_ml}) >= {t_minL} |---> Average longitudinal thickness criteria is -> {average_longitudinal_thickness_criteria} <-'
+    elif (t_amS - FCA_ml) < t_minL:
+        average_longitudinal_thickness_criteria = 'failed'
+        text = f'(t_amS - FCA_ml) < t_minL |---> ({t_amS} - {FCA_ml}) < {t_minL} |---> Average longitudinal thickness criteria is -> {average_longitudinal_thickness_criteria} <-'
+    return average_longitudinal_thickness_criteria
+
+def check_average_circumferential_thickness_criteria(t_amC, FCA_ml, t_minC):
+    """
+    Average Measured Thickness from Critical Thickness Profiles based on the
+    circumferential CTP determined at the time of the inspection
+    """
+    if (t_amC - FCA_ml) >= t_minC:
+        average_circumferential_thickness_criteria = 'passed'
+        text = f'(t_amC - FCA_ml) >= t_minC |---> ({t_amC} - {FCA_ml}) >= {t_minC} |---> Average circumferential thickness criteria is -> {average_circumferential_thickness_criteria} <-'
+    elif (t_amC - FCA_ml) < t_minC:
+        average_circumferential_thickness_criteria = 'failed'
+        text =  f'(t_amC - FCA_ml) < t_minC |---> ({t_amC} - {FCA_ml}) < {t_minC} |---> Average circumferential thickness criteria is -> {average_circumferential_thickness_criteria} <-'
+    return average_circumferential_thickness_criteria
+
 
 if __name__ == '__main__':
     print('t_nom = ', f_t_nom(pipe_type, t, M_ut))
@@ -224,3 +251,8 @@ if __name__ == '__main__':
     print('MAWP_L = ', f_MAWP_L(S, E, t_c, MA, D_0, Y_B31, t_sl))
     print('')
     print('MAWP = ', f_MAWP(MAWP_C, MAWP_L))
+    print('')
+    print(f'(t_amC - FCA_ml) >= t_minC |---> ({t_amC} - {FCA_ml}) >= {t_minC} |---> Average circumferential thickness criteria is -> ', check_average_longitudinal_thickness_criteria(t_amS, FCA_ml, t_minL))
+    print('')
+    print(f'(t_amC - FCA_ml) >= t_minC |---> ({t_amC} - {FCA_ml}) >= {t_minC} |---> Average circumferential thickness criteria is -> ',check_average_circumferential_thickness_criteria(t_amC, FCA_ml, t_minC))
+    print('')
