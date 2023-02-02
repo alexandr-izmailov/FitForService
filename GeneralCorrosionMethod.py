@@ -5,7 +5,7 @@ M_ut = 0
 FCA_ml = 0.14
 LOSS = 0
 FCA = 0
-type_of_wall_loss = 'internal'
+type_of_wall_loss = 'external'
 t_mm = 3.13
 RSF_a = 0.9
 
@@ -84,6 +84,9 @@ def f_D_ml(type_of_wall_loss, D, FCA_ml):
         D_ml = D
     return D_ml
 
+# для теста
+D_ml = f_D_ml(type_of_wall_loss, D, FCA_ml)
+
 # step 4------------------------------------------------
 def f_R_t(t_mm, FCA_ml,  t_ml):
     """
@@ -113,7 +116,50 @@ def f_Q(R_t, RSF_a):
         text = f'Q = 50'
     return Q
 
+# для теста
+Q = f_Q(R_t, RSF_a)
 
+# step 6------------------------------------------------
+def f_L(Q, D_ml, t_ml):
+    """
+    Length for thickness averaging L, [mm]
+    """
+    L = Q * (D_ml * t_ml) ** 0.5
+    text = f'L = Q * (D_ml * t_ml) ^ 0.5 = {Q} * ({D_ml} * {t_ml}) ^ 0.5 = {L}'
+    return L
+
+# step 7------------------------------------------------
+def f_t_minC(P, D_0, S, E, Y_B31, MA):
+    """
+    Minimum required thickness based on the
+    circumferential stress, [mm]
+    """
+    t_minC = (P * D_0 / 10) / (2 * (S * E + P / 10 * Y_B31)) + MA
+    text = f't_minC = (P * D_0) / (2 * (S * E + P * Y_B31)) + MA = ({P} * {D_0} / 10) / (2 * ({S} * {E} + {P} / 10 * {Y_B31})) + {MA} = {P}'
+    return t_minC
+
+# для теста
+t_minC = f_t_minC(P, D_0, S, E, Y_B31, MA)
+
+def f_t_minL(P, D_0, S, E, Y_B31, MA):
+    """
+    Minimum required thickness based on the
+    longitudinal stress, [mm]
+    """
+    t_minL = (P * D_0 / 10) / (4 * (S * E + P / 10 * Y_B31)) + t_sl + MA
+    text = f't_minL = (P * D_0) / (4 * (S * E + P * Y_B31)) + t_sl + MA = ({P} * {D_0} / 10) / (4 * ({S} * {E} + {P} / 10 * {Y_B31})) + {t_minL}'
+    return t_minL
+
+# для теста
+t_minL = f_t_minL(P, D_0, S, E, Y_B31, MA)
+
+def f_t_min(t_minC, t_minL):
+    """
+    minimum required thickness , [mm]
+    """
+    t_min = max(t_minC, t_minL)
+    text = f't_min = max(t_minC; t_minL) = max({t_minC}; {t_minL}) = {t_min}'
+    return t_min
 
 if __name__ == '__main__':
     print('t_nom = ', f_t_nom(pipe_type, t, M_ut))
@@ -129,3 +175,11 @@ if __name__ == '__main__':
     print('R_t = ', f_R_t(t_mm, FCA_ml, t_ml))
     print('')
     print('Q = ', f_Q(R_t, RSF_a))
+    print('')
+    print('L = ',  f_L(Q, D_ml, t_ml))
+    print('')
+    print('t_minC = ', f_t_minC(P, D_0, S, E, Y_B31, MA))
+    print('')
+    print('t_minL = ', f_t_minL(P, D_0, S, E, Y_B31, MA))
+    print('')
+    print('t_min = ', f_t_min(t_minC, t_minL))
