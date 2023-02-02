@@ -60,6 +60,9 @@ def f_t_c(t_nom, LOSS, FCA):
     text = f't_c = t_nom - LOSS - FCA = {t_nom} - {LOSS} - {FCA} = {t_c}'
     return t_c
 
+# для теста
+t_c = f_t_c(t_nom, LOSS, FCA)
+
 # step 3.1------------------------------------------------
 def f_D(D_0, t_nom):
     """
@@ -161,6 +164,38 @@ def f_t_min(t_minC, t_minL):
     text = f't_min = max(t_minC; t_minL) = max({t_minC}; {t_minL}) = {t_min}'
     return t_min
 
+# step 8------------------------------------------------
+def f_MAWP_C(S, E, t_c, MA, D_0, Y_B31):
+    """
+    maximum allowable working pressure based on circumferential stress, [bar]
+    """
+    MAWP_C = 10 * (2 * S * E * (t_c - MA)) / (D_0 - 2 * Y_B31 * (t_c - MA))
+    text = f'MAWP_C = (2 * S * E * (t_c - MA)) / (D_0 - 2 * Y_B31 * (t_c - MA)) = 10 * (2 * {S} * {E} * ({t_c} - {MA})) / ({D_0} - 2 * {Y_B31} * ({t_c} - {MA})) = {MAWP_C}'
+    return MAWP_C
+
+# для теста
+MAWP_C = f_MAWP_C(S, E, t_c, MA, D_0, Y_B31)
+
+def f_MAWP_L(S, E, t_c, MA, D_0, Y_B31, t_sl):
+    """
+    maximum allowable working pressure based on longitudinal stress, [bar]
+    """
+    MAWP_L = 10 * (4 * S * E * (t_c - t_sl - MA)) / (D_0 - 4 * Y_B31 * (t_c - t_sl - MA))
+    text = f'MAWP_L = (4 * S * E * (t_c - t_c - t_sl - MA)) / (D_0 - 4 * Y_B31 * (t_c - t_sl - MA)) = 10 * (4 * {S} * {E} * ({t_c} - {t_sl} - {MA})) / ({D_0} - 4 * {Y_B31} * ({t_c} - {t_sl} - {MA})) = {MAWP_L}'
+    return MAWP_L
+
+# для теста
+MAWP_L = f_MAWP_L(S, E, t_c, MA, D_0, Y_B31, t_sl)
+
+def f_MAWP(MAWP_C, MAWP_L):
+    """
+    maximum allowable working pressure, [bar]
+    """
+    MAWP = min(MAWP_C, MAWP_L)
+    text = f'MAWP = min(MAWP_C; MAWP_L) = min({MAWP_C}; {MAWP_L}) = {MAWP}'
+    return MAWP
+
+
 if __name__ == '__main__':
     print('t_nom = ', f_t_nom(pipe_type, t, M_ut))
     print('')
@@ -183,3 +218,9 @@ if __name__ == '__main__':
     print('t_minL = ', f_t_minL(P, D_0, S, E, Y_B31, MA))
     print('')
     print('t_min = ', f_t_min(t_minC, t_minL))
+    print('')
+    print('MAWP_C = ', f_MAWP_C(S, E, t_c, MA, D_0, Y_B31))
+    print('')
+    print('MAWP_L = ', f_MAWP_L(S, E, t_c, MA, D_0, Y_B31, t_sl))
+    print('')
+    print('MAWP = ', f_MAWP(MAWP_C, MAWP_L))
