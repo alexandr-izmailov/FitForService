@@ -9,7 +9,6 @@ type_of_wall_loss = 'external'
 t_mm = 3.13
 RSF_a = 0.9
 
-
 P = 30
 S = 137.9
 D_0 = 150
@@ -19,7 +18,6 @@ MA = 0
 t_sl = 0
 t_amS = 3.13
 t_amC = 3.13
-
 
 
 # function definition
@@ -36,20 +34,24 @@ def f_t_nom(pipe_type, t, M_ut):
         text = f't_nom = t - M_ut = {t} - {M_ut} = {t_nom}'
     return t_nom
 
+
 # для теста
 t_nom = f_t_nom(pipe_type, t, M_ut)
 
+
 # step 1 ------------------------------------------------
 def f_t_ml(t_nom, FCA_ml):
-   """
-   t_ml - Nominal thickness in the region of corrosion corrected FCA_ml, [mm]
-   """
-   t_ml = t_nom - FCA_ml
-   text = f't_ml = t_nom - FCA_ml = {t_nom} - {FCA_ml} = {t_ml}'
-   return t_ml
+    """
+    t_ml - Nominal thickness in the region of corrosion corrected FCA_ml, [mm]
+    """
+    t_ml = t_nom - FCA_ml
+    text = f't_ml = t_nom - FCA_ml = {t_nom} - {FCA_ml} = {t_ml}'
+    return t_ml
+
 
 # для теста
 t_ml = f_t_ml(t_nom, FCA_ml)
+
 
 # step 2 ------------------------------------------------
 def f_t_c(t_nom, LOSS, FCA):
@@ -60,8 +62,10 @@ def f_t_c(t_nom, LOSS, FCA):
     text = f't_c = t_nom - LOSS - FCA = {t_nom} - {LOSS} - {FCA} = {t_c}'
     return t_c
 
+
 # для теста
 t_c = f_t_c(t_nom, LOSS, FCA)
+
 
 # step 3.1------------------------------------------------
 def f_D(D_0, t_nom):
@@ -72,8 +76,10 @@ def f_D(D_0, t_nom):
     text = f'D = D_0 - 2 * t_nom = {D_0} - 2 * {t_nom} = {D}'
     return D
 
+
 # для теста
 D = f_D(D_0, t_nom)
+
 
 # step 3------------------------------------------------
 def f_D_ml(type_of_wall_loss, D, FCA_ml):
@@ -87,11 +93,13 @@ def f_D_ml(type_of_wall_loss, D, FCA_ml):
         D_ml = D
     return D_ml
 
+
 # для теста
 D_ml = f_D_ml(type_of_wall_loss, D, FCA_ml)
 
+
 # step 4------------------------------------------------
-def f_R_t(t_mm, FCA_ml,  t_ml):
+def f_R_t(t_mm, FCA_ml, t_ml):
     """
     Remaining thickness ratio R_t, [-]
     """
@@ -99,8 +107,10 @@ def f_R_t(t_mm, FCA_ml,  t_ml):
     text = f'R_t = (t_mm - FCA_ml) / t_ml = {t_mm} - {FCA_ml} / {t_ml} = {R_t}'
     return R_t
 
+
 # для теста
 R_t = f_R_t(t_mm, FCA_ml, t_ml)
+
 
 # step 5------------------------------------------------
 def f_Q(R_t, RSF_a):
@@ -112,15 +122,17 @@ def f_Q(R_t, RSF_a):
     Recommended Remaining Strength Factor RSFa is 0.90
     """
     if R_t < RSF_a:
-        Q = 1.123 * (((1 - R_t) / (1 - R_t  /  RSF_a))**2 - 1)**(0.5)
+        Q = 1.123 * (((1 - R_t) / (1 - R_t / RSF_a)) ** 2 - 1) ** (0.5)
         text = f'Q = 1.123 * (((1 - R_t) / (1 - R_t  /  RSF_a))^2 - 1)^0.5 = 1.123 * (((1 - {R_t}) / (1 - {R_t}  /  {RSF_a}))^2 - 1)^0.5 = {Q}'
     elif R_t >= RSF_a:
         Q = 50
         text = f'Q = 50'
     return Q
 
+
 # для теста
 Q = f_Q(R_t, RSF_a)
+
 
 # step 6------------------------------------------------
 def f_L(Q, D_ml, t_ml):
@@ -130,6 +142,7 @@ def f_L(Q, D_ml, t_ml):
     L = Q * (D_ml * t_ml) ** 0.5
     text = f'L = Q * (D_ml * t_ml) ^ 0.5 = {Q} * ({D_ml} * {t_ml}) ^ 0.5 = {L}'
     return L
+
 
 # step 7------------------------------------------------
 def f_t_minC(P, D_0, S, E, Y_B31, MA):
@@ -141,8 +154,10 @@ def f_t_minC(P, D_0, S, E, Y_B31, MA):
     text = f't_minC = (P * D_0) / (2 * (S * E + P * Y_B31)) + MA = ({P} * {D_0} / 10) / (2 * ({S} * {E} + {P} / 10 * {Y_B31})) + {MA} = {P}'
     return t_minC
 
+
 # для теста
 t_minC = f_t_minC(P, D_0, S, E, Y_B31, MA)
+
 
 def f_t_minL(P, D_0, S, E, Y_B31, MA):
     """
@@ -153,8 +168,10 @@ def f_t_minL(P, D_0, S, E, Y_B31, MA):
     text = f't_minL = (P * D_0) / (4 * (S * E + P * Y_B31)) + t_sl + MA = ({P} * {D_0} / 10) / (4 * ({S} * {E} + {P} / 10 * {Y_B31})) + {t_minL}'
     return t_minL
 
+
 # для теста
 t_minL = f_t_minL(P, D_0, S, E, Y_B31, MA)
+
 
 def f_t_min(t_minC, t_minL):
     """
@@ -163,6 +180,9 @@ def f_t_min(t_minC, t_minL):
     t_min = max(t_minC, t_minL)
     text = f't_min = max(t_minC; t_minL) = max({t_minC}; {t_minL}) = {t_min}'
     return t_min
+
+# для теста
+t_min = f_t_min(t_minC, t_minL)
 
 # step 8------------------------------------------------
 def f_MAWP_C(S, E, t_c, MA, D_0, Y_B31):
@@ -173,8 +193,10 @@ def f_MAWP_C(S, E, t_c, MA, D_0, Y_B31):
     text = f'MAWP_C = (2 * S * E * (t_c - MA)) / (D_0 - 2 * Y_B31 * (t_c - MA)) = 10 * (2 * {S} * {E} * ({t_c} - {MA})) / ({D_0} - 2 * {Y_B31} * ({t_c} - {MA})) = {MAWP_C}'
     return MAWP_C
 
+
 # для теста
 MAWP_C = f_MAWP_C(S, E, t_c, MA, D_0, Y_B31)
+
 
 def f_MAWP_L(S, E, t_c, MA, D_0, Y_B31, t_sl):
     """
@@ -184,8 +206,10 @@ def f_MAWP_L(S, E, t_c, MA, D_0, Y_B31, t_sl):
     text = f'MAWP_L = (4 * S * E * (t_c - t_c - t_sl - MA)) / (D_0 - 4 * Y_B31 * (t_c - t_sl - MA)) = 10 * (4 * {S} * {E} * ({t_c} - {t_sl} - {MA})) / ({D_0} - 4 * {Y_B31} * ({t_c} - {t_sl} - {MA})) = {MAWP_L}'
     return MAWP_L
 
+
 # для теста
 MAWP_L = f_MAWP_L(S, E, t_c, MA, D_0, Y_B31, t_sl)
+
 
 def f_MAWP(MAWP_C, MAWP_L):
     """
@@ -194,6 +218,7 @@ def f_MAWP(MAWP_C, MAWP_L):
     MAWP = min(MAWP_C, MAWP_L)
     text = f'MAWP = min(MAWP_C; MAWP_L) = min({MAWP_C}; {MAWP_L}) = {MAWP}'
     return MAWP
+
 
 # step 9------------------------------------------------
 def check_average_longitudinal_thickness_criteria(t_amS, FCA_ml, t_minC):
@@ -209,6 +234,7 @@ def check_average_longitudinal_thickness_criteria(t_amS, FCA_ml, t_minC):
         text = f'(t_amS - FCA_ml) < t_minL |---> ({t_amS} - {FCA_ml}) < {t_minC} |---> Average longitudinal thickness criteria is -> {average_longitudinal_thickness_criteria} <-'
     return average_longitudinal_thickness_criteria
 
+
 def check_average_circumferential_thickness_criteria(t_amC, FCA_ml, t_minL):
     """
     Average Measured Thickness from Critical Thickness Profiles based on the
@@ -219,8 +245,9 @@ def check_average_circumferential_thickness_criteria(t_amC, FCA_ml, t_minL):
         text = f'(t_amC - FCA_ml) >= t_minL |---> ({t_amC} - {FCA_ml}) >= {t_minL} |---> Average circumferential thickness criteria is -> {average_circumferential_thickness_criteria} <-'
     elif (t_amC - FCA_ml) < t_minL:
         average_circumferential_thickness_criteria = 'failed'
-        text =  f'(t_amC - FCA_ml) < t_minL |---> ({t_amC} - {FCA_ml}) < {t_minL} |---> Average circumferential thickness criteria is -> {average_circumferential_thickness_criteria} <-'
+        text = f'(t_amC - FCA_ml) < t_minL |---> ({t_amC} - {FCA_ml}) < {t_minL} |---> Average circumferential thickness criteria is -> {average_circumferential_thickness_criteria} <-'
     return average_circumferential_thickness_criteria
+
 
 # step 10------------------------------------------------
 def f_MAWP_rC(S, E, t_amS, FCA_ml, D_0, Y_B31):
@@ -232,8 +259,10 @@ def f_MAWP_rC(S, E, t_amS, FCA_ml, D_0, Y_B31):
     text = f'MAWP_rC = (2 * S * E * (t_amS - FCA_ml)) / (D_0 - 2 * Y_B31 * (t_amS - FCA_ml)) = 10 * (2 * {S} * {E} * ({t_amS} - {FCA_ml})) / ({D_0} - 2 * {Y_B31} * ({t_amS} - {FCA_ml})) = {MAWP_rC}'
     return MAWP_rC
 
+
 # для теста
 MAWP_rC = f_MAWP_rC(S, E, t_amS, FCA_ml, D_0, Y_B31)
+
 
 def f_MAWP_rL(S, E, t_amC, FCA_ml, D_0, Y_B31):
     """
@@ -244,20 +273,47 @@ def f_MAWP_rL(S, E, t_amC, FCA_ml, D_0, Y_B31):
     text = f'MAWP_rL = (4 * S * E * (t_amC - FCA_ml )) / (D_0 - 4 * Y_B31 * (t_amC - FCA_ml)) = 10 * (4 * {S} * {E} * ({t_amC} - {FCA_ml})) / ({D_0} - 4 * {Y_B31} * ({t_amC} - {FCA_ml})) = {MAWP_rL}'
     return MAWP_rL
 
+
 # для теста
 MAWP_rL = f_MAWP_rL(S, E, t_amC, FCA_ml, D_0, Y_B31)
 
-def check_MAWP_criteria(MAWP_rC,MAWP_rL, P):
+
+def check_MAWP_criteria(MAWP_rC, MAWP_rL, P):
     """
     MAWP criteria from Critical Thickness Profiles
     """
-    if min(MAWP_rC,MAWP_rL) > P:
+    if min(MAWP_rC, MAWP_rL) > P:
         MAWP_criteria = 'passed'
         text = f'min(MAWP_rC,MAWP_rL) > P |---> min({MAWP_rC},{MAWP_rL}) > {P} |---> MAWP criteria is -> {MAWP_criteria} <-'
-    elif min(MAWP_rC,MAWP_rL) <= P:
+    elif min(MAWP_rC, MAWP_rL) <= P:
         MAWP_criteria = 'failed'
         text = f'min(MAWP_rC,MAWP_rL) <= P |---> min({MAWP_rC},{MAWP_rL}) <= {P} |---> MAWP criteria is -> {MAWP_criteria} <-'
     return MAWP_criteria
+
+
+#  step 11------------------------------------------------
+def f_t_lim(t_nom: float) -> float:
+    """
+    t_lim - parameter which is needed for Minimum measured thickness criteria, [mm]
+    """
+    if (0.2 * t_nom) > 1.3:
+        t_lim = 0.2 * t_nom
+    else:
+        t_lim = 1.3
+    return t_lim
+
+
+# для теста
+t_lim = f_t_lim(t_nom)
+
+def check_minimum_thickness_criteria(t_mm, FCA_ml, t_min,t_lim):
+    if (t_mm - FCA_ml) >= max((0.5 * t_min), t_lim):
+        minimum_thickness_criteria = 'passed'
+        text = f'(t_mm - FCA_ml) >= max((0.5 * t_min), t_lim) |---> ({t_mm} - {FCA_ml}) >= max((0.5 * {t_min}, {t_lim})) |---> ({t_mm - FCA_ml}) >= ({max((0.5 * t_min), t_lim)}) |---> Minimum thickness criteria is -> {minimum_thickness_criteria} <-'
+    else:
+        minimum_thickness_criteria = 'failed'
+        text = f'(t_mm - FCA_ml) < max((0.5 * t_min), t_lim) |---> ({t_mm} - {FCA_ml}) < max((0.5 * {t_min}, {t_lim})) |---> ({t_mm - FCA_ml}) < ({max((0.5 * t_min), t_lim)}) |---> Minimum thickness criteria is -> {minimum_thickness_criteria} <-'
+    return minimum_thickness_criteria
 
 
 if __name__ == '__main__':
@@ -275,7 +331,7 @@ if __name__ == '__main__':
     print('')
     print('Q = ', f_Q(R_t, RSF_a))
     print('')
-    print('L = ',  f_L(Q, D_ml, t_ml))
+    print('L = ', f_L(Q, D_ml, t_ml))
     print('')
     print('t_minC = ', f_t_minC(P, D_0, S, E, Y_B31, MA))
     print('')
@@ -289,12 +345,23 @@ if __name__ == '__main__':
     print('')
     print('MAWP = ', f_MAWP(MAWP_C, MAWP_L))
     print('')
-    print(f'(t_amS - FCA_ml) >= t_minC |---> ({t_amS} - {FCA_ml}) >= {t_minC} |---> Average longitudinal thickness criteria is -> ', check_average_longitudinal_thickness_criteria(t_amS, FCA_ml, t_minC))
+    print(
+        f'(t_amS - FCA_ml) >= t_minC |---> ({t_amS} - {FCA_ml}) >= {t_minC} |---> Average longitudinal thickness criteria is -> ',
+        check_average_longitudinal_thickness_criteria(t_amS, FCA_ml, t_minC))
     print('')
-    print(f'(t_amC - FCA_ml) >= t_minL |---> ({t_amC} - {FCA_ml}) >= {t_minL} |---> Average circumferential thickness criteria is -> ',check_average_circumferential_thickness_criteria(t_amC, FCA_ml, t_minL))
+    print(
+        f'(t_amC - FCA_ml) >= t_minL |---> ({t_amC} - {FCA_ml}) >= {t_minL} |---> Average circumferential thickness criteria is -> ',
+        check_average_circumferential_thickness_criteria(t_amC, FCA_ml, t_minL))
     print('')
-    print(f'MAWP_rC = (2 * S * E * (t_amS - FCA_ml)) / (D_0 - 2 * Y_B31 * (t_amS - FCA_ml)) = 10 * (2 * {S} * {E} * ({t_amS} - {FCA_ml})) / ({D_0} - 2 * {Y_B31} * ({t_amS} - {FCA_ml})) = ', MAWP_rC)
+    print(
+        f'MAWP_rC = (2 * S * E * (t_amS - FCA_ml)) / (D_0 - 2 * Y_B31 * (t_amS - FCA_ml)) = 10 * (2 * {S} * {E} * ({t_amS} - {FCA_ml})) / ({D_0} - 2 * {Y_B31} * ({t_amS} - {FCA_ml})) = ',
+        MAWP_rC)
     print('')
-    print(f'MAWP_rL = (4 * S * E * (t_amC - FCA_ml )) / (D_0 - 4 * Y_B31 * (t_amC - FCA_ml)) = 10 * (4 * {S} * {E} * ({t_amC} - {FCA_ml})) / ({D_0} - 4 * {Y_B31} * ({t_amC} - {FCA_ml})) = ', MAWP_rL)
+    print(
+        f'MAWP_rL = (4 * S * E * (t_amC - FCA_ml )) / (D_0 - 4 * Y_B31 * (t_amC - FCA_ml)) = 10 * (4 * {S} * {E} * ({t_amC} - {FCA_ml})) / ({D_0} - 4 * {Y_B31} * ({t_amC} - {FCA_ml})) = ',
+        MAWP_rL)
     print('')
-    print(f'min(MAWP_rC,MAWP_rL) > P |---> min({MAWP_rC},{MAWP_rL}) > {P} |---> MAWP criteria is -> ', check_MAWP_criteria(MAWP_rC,MAWP_rL, P))
+    print(f'min(MAWP_rC,MAWP_rL) > P |---> min({MAWP_rC},{MAWP_rL}) > {P} |---> MAWP criteria is -> ',
+          check_MAWP_criteria(MAWP_rC, MAWP_rL, P))
+    print('')
+    print( f'minimum_thickness_criteria is ->', check_minimum_thickness_criteria(t_mm, FCA_ml, t_min, t_lim))
