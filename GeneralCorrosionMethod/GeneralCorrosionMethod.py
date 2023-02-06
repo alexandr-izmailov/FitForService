@@ -19,6 +19,14 @@ t_sl = 0
 t_amS = 3.13
 t_amC = 3.13
 
+# definition of class, common for all functions, which is used to return result and text variables
+class DataCalculated:
+    def __init__(self, result, text):
+        self.result = result
+        self.text = text
+
+    def __repr__(self):
+        return f'Result: {self.result}\nText: {self.text}'
 
 # function definition
 # step 1.1 ------------------------------------------------
@@ -29,14 +37,16 @@ def f_t_nom(pipe_type, t, M_ut):
     if pipe_type in ('Seamless', 'User defined %'):
         t_nom = t * (1 - M_ut)
         text = f't_nom = t * (1 - M_ut) = {t} * (1 - {M_ut}) = {t_nom}'
+        data = DataCalculated(t_nom, text)
     elif pipe_type in ('Welded', 'User defined mm'):
         t_nom = t - M_ut
         text = f't_nom = t - M_ut = {t} - {M_ut} = {t_nom}'
-    return t_nom
+        data = DataCalculated(t_nom, text)
+    return data
 
 
 # для теста
-t_nom = f_t_nom(pipe_type, t, M_ut)
+t_nom = f_t_nom(pipe_type, t, M_ut).result
 
 
 # step 1 ------------------------------------------------
@@ -46,11 +56,12 @@ def f_t_ml(t_nom, FCA_ml):
     """
     t_ml = t_nom - FCA_ml
     text = f't_ml = t_nom - FCA_ml = {t_nom} - {FCA_ml} = {t_ml}'
-    return t_ml
+    data = DataCalculated(t_ml, text)
+    return data
 
 
 # для теста
-t_ml = f_t_ml(t_nom, FCA_ml)
+t_ml = f_t_ml(t_nom, FCA_ml).result
 
 
 # step 2 ------------------------------------------------
@@ -60,11 +71,12 @@ def f_t_c(t_nom, LOSS, FCA):
     """
     t_c = t_nom - LOSS - FCA
     text = f't_c = t_nom - LOSS - FCA = {t_nom} - {LOSS} - {FCA} = {t_c}'
-    return t_c
+    data = DataCalculated(t_c, text)
+    return data
 
 
 # для теста
-t_c = f_t_c(t_nom, LOSS, FCA)
+t_c = f_t_c(t_nom, LOSS, FCA).result
 
 
 # step 3.1------------------------------------------------
@@ -74,11 +86,12 @@ def f_D(D_0, t_nom):
     """
     D = D_0 - 2 * t_nom
     text = f'D = D_0 - 2 * t_nom = {D_0} - 2 * {t_nom} = {D}'
-    return D
+    data = DataCalculated(D, text)
+    return data
 
 
 # для теста
-D = f_D(D_0, t_nom)
+D = f_D(D_0, t_nom).result
 
 
 # step 3------------------------------------------------
@@ -89,13 +102,16 @@ def f_D_ml(type_of_wall_loss, D, FCA_ml):
     if type_of_wall_loss == 'internal':
         D_ml = D + 2 * FCA_ml
         text = f'D_ml = D + 2 * FCA_ml = {D} + 2 * {FCA_ml} = {D_ml}'
+        data = DataCalculated(D_ml, text)
     elif type_of_wall_loss == 'external':
         D_ml = D
-    return D_ml
+        text = f'D_ml = D = {D} = {D_ml}'
+        data = DataCalculated(D_ml, text)
+    return data
 
 
 # для теста
-D_ml = f_D_ml(type_of_wall_loss, D, FCA_ml)
+D_ml = f_D_ml(type_of_wall_loss, D, FCA_ml).result
 
 
 # step 4------------------------------------------------
@@ -105,11 +121,12 @@ def f_R_t(t_mm, FCA_ml, t_ml):
     """
     R_t = (t_mm - FCA_ml) / t_ml
     text = f'R_t = (t_mm - FCA_ml) / t_ml = {t_mm} - {FCA_ml} / {t_ml} = {R_t}'
-    return R_t
+    data = DataCalculated(R_t,text)
+    return data
 
 
 # для теста
-R_t = f_R_t(t_mm, FCA_ml, t_ml)
+R_t = f_R_t(t_mm, FCA_ml, t_ml).result
 
 
 # step 5------------------------------------------------
@@ -126,12 +143,13 @@ def f_Q(R_t, RSF_a):
         text = f'Q = 1.123 * (((1 - R_t) / (1 - R_t  /  RSF_a))^2 - 1)^0.5 = 1.123 * (((1 - {R_t}) / (1 - {R_t}  /  {RSF_a}))^2 - 1)^0.5 = {Q}'
     elif R_t >= RSF_a:
         Q = 50
-        text = f'Q = 50'
-    return Q
+        text = f'Q = {Q}'
+    data = DataCalculated(Q, text)
+    return data
 
 
 # для теста
-Q = f_Q(R_t, RSF_a)
+Q = f_Q(R_t, RSF_a).result
 
 
 # step 6------------------------------------------------
@@ -141,7 +159,8 @@ def f_L(Q, D_ml, t_ml):
     """
     L = Q * (D_ml * t_ml) ** 0.5
     text = f'L = Q * (D_ml * t_ml) ^ 0.5 = {Q} * ({D_ml} * {t_ml}) ^ 0.5 = {L}'
-    return L
+    data = DataCalculated(L, text)
+    return data
 
 
 # step 7------------------------------------------------
@@ -152,11 +171,12 @@ def f_t_minC(P, D_0, S, E, Y_B31, MA):
     """
     t_minC = (P * D_0 / 10) / (2 * (S * E + P / 10 * Y_B31)) + MA
     text = f't_minC = (P * D_0) / (2 * (S * E + P * Y_B31)) + MA = ({P} * {D_0} / 10) / (2 * ({S} * {E} + {P} / 10 * {Y_B31})) + {MA} = {P}'
-    return t_minC
+    data = DataCalculated(t_minC, text)
+    return data
 
 
 # для теста
-t_minC = f_t_minC(P, D_0, S, E, Y_B31, MA)
+t_minC = f_t_minC(P, D_0, S, E, Y_B31, MA).result
 
 
 def f_t_minL(P, D_0, S, E, Y_B31, MA):
@@ -165,12 +185,13 @@ def f_t_minL(P, D_0, S, E, Y_B31, MA):
     longitudinal stress, [mm]
     """
     t_minL = (P * D_0 / 10) / (4 * (S * E + P / 10 * Y_B31)) + t_sl + MA
-    text = f't_minL = (P * D_0) / (4 * (S * E + P * Y_B31)) + t_sl + MA = ({P} * {D_0} / 10) / (4 * ({S} * {E} + {P} / 10 * {Y_B31})) + {t_minL}'
-    return t_minL
+    text = f't_minL = (P * D_0) / (4 * (S * E + P * Y_B31)) + t_sl + MA = ({P} * {D_0} / 10) / (4 * ({S} * {E} + {P} / 10 * {Y_B31})) + {t_minL} = {t_minL}'
+    data = DataCalculated(t_minL, text)
+    return data
 
 
 # для теста
-t_minL = f_t_minL(P, D_0, S, E, Y_B31, MA)
+t_minL = f_t_minL(P, D_0, S, E, Y_B31, MA).result
 
 
 def f_t_min(t_minC, t_minL):
@@ -179,10 +200,13 @@ def f_t_min(t_minC, t_minL):
     """
     t_min = max(t_minC, t_minL)
     text = f't_min = max(t_minC; t_minL) = max({t_minC}; {t_minL}) = {t_min}'
-    return t_min
+    data = DataCalculated(t_min, text)
+    return data
+
 
 # для теста
-t_min = f_t_min(t_minC, t_minL)
+t_min = f_t_min(t_minC, t_minL).result
+
 
 # step 8------------------------------------------------
 def f_MAWP_C(S, E, t_c, MA, D_0, Y_B31):
@@ -191,11 +215,12 @@ def f_MAWP_C(S, E, t_c, MA, D_0, Y_B31):
     """
     MAWP_C = 10 * (2 * S * E * (t_c - MA)) / (D_0 - 2 * Y_B31 * (t_c - MA))
     text = f'MAWP_C = (2 * S * E * (t_c - MA)) / (D_0 - 2 * Y_B31 * (t_c - MA)) = 10 * (2 * {S} * {E} * ({t_c} - {MA})) / ({D_0} - 2 * {Y_B31} * ({t_c} - {MA})) = {MAWP_C}'
-    return MAWP_C
+    data = DataCalculated(MAWP_C, text,)
+    return data
 
 
 # для теста
-MAWP_C = f_MAWP_C(S, E, t_c, MA, D_0, Y_B31)
+MAWP_C = f_MAWP_C(S, E, t_c, MA, D_0, Y_B31).result
 
 
 def f_MAWP_L(S, E, t_c, MA, D_0, Y_B31, t_sl):
@@ -204,11 +229,12 @@ def f_MAWP_L(S, E, t_c, MA, D_0, Y_B31, t_sl):
     """
     MAWP_L = 10 * (4 * S * E * (t_c - t_sl - MA)) / (D_0 - 4 * Y_B31 * (t_c - t_sl - MA))
     text = f'MAWP_L = (4 * S * E * (t_c - t_c - t_sl - MA)) / (D_0 - 4 * Y_B31 * (t_c - t_sl - MA)) = 10 * (4 * {S} * {E} * ({t_c} - {t_sl} - {MA})) / ({D_0} - 4 * {Y_B31} * ({t_c} - {t_sl} - {MA})) = {MAWP_L}'
-    return MAWP_L
+    data = DataCalculated(MAWP_L, text)
+    return data
 
 
 # для теста
-MAWP_L = f_MAWP_L(S, E, t_c, MA, D_0, Y_B31, t_sl)
+MAWP_L = f_MAWP_L(S, E, t_c, MA, D_0, Y_B31, t_sl).result
 
 
 def f_MAWP(MAWP_C, MAWP_L):
@@ -217,7 +243,8 @@ def f_MAWP(MAWP_C, MAWP_L):
     """
     MAWP = min(MAWP_C, MAWP_L)
     text = f'MAWP = min(MAWP_C; MAWP_L) = min({MAWP_C}; {MAWP_L}) = {MAWP}'
-    return MAWP
+    data = DataCalculated(MAWP, text)
+    return data
 
 
 # step 9------------------------------------------------
@@ -232,7 +259,8 @@ def check_average_longitudinal_thickness_criteria(t_amS, FCA_ml, t_minC):
     elif (t_amS - FCA_ml) < t_minC:
         average_longitudinal_thickness_criteria = 'failed'
         text = f'(t_amS - FCA_ml) < t_minL |---> ({t_amS} - {FCA_ml}) < {t_minC} |---> Average longitudinal thickness criteria is -> {average_longitudinal_thickness_criteria} <-'
-    return average_longitudinal_thickness_criteria
+    data = DataCalculated(average_longitudinal_thickness_criteria, text)
+    return data
 
 
 def check_average_circumferential_thickness_criteria(t_amC, FCA_ml, t_minL):
@@ -246,8 +274,8 @@ def check_average_circumferential_thickness_criteria(t_amC, FCA_ml, t_minL):
     elif (t_amC - FCA_ml) < t_minL:
         average_circumferential_thickness_criteria = 'failed'
         text = f'(t_amC - FCA_ml) < t_minL |---> ({t_amC} - {FCA_ml}) < {t_minL} |---> Average circumferential thickness criteria is -> {average_circumferential_thickness_criteria} <-'
-    return average_circumferential_thickness_criteria
-
+    data = DataCalculated(average_circumferential_thickness_criteria, text)
+    return data
 
 # step 10------------------------------------------------
 def f_MAWP_rC(S, E, t_amS, FCA_ml, D_0, Y_B31):
@@ -257,11 +285,11 @@ def f_MAWP_rC(S, E, t_amS, FCA_ml, D_0, Y_B31):
     """
     MAWP_rC = 10 * (2 * S * E * (t_amS - FCA_ml)) / (D_0 - 2 * Y_B31 * (t_amS - FCA_ml))
     text = f'MAWP_rC = (2 * S * E * (t_amS - FCA_ml)) / (D_0 - 2 * Y_B31 * (t_amS - FCA_ml)) = 10 * (2 * {S} * {E} * ({t_amS} - {FCA_ml})) / ({D_0} - 2 * {Y_B31} * ({t_amS} - {FCA_ml})) = {MAWP_rC}'
-    return MAWP_rC
-
+    data = DataCalculated(MAWP_rC, text)
+    return data
 
 # для теста
-MAWP_rC = f_MAWP_rC(S, E, t_amS, FCA_ml, D_0, Y_B31)
+MAWP_rC = f_MAWP_rC(S, E, t_amS, FCA_ml, D_0, Y_B31).result
 
 
 def f_MAWP_rL(S, E, t_amC, FCA_ml, D_0, Y_B31):
@@ -271,11 +299,12 @@ def f_MAWP_rL(S, E, t_amC, FCA_ml, D_0, Y_B31):
     """
     MAWP_rL = 10 * (4 * S * E * (t_amC - FCA_ml)) / (D_0 - 4 * Y_B31 * (t_amC - FCA_ml))
     text = f'MAWP_rL = (4 * S * E * (t_amC - FCA_ml )) / (D_0 - 4 * Y_B31 * (t_amC - FCA_ml)) = 10 * (4 * {S} * {E} * ({t_amC} - {FCA_ml})) / ({D_0} - 4 * {Y_B31} * ({t_amC} - {FCA_ml})) = {MAWP_rL}'
-    return MAWP_rL
+    data = DataCalculated(MAWP_rL, text)
+    return data
 
 
 # для теста
-MAWP_rL = f_MAWP_rL(S, E, t_amC, FCA_ml, D_0, Y_B31)
+MAWP_rL = f_MAWP_rL(S, E, t_amC, FCA_ml, D_0, Y_B31).result
 
 
 def check_MAWP_criteria(MAWP_rC, MAWP_rL, P):
@@ -288,7 +317,8 @@ def check_MAWP_criteria(MAWP_rC, MAWP_rL, P):
     elif min(MAWP_rC, MAWP_rL) <= P:
         MAWP_criteria = 'failed'
         text = f'min(MAWP_rC,MAWP_rL) <= P |---> min({MAWP_rC},{MAWP_rL}) <= {P} |---> MAWP criteria is -> {MAWP_criteria} <-'
-    return MAWP_criteria
+    data = DataCalculated(MAWP_criteria, text)
+    return data
 
 
 #  step 11------------------------------------------------
@@ -298,22 +328,27 @@ def f_t_lim(t_nom: float) -> float:
     """
     if (0.2 * t_nom) > 1.3:
         t_lim = 0.2 * t_nom
+        text = f'(0.2 * t_nom) > 1.3 |---> t_lim = 0.2 * t_nom = 0.2 * {t_nom} = {t_lim}'
     else:
         t_lim = 1.3
-    return t_lim
+        text = f'(0.2 * t_nom) <= 1.3 |--->  t_lim = {t_nom}'
+    data = DataCalculated(MAWP_rC, text)
+    return data
 
 
 # для теста
-t_lim = f_t_lim(t_nom)
+t_lim = f_t_lim(t_nom).result
 
-def check_minimum_thickness_criteria(t_mm, FCA_ml, t_min,t_lim):
+
+def check_minimum_thickness_criteria(t_mm, FCA_ml, t_min, t_lim):
     if (t_mm - FCA_ml) >= max((0.5 * t_min), t_lim):
         minimum_thickness_criteria = 'passed'
         text = f'(t_mm - FCA_ml) >= max((0.5 * t_min), t_lim) |---> ({t_mm} - {FCA_ml}) >= max((0.5 * {t_min}, {t_lim})) |---> ({t_mm - FCA_ml}) >= ({max((0.5 * t_min), t_lim)}) |---> Minimum thickness criteria is -> {minimum_thickness_criteria} <-'
     else:
         minimum_thickness_criteria = 'failed'
         text = f'(t_mm - FCA_ml) < max((0.5 * t_min), t_lim) |---> ({t_mm} - {FCA_ml}) < max((0.5 * {t_min}, {t_lim})) |---> ({t_mm - FCA_ml}) < ({max((0.5 * t_min), t_lim)}) |---> Minimum thickness criteria is -> {minimum_thickness_criteria} <-'
-    return minimum_thickness_criteria
+    data = DataCalculated(minimum_thickness_criteria, text)
+    return data
 
 
 if __name__ == '__main__':
@@ -364,4 +399,4 @@ if __name__ == '__main__':
     print(f'min(MAWP_rC,MAWP_rL) > P |---> min({MAWP_rC},{MAWP_rL}) > {P} |---> MAWP criteria is -> ',
           check_MAWP_criteria(MAWP_rC, MAWP_rL, P))
     print('')
-    print( f'minimum_thickness_criteria is ->', check_minimum_thickness_criteria(t_mm, FCA_ml, t_min, t_lim))
+    print(f'minimum_thickness_criteria is ->', check_minimum_thickness_criteria(t_mm, FCA_ml, t_min, t_lim))
