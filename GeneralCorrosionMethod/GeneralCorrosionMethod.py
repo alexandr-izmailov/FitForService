@@ -120,7 +120,7 @@ def f_R_t(t_mm, FCA_ml, t_ml):
     Remaining thickness ratio R_t, [-]
     """
     R_t = (t_mm - FCA_ml) / t_ml
-    text = f'R_t = (t_mm - FCA_ml) / t_ml = {t_mm} - {FCA_ml} / {t_ml} = {R_t}'
+    text = f'R_t = (t_mm - FCA_ml) / t_ml = ({t_mm} - {FCA_ml}) / {t_ml} = {R_t}'
     data = DataCalculated(R_t,text)
     return data
 
@@ -328,11 +328,11 @@ def f_t_lim(t_nom: float) -> float:
     """
     if (0.2 * t_nom) > 1.3:
         t_lim = 0.2 * t_nom
-        text = f'(0.2 * t_nom) > 1.3 |---> t_lim = 0.2 * t_nom = 0.2 * {t_nom} = {t_lim}'
+        text = f't_lim  = max(0.2  *  t_nom; 1.3) |---> t_lim = max(0.2  *  {t_nom}; 1.3) |---> t_lim = {t_lim}'
     else:
         t_lim = 1.3
-        text = f'(0.2 * t_nom) <= 1.3 |--->  t_lim = {t_nom}'
-    data = DataCalculated(MAWP_rC, text)
+        text = f't_lim  = max(0.2  *  t_nom; 1.3) |---> t_lim = max(0.2  *  {t_nom}; 1.3) |---> t_lim = {t_lim}'
+    data = DataCalculated(t_lim, text)
     return data
 
 
@@ -390,13 +390,15 @@ if __name__ == '__main__':
     print('')
     print(
         f'MAWP_rC = (2 * S * E * (t_amS - FCA_ml)) / (D_0 - 2 * Y_B31 * (t_amS - FCA_ml)) = 10 * (2 * {S} * {E} * ({t_amS} - {FCA_ml})) / ({D_0} - 2 * {Y_B31} * ({t_amS} - {FCA_ml})) = ',
-        MAWP_rC)
+        f_MAWP_rC(S, E, t_amS, FCA_ml, D_0, Y_B31))
     print('')
     print(
         f'MAWP_rL = (4 * S * E * (t_amC - FCA_ml )) / (D_0 - 4 * Y_B31 * (t_amC - FCA_ml)) = 10 * (4 * {S} * {E} * ({t_amC} - {FCA_ml})) / ({D_0} - 4 * {Y_B31} * ({t_amC} - {FCA_ml})) = ',
-        MAWP_rL)
+        f_MAWP_rL(S, E, t_amC, FCA_ml, D_0, Y_B31))
     print('')
     print(f'min(MAWP_rC,MAWP_rL) > P |---> min({MAWP_rC},{MAWP_rL}) > {P} |---> MAWP criteria is -> ',
           check_MAWP_criteria(MAWP_rC, MAWP_rL, P))
+    print('')
+    print(f't_lim =  ', f_t_lim(t_nom))
     print('')
     print(f'minimum_thickness_criteria is ->', check_minimum_thickness_criteria(t_mm, FCA_ml, t_min, t_lim))
