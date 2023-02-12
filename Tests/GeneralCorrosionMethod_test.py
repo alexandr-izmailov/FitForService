@@ -70,7 +70,7 @@ def test_f_t_minC():
     assert f_t_minC(P, D_0, S, E, Y_B31, MA).result == 1.6175413371675054
 
 def test_f_t_minL():
-    assert f_t_minL(P, D_0, S, E, Y_B31, MA).result == 0.8087706685837527
+    assert f_t_minL(P, D_0, S, E, Y_B31, MA, t_sl).result == 0.8087706685837527
 
 def test_f_t_min():
     assert f_t_min(t_minC, t_minL).result == 1.6175413371675054
