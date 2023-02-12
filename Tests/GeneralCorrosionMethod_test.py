@@ -1,6 +1,45 @@
 import pytest
 from GeneralCorrosionMethod.GeneralCorrosionMethod import *
 
+# input data
+t = 3.7592
+pipe_type = 'Seamless'
+M_ut = 0
+FCA_ml = 0.14
+LOSS = 0
+FCA = 0
+type_of_wall_loss = 'external'
+t_mm = 3.13
+RSF_a = 0.9
+
+P = 30
+S = 137.9
+D_0 = 150
+E = 1
+Y_B31 = 0.4
+MA = 0
+t_sl = 0
+t_amS = 3.13
+t_amC = 3.13
+
+# Calculated data
+t_nom = 3.7592
+t_ml = 3.6191999999999998
+t_c = 3.7592
+D = 142.48160000000001
+D_ml = 142.48160000000001
+R_t = 0.8261494252873564
+Q = 2.097574142996543
+L = 47.632459197714674
+t_minC = 1.6175413371675054
+t_minL = 0.8087706685837527
+t_min = 1.6175413371675054
+MAWP_C = 70.53328384332713
+MAWP_L = 144.01296576983427
+MAWP = 70.53328384332713
+MAWP_rC = 55.86702617744296
+MAWP_rL = 113.57453724107536
+t_lim = 1.3
 
 
 def test_f_t_nom():
@@ -66,5 +105,5 @@ def test_f_t_lim():
 def test_check_minimum_thickness_criteria():
     assert check_minimum_thickness_criteria(t_mm, FCA_ml, t_min, t_lim).result == 'passed'
 
-if __name__ == '__main__':
-    pytest.main()
+# if __name__ == '__main__':
+#     pytest.main()
