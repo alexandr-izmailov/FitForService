@@ -5,7 +5,7 @@ from docx.shared import Pt
 from docx.enum.style import WD_STYLE_TYPE
 
 # Set the directory where the file should be saved
-directory = r"C:\Users\a.izmailov\PycharmProjects\FitForService\reports"
+directory = r"FitForService\reports"
 
 # Create the document
 document = Document()
@@ -237,11 +237,6 @@ if method == 'general corrosion':
                 elif check_minimum_thickness_criteria == 'passed':
 
                     print(check_minimum_thickness_criteria)
-
-
-
-
-
 
 elif method == 'local corrosion':
     pass
