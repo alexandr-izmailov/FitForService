@@ -1,3 +1,5 @@
+from Classes.MajorClasses import DataCalculated
+
 # # input data
 # t = 3.7592
 # pipe_type = 'Seamless'
@@ -19,14 +21,6 @@
 # t_amS = 3.13
 # t_amC = 3.13
 
-# definition of class, common for all functions, which is used to return result and text variables
-class DataCalculated:
-    def __init__(self, result, text):
-        self.result = result
-        self.text = text
-
-    def __repr__(self):
-        return f'Result: {self.result}\nText: {self.text}'
 
 # function definition
 # step 1.1 ------------------------------------------------
@@ -405,4 +399,4 @@ def check_minimum_thickness_criteria(t_mm, FCA_ml, t_min, t_lim):
 #     print('')
 #     print(f't_lim =  ', f_t_lim(t_nom))
 #     print('')
-#     print(f'minimum_thickness_criteria is ->', check_minimum_thickness_criteria(t_mm, FCA_ml, t_min, t_lim))
+#     print(f'minimum_thickness_criteria is ->', check_minimum_thickness_criteria(t_mm, FCA_ml, t_min, t_lim))t_min
