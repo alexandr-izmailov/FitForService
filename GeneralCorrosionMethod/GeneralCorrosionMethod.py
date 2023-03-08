@@ -29,8 +29,8 @@ def f_t_nom(pipe_type, t, M_ut):
     t_nom - Nominal or furnished thickness of the component adjusted for mill undertolerance as applicable, [mm]
     """
     if pipe_type in ('Seamless', 'User defined %'):
-        t_nom = t * (1 - M_ut)
-        text = f't_nom = t * (1 - M_ut) = {t} * (1 - {M_ut}) = {t_nom}'
+        t_nom = t * (1 - M_ut / 100)
+        text = f't_nom = t * (1 - M_ut / 100) = {t} * (1 - {M_ut} / 100) = {t_nom}'
         data = DataCalculated(t_nom, text)
     elif pipe_type in ('Welded', 'User defined mm'):
         t_nom = t - M_ut
