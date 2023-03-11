@@ -1,27 +1,5 @@
 from Classes.MajorClasses import DataCalculated
 
-# # input data
-# t = 5.49
-# pipe_type = 'Seamless'
-# M_ut = 12.5
-# LOSS = 0
-# FCA = 0
-# FCA_ml = 0
-# t_mm = 3.16
-# s = 50
-# S = 138
-# D_0 = 88.9
-# L_msd = 1000
-# g_r = 0
-# E = 1
-# MA = 0
-# Y_B31 = 0.4
-# t_sl = 0
-# RSF_a = 0.9
-# c = 50
-# EL = 1
-# EC = 1
-# P = 16.5
 
 # function definition
 # step 1.1 ------------------------------------------------
@@ -29,11 +7,11 @@ def f_t_nom(pipe_type, t, M_ut):
     """"
     t_nom - Nominal or furnished thickness of the component adjusted for mill undertolerance as applicable, [mm]
     """
-    if pipe_type in ('Seamless', 'User defined %'):
+    if pipe_type.lower() in ('seamless %', 'user defined %'):
         t_nom = t * (1 - M_ut / 100)
         text = f't_nom = t * (1 - M_ut / 100) = {t} * (1 - {M_ut} / 100) = {t_nom}'
         data = DataCalculated(t_nom, text)
-    elif pipe_type in ('Welded', 'User defined mm'):
+    elif pipe_type.lower() in ('welded mm', 'user defined mm'):
         t_nom = t - M_ut
         text = f't_nom = t - M_ut = {t} - {M_ut} = {t_nom}'
         data = DataCalculated(t_nom, text)
