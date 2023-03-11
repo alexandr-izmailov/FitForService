@@ -2,7 +2,7 @@ from LocalCorrosionMethod.LocalCorrosionMethod import *
 
 # input data
 t = 5.49
-pipe_type = 'Seamless'
+pipe_type = 'seamless %'
 M_ut = 12.5
 LOSS = 0
 FCA = 0

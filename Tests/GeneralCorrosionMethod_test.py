@@ -3,7 +3,7 @@ from GeneralCorrosionMethod.GeneralCorrosionMethod import *
 
 # input data
 t = 3.7592
-pipe_type = 'Seamless'
+pipe_type = 'user defined %'
 M_ut = 0
 FCA_ml = 0.14
 LOSS = 0
