@@ -232,10 +232,10 @@ def check_average_longitudinal_thickness_criteria(t_amS, FCA_ml, t_minC):
     """
     if (t_amS - FCA_ml) >= t_minC:
         average_longitudinal_thickness_criteria = 'passed'
-        text = f'(t_amS - FCA_ml) >= t_minL |---> ({t_amS} - {FCA_ml}) >= {t_minC} |---> Average longitudinal thickness criteria is -> {average_longitudinal_thickness_criteria}'
+        text = f'(t_amS - FCA_ml) >= t_minL |---> ({t_amS} - {FCA_ml}) >= {t_minC} \nAverage longitudinal thickness criteria is {average_longitudinal_thickness_criteria}'
     elif (t_amS - FCA_ml) < t_minC:
         average_longitudinal_thickness_criteria = 'failed'
-        text = f'(t_amS - FCA_ml) < t_minL |---> ({t_amS} - {FCA_ml}) < {t_minC} |---> Average longitudinal thickness criteria is -> {average_longitudinal_thickness_criteria}'
+        text = f'(t_amS - FCA_ml) < t_minL |---> ({t_amS} - {FCA_ml}) < {t_minC} \nAverage longitudinal thickness criteria is {average_longitudinal_thickness_criteria}'
     data = DataCalculated(average_longitudinal_thickness_criteria, text)
     return data
 
@@ -247,10 +247,10 @@ def check_average_circumferential_thickness_criteria(t_amC, FCA_ml, t_minL):
     """
     if (t_amC - FCA_ml) >= t_minL:
         average_circumferential_thickness_criteria = 'passed'
-        text = f'(t_amC - FCA_ml) >= t_minL |---> ({t_amC} - {FCA_ml}) >= {t_minL} |---> Average circumferential thickness criteria is -> {average_circumferential_thickness_criteria}'
+        text = f'(t_amC - FCA_ml) >= t_minL |---> ({t_amC} - {FCA_ml}) >= {t_minL} \nAverage circumferential thickness criteria is {average_circumferential_thickness_criteria}'
     elif (t_amC - FCA_ml) < t_minL:
         average_circumferential_thickness_criteria = 'failed'
-        text = f'(t_amC - FCA_ml) < t_minL |---> ({t_amC} - {FCA_ml}) < {t_minL} |---> Average circumferential thickness criteria is -> {average_circumferential_thickness_criteria}'
+        text = f'(t_amC - FCA_ml) < t_minL |---> ({t_amC} - {FCA_ml}) < {t_minL} \n> Average circumferential thickness criteria is {average_circumferential_thickness_criteria}'
     data = DataCalculated(average_circumferential_thickness_criteria, text)
     return data
 
@@ -290,10 +290,10 @@ def check_MAWP_criteria(MAWP_rC, MAWP_rL, P):
     """
     if min(MAWP_rC, MAWP_rL) > P:
         MAWP_criteria = 'passed'
-        text = f'min(MAWP_rC,MAWP_rL) > P |---> min({MAWP_rC},{MAWP_rL}) > {P} |---> MAWP criteria is -> {MAWP_criteria}'
+        text = f'min(MAWP_rC,MAWP_rL) > P |---> min({MAWP_rC},{MAWP_rL}) > {P} \nMAWP criteria is {MAWP_criteria}'
     elif min(MAWP_rC, MAWP_rL) <= P:
         MAWP_criteria = 'failed'
-        text = f'min(MAWP_rC,MAWP_rL) <= P |---> min({MAWP_rC},{MAWP_rL}) <= {P} |---> MAWP criteria is -> {MAWP_criteria}'
+        text = f'min(MAWP_rC,MAWP_rL) <= P |---> min({MAWP_rC},{MAWP_rL}) <= {P} \nMAWP criteria is {MAWP_criteria}'
     data = DataCalculated(MAWP_criteria, text)
     return data
 
@@ -320,10 +320,10 @@ def f_t_lim(t_nom: float) -> float:
 def check_minimum_thickness_criteria(t_mm, FCA_ml, t_min, t_lim):
     if (t_mm - FCA_ml) >= max((0.5 * t_min), t_lim):
         minimum_thickness_criteria = 'passed'
-        text = f'(t_mm - FCA_ml) >= max((0.5 * t_min), t_lim) |---> ({t_mm} - {FCA_ml}) >= max((0.5 * {t_min}, {t_lim})) |---> ({t_mm - FCA_ml}) >= ({max((0.5 * t_min), t_lim)}) |---> Minimum thickness criteria is -> {minimum_thickness_criteria}'
+        text = f'(t_mm - FCA_ml) >= max((0.5 * t_min), t_lim) |---> ({t_mm} - {FCA_ml}) >= max((0.5 * {t_min}, {t_lim})) |---> ({t_mm - FCA_ml}) >= ({max((0.5 * t_min), t_lim)}) \nMinimum thickness criteria is {minimum_thickness_criteria}'
     else:
         minimum_thickness_criteria = 'failed'
-        text = f'(t_mm - FCA_ml) < max((0.5 * t_min), t_lim) |---> ({t_mm} - {FCA_ml}) < max((0.5 * {t_min}, {t_lim})) |---> ({t_mm - FCA_ml}) < ({max((0.5 * t_min), t_lim)}) |---> Minimum thickness criteria is -> {minimum_thickness_criteria}'
+        text = f'(t_mm - FCA_ml) < max((0.5 * t_min), t_lim) |---> ({t_mm} - {FCA_ml}) < max((0.5 * {t_min}, {t_lim})) |---> ({t_mm - FCA_ml}) < ({max((0.5 * t_min), t_lim)}) \nMinimum thickness criteria is {minimum_thickness_criteria}'
     data = DataCalculated(minimum_thickness_criteria, text)
     return data
 
@@ -358,11 +358,11 @@ def check_minimum_thickness_criteria(t_mm, FCA_ml, t_min, t_lim):
 #     print('MAWP = ', f_MAWP(MAWP_C, MAWP_L))
 #     print('')
 #     print(
-#         f'(t_amS - FCA_ml) >= t_minC |---> ({t_amS} - {FCA_ml}) >= {t_minC} |---> Average longitudinal thickness criteria is -> ',
+#         f'(t_amS - FCA_ml) >= t_minC |---> ({t_amS} - {FCA_ml}) >= {t_minC} |---> Average longitudinal thickness criteria is ',
 #         check_average_longitudinal_thickness_criteria(t_amS, FCA_ml, t_minC))
 #     print('')
 #     print(
-#         f'(t_amC - FCA_ml) >= t_minL |---> ({t_amC} - {FCA_ml}) >= {t_minL} |---> Average circumferential thickness criteria is -> ',
+#         f'(t_amC - FCA_ml) >= t_minL |---> ({t_amC} - {FCA_ml}) >= {t_minL} |---> Average circumferential thickness criteria is ',
 #         check_average_circumferential_thickness_criteria(t_amC, FCA_ml, t_minL))
 #     print('')
 #     print(
@@ -373,9 +373,9 @@ def check_minimum_thickness_criteria(t_mm, FCA_ml, t_min, t_lim):
 #         f'MAWP_rL = (4 * S * E * (t_amC - FCA_ml )) / (D_0 - 4 * Y_B31 * (t_amC - FCA_ml)) = 10 * (4 * {S} * {E} * ({t_amC} - {FCA_ml})) / ({D_0} - 4 * {Y_B31} * ({t_amC} - {FCA_ml})) = ',
 #         f_MAWP_rL(S, E, t_amC, FCA_ml, D_0, Y_B31))
 #     print('')
-#     print(f'min(MAWP_rC,MAWP_rL) > P |---> min({MAWP_rC},{MAWP_rL}) > {P} |---> MAWP criteria is -> ',
+#     print(f'min(MAWP_rC,MAWP_rL) > P |---> min({MAWP_rC},{MAWP_rL}) > {P} |---> MAWP criteria is ',
 #           check_MAWP_criteria(MAWP_rC, MAWP_rL, P))
 #     print('')
 #     print(f't_lim =  ', f_t_lim(t_nom))
 #     print('')
-#     print(f'minimum_thickness_criteria is ->', check_minimum_thickness_criteria(t_mm, FCA_ml, t_min, t_lim))t_min
+#     print(f'minimum_thickness_criteria is', check_minimum_thickness_criteria(t_mm, FCA_ml, t_min, t_lim))t_min
