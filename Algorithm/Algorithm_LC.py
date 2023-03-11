@@ -17,7 +17,7 @@ math_font.font.size = Pt(12)
 
 # input data
 t = 5.49
-pipe_type = 'Seamless'
+pipe_type = 'seamless %'
 M_ut = 12.5
 LOSS = 0
 FCA = 0
@@ -42,7 +42,7 @@ defect_type = 'Local metal loss'
 input_data_text = """
 Input data:
 t = 5.49
-pipe_type = 'Seamless'
+pipe_type = 'seamless %'
 M_ut = 12.5
 LOSS = 0
 FCA = 0
@@ -62,6 +62,7 @@ c = 50
 EL = 1
 EC = 1
 P = 16.5
+defect_type = 'Local metal loss'
 """
 
 paragraph = document.add_paragraph(input_data_text)
@@ -112,11 +113,11 @@ else:
             # step 4 --------------------------------------------------
             document.add_paragraph('STEP 4')
 
-            if defect_type == 'Groove' and lc.check_Groove_flaw_criteria(g_r, R_t, t_c).result == 'failed':
+            if defect_type.lower() == 'groove' and lc.check_Groove_flaw_criteria(g_r, R_t, t_c).result == 'failed':
                 document.add_paragraph(lc.check_Groove_flaw_criteria(g_r, R_t, t_c).text)
-            elif (defect_type == 'Groove' and lc.check_Groove_flaw_criteria(g_r, R_t, t_c).result == 'passed') \
-                                        or (defect_type == 'Local metal loss'):
-                if defect_type == 'Groove' and lc.check_Groove_flaw_criteria(g_r, R_t, t_c).result == 'passed':
+            elif (defect_type.lower() == 'groove' and lc.check_Groove_flaw_criteria(g_r, R_t, t_c).result == 'passed') \
+                                        or (defect_type.lower() == 'local metal loss'):
+                if defect_type.lower() == 'groove' and lc.check_Groove_flaw_criteria(g_r, R_t, t_c).result == 'passed':
                     document.add_paragraph(lc.check_Groove_flaw_criteria(g_r, R_t, t_c).text)
 
                 # Maximum allowable working pressure based on circumferential stress, [bar]
@@ -157,8 +158,9 @@ else:
                 # step 7 --------------------------------------------------
                 document.add_paragraph('STEP 7')
 
-                if lc.check_circumferential_extent_criteria(c, s, EL, EC) == 'failed':
+                if lc.check_circumferential_extent_criteria(c, s, EL, EC).result == 'passed':
                     document.add_paragraph(lc.check_circumferential_extent_criteria(c, s, EL, EC).text)
+
                 else:
                     document.add_paragraph(lc.check_circumferential_extent_criteria(c, s, EL, EC).text)
 
@@ -179,7 +181,9 @@ else:
 
 
 # Save the document
-document.save(os.path.join(directory, "test_report_LC.docx"))
+# document.save(os.path.join(directory, "test_report_LC.docx"))
 
 if __name__ == '__main__':
-    print('file is created')
+    print('program finished')
+
+
