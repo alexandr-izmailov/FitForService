@@ -74,30 +74,30 @@ def f_R_t(t_mm, FCA_ml, t_c):
 def check_R_t(R_t):
     if R_t >= 0.2:
         check_R_t = 'passed'
-        text = f'As R_t >= 0.2 \n{R_t} >= 0.2 |---> R_t check is -> {check_R_t}'
+        text = f'As R_t >= 0.2 \n{R_t} >= 0.2 \nR_t check is {check_R_t}'
     else:
         check_R_t = 'failed'
-        text = f'As R_t < 0.2 \n{R_t} < 0.2 |---> R_t check is -> {check_R_t}'
+        text = f'As R_t < 0.2 \n{R_t} < 0.2 \nR_t check is {check_R_t}'
     data = DataCalculated(check_R_t, text)
     return data
 
 def check_thickness(t_mm, FCA_ml):
     if t_mm - FCA_ml >= 1.3:
         check_thickness = 'passed'
-        text = f'As t_mm - FCA_ml >= 1.3 ---> {t_mm} - {FCA_ml} >= 1.3 \n{t_mm - FCA_ml} >= 1.3  |---> Thickness check is -> {check_thickness}'
+        text = f'As t_mm - FCA_ml >= 1.3 ---> {t_mm} - {FCA_ml} >= 1.3 \n{t_mm - FCA_ml} >= 1.3 \nThickness check is {check_thickness}'
     else:
         check_thickness = 'failed'
-        text = f'As t_mm - FCA_ml < 1.3 ---> {t_mm} - {FCA_ml} < 1.3 \n{t_mm - FCA_ml} < 1.3  |---> Thickness check is -> {check_thickness}'
+        text = f'As t_mm - FCA_ml < 1.3 ---> {t_mm} - {FCA_ml} < 1.3 \n{t_mm - FCA_ml} < 1.3 \nThickness check is {check_thickness}'
     data = DataCalculated(check_thickness, text)
     return data
 
 def check_L_msd_criteria(L_msd, D, t_c):
     if L_msd >= 1.8 * (D * t_c)**(0.5):
         L_msd_criteria = 'passed'
-        text = f'As L_msd >= 1.8 * (D * t_c)^(0.5) ---> {L_msd} >= 1.8 * ({D} * {t_c})**(0.5) \n {L_msd} >= {1.8 * (D * t_c)**(0.5)} |---> L_msd criteria is -> {L_msd_criteria}'
+        text = f'As L_msd >= 1.8 * (D * t_c)^(0.5) ---> {L_msd} >= 1.8 * ({D} * {t_c})**(0.5) \n {L_msd} >= {1.8 * (D * t_c)**(0.5)} \nL_msd criteria is {L_msd_criteria}'
     else:
         L_msd_criteria = 'failed'
-        text = f' As L_msd < 1.8 * (D * t_c)^(0.5) ---> {L_msd} < 1.8 * ({D} * {t_c})**(0.5) \n {L_msd} < {1.8 * (D * t_c) ** (0.5)} |---> L_msd criteria is -> {L_msd_criteria}'
+        text = f' As L_msd < 1.8 * (D * t_c)^(0.5) ---> {L_msd} < 1.8 * ({D} * {t_c})**(0.5) \n {L_msd} < {1.8 * (D * t_c) ** (0.5)} \nL_msd criteria is {L_msd_criteria}'
     data = DataCalculated(L_msd_criteria, text)
     return data
 
@@ -105,10 +105,10 @@ def check_L_msd_criteria(L_msd, D, t_c):
 def check_Groove_flaw_criteria(g_r, R_t, t_c):
     if g_r / ((1 - R_t) * t_c) >= 0.5:
         groove_flaw_criteria = 'passed'
-        text = f'As g_r / ((1 - R_t) * t_c) >= 0.5 ---> {g_r} / ((1 - {R_t}) * {t_c}) >= 0.5 \n{g_r / ((1 - R_t) * t_c)} >= 0.5 |---> Level 1 is {groove_flaw_criteria}'
+        text = f'As g_r / ((1 - R_t) * t_c) >= 0.5 ---> {g_r} / ((1 - {R_t}) * {t_c}) >= 0.5 \n{g_r / ((1 - R_t) * t_c)} >= 0.5 \nLevel 1 is {groove_flaw_criteria}'
     else:
         groove_flaw_criteria = 'failed'
-        text = f'As g_r / ((1 - R_t) * t_c) < 0.5 ---> {g_r} / ((1 - {R_t}) * {t_c}) < 0.5 \n{g_r / ((1 - R_t) * t_c)} < 0.5 |---> Level 1 is {groove_flaw_criteria}'
+        text = f'As g_r / ((1 - R_t) * t_c) < 0.5 ---> {g_r} / ((1 - {R_t}) * {t_c}) < 0.5 \n{g_r / ((1 - R_t) * t_c)} < 0.5 \nLevel 1 is {groove_flaw_criteria}'
     data = DataCalculated(groove_flaw_criteria, text)
     return data
 
@@ -169,25 +169,25 @@ def check_screening_criteria(λ, R_t, RSF_a, M_t):
     if λ <= 0.354:
         if R_t > 0.2:
             screening_criteria = 'acceptable'
-            text = f'As λ <= 0.354 and R_t > 0.2 |---> Screening criteria for Local Metal Loss in a cylindrical shell is -> {screening_criteria}'
+            text = f'As λ <= 0.354 and R_t > 0.2 \nScreening criteria for Local Metal Loss in a cylindrical shell is {screening_criteria}'
         else:
             screening_criteria = 'NOT acceptable'
-            text = f'As λ <= 0.354 but R_t <= 0.2 |---> Screening criteria for Local Metal Loss in a cylindrical shell is -> {screening_criteria}'
+            text = f'As λ <= 0.354 but R_t <= 0.2 \nScreening criteria for Local Metal Loss in a cylindrical shell is {screening_criteria}'
     elif 0.354 < λ and λ < 20:
         R_t_curve = (RSF_a - RSF_a / M_t) * (1.0 - RSF_a / M_t) ** (-1)
         if R_t > R_t_curve:
             screening_criteria = 'acceptable'
-            text = f'As 0.354 < λ < 20 and R_t > (RSF_a - RSF_a / M_t) * (1.0 - RSF_a / M_t)^(-1) ---> {R_t} > ({RSF_a} - {RSF_a} / {M_t}) * (1.0 - {RSF_a} / {M_t})^(-1) \n{R_t} > {R_t_curve} |---> Screening criteria for Local Metal Loss in a cylindrical shell is -> {screening_criteria}'
+            text = f'As 0.354 < λ < 20 and R_t > (RSF_a - RSF_a / M_t) * (1.0 - RSF_a / M_t)^(-1) \n{R_t} > ({RSF_a} - {RSF_a} / {M_t}) * (1.0 - {RSF_a} / {M_t})^(-1) \n{R_t} > {R_t_curve} \nScreening criteria for Local Metal Loss in a cylindrical shell is {screening_criteria}'
         else:
             screening_criteria = 'NOT acceptable'
-            text = f'As 0.354 < λ < 20 and R_t <= (RSF_a - RSF_a / M_t) * (1.0 - RSF_a / M_t)^(-1) ---> {R_t} <= ({RSF_a} - {RSF_a} / {M_t}) * (1.0 - {RSF_a} / {M_t})^(-1) \n{R_t} <= {R_t_curve} |---> Screening criteria for Local Metal Loss in a cylindrical shell is -> {screening_criteria}'
+            text = f'As 0.354 < λ < 20 and R_t <= (RSF_a - RSF_a / M_t) * (1.0 - RSF_a / M_t)^(-1) \n{R_t} <= ({RSF_a} - {RSF_a} / {M_t}) * (1.0 - {RSF_a} / {M_t})^(-1) \n{R_t} <= {R_t_curve} \nScreening criteria for Local Metal Loss in a cylindrical shell is {screening_criteria}'
     elif λ >= 20:
         if R_t > 0.9:
             screening_criteria = 'acceptable'
-            text = f'As λ >= 20 and R_t > 0.9 |---> Screening criteria for Local Metal Loss in a cylindrical shell is -> {screening_criteria}'
+            text = f'As λ >= 20 and R_t > 0.9 \nScreening criteria for Local Metal Loss in a cylindrical shell is {screening_criteria}'
         else:
             screening_criteria = 'NOT acceptable'
-            text = f'As λ >= 20 and R_t <= 0.9 |---> Screening criteria for Local Metal Loss in a cylindrical shell is -> {screening_criteria}'
+            text = f'As λ >= 20 and R_t <= 0.9 \nScreening criteria for Local Metal Loss in a cylindrical shell is {screening_criteria}'
     data = DataCalculated(screening_criteria, text)
     return data
 
@@ -209,10 +209,10 @@ def f_MAWPr(MAWP, RSF, RSF_a):
     """
     if RSF < RSF_a:
         MAWPr = MAWP * (RSF / RSF_a)
-        text = f'As RSF < RSF_a ---> {RSF} < {RSF_a} |---> MAWPr = MAWP * (RSF / RSF_a) =  {MAWP} * ({RSF} / {RSF_a}) = {MAWPr}'
+        text = f'As RSF < RSF_a ---> {RSF} < {RSF_a} \nMAWPr = MAWP * (RSF / RSF_a) =  {MAWP} * ({RSF} / {RSF_a}) = {MAWPr}'
     elif RSF >= RSF_a:
         MAWPr = MAWP
-        text = f'As RSF >= RSF_a ---> {RSF} >= {RSF_a} |---> MAWPr = MAWP = {MAWPr}'
+        text = f'As RSF >= RSF_a ---> {RSF} >= {RSF_a} \nMAWPr = MAWP = {MAWPr}'
     data = DataCalculated(MAWPr, text)
     return data
 
@@ -227,10 +227,10 @@ def check_circumferential_extent_criteria(c, s, EL, EC):
     """
     if c <= 2 * s * (EL / EC):
         circumferential_extent_criteria = 'passed'
-        text = f'As c <= 2 * s * (EL / EC) ---> {c} <= 2 * {s} * ({EL} / {EC}) \n{c} <= {2 * s* (EL / EC)} |---> Circumferential extent of the flaw criteria is -> {circumferential_extent_criteria}'
+        text = f'As c <= 2 * s * (EL / EC) ---> {c} <= 2 * {s} * ({EL} / {EC}) \n{c} <= {2 * s* (EL / EC)} \nCircumferential extent of the flaw criteria is {circumferential_extent_criteria}'
     else:
         circumferential_extent_criteria = 'failed'
-        text = f'As c > 2 * s * (EL / EC) ---> {c} > 2 * {s} * ({EL} / {EC}) \n{c} > {2 * s * (EL / EC)} |---> Circumferential extent of the flaw criteria is -> {circumferential_extent_criteria}'
+        text = f'As c > 2 * s * (EL / EC) ---> {c} > 2 * {s} * ({EL} / {EC}) \n{c} > {2 * s * (EL / EC)} \nCircumferential extent of the flaw criteria is {circumferential_extent_criteria}'
     data = DataCalculated(circumferential_extent_criteria, text)
     return data
 
@@ -253,10 +253,10 @@ def check_minimum_thickness_required_criteria(t_minL, t_mm, FCA_ml):
     """
     if t_minL <= t_mm - FCA_ml:
         minimum_thickness_required_criteria = 'passed'
-        text = f'As t_minL <= t_mm - FCA_ml --> {t_minL} <= {t_mm} - {FCA_ml} \n{t_minL} <= {t_mm - FCA_ml} |--->  Minimum thickness required for longitudinal stresses criteria is -> {minimum_thickness_required_criteria}'
+        text = f'As t_minL <= t_mm - FCA_ml --> {t_minL} <= {t_mm} - {FCA_ml} \n{t_minL} <= {t_mm - FCA_ml} \nMinimum thickness required for longitudinal stresses criteria is {minimum_thickness_required_criteria}'
     else:
         minimum_thickness_required_criteria = 'failed'
-        text = f'As t_minL > t_mm - FCA_ml --> {t_minL} > {t_mm} - {FCA_ml} \n{t_minL} > {t_mm - FCA_ml} |--->  Minimum thickness required for longitudinal stresses criteria is -> {minimum_thickness_required_criteria}'
+        text = f'As t_minL > t_mm - FCA_ml --> {t_minL} > {t_mm} - {FCA_ml} \n{t_minL} > {t_mm - FCA_ml} \nMinimum thickness required for longitudinal stresses criteria is {minimum_thickness_required_criteria}'
     data = DataCalculated(minimum_thickness_required_criteria, text)
     return data
 
