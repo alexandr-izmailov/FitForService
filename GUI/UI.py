@@ -1,8 +1,8 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QComboBox, QVBoxLayout, QHBoxLayout, QLineEdit
 from PyQt5 import QtCore,  QtWidgets
-from Tabs.TabGC import TabGC
-from Tabs.TabLC import TabLC
+from GUI.Tabs.TabGC import TabGC
+from GUI.Tabs.TabLC import TabLC
 
 class UI(QWidget):
     def __init__(self):
