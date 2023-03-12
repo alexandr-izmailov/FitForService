@@ -1,39 +1,94 @@
-from GeneralCorrosionMethod import GeneralCorrosionMethod as g
+import GeneralCorrosionMethod as g
 from Document.DocumentProccess import adjust_document, save_new_report_file
 
-# Set the directory where the file should be saved
-directory = r"..\reports"
-
-def gc_algorithm():
+def gc_algorithm(gc_input):
     document = adjust_document()
 
     passing_text_line = 'Fitness for Service Level 1 criteria passed'
     failing_text_line = "Fitness for Service Level 1 criteria failed"
+    short_report_list = list()
+
+    # # input data
+    # t = 3.7592
+    # pipe_type = 'user defined %'
+    # M_ut = 0
+    # FCA_ml = 0.14
+    # LOSS = 0
+    # FCA = 0
+    # type_of_wall_loss = 'external'
+    # t_mm = 3.13
+    # RSF_a = 0.9
+    #
+    # P = 30
+    # S = 137.9
+    # D_0 = 150
+    # E = 1
+    # Y_B31 = 0.4
+    # MA = 0
+    # t_sl = 0
+    # t_amS = 3.13
+    # t_amC = 3.13
 
     # input data
-    t = 3.7592
-    pipe_type = 'user defined %'
-    M_ut = 0
-    FCA_ml = 0.14
-    LOSS = 0
-    FCA = 0
-    type_of_wall_loss = 'external'
-    t_mm = 3.13
-    RSF_a = 0.9
+    asset = gc_input.asset
+    line_number = gc_input.line_number
+    monitoring_location = gc_input.monitoring_location
+    type_of_wall_loss = gc_input.wall_loss_type
+    material = gc_input.material
+    steel_type = gc_input.steel_type
+    temperature = gc_input.temperature
+    S = gc_input.stress
+    nominal_pipe_size = gc_input.nominal_pipe_size
+    D_0 = gc_input.outside_diameter
+    schedule = gc_input.schedule
+    t = gc_input.thickness
+    pipe_type = gc_input.pipe_type
+    M_ut = gc_input.mill_under_tolerance
+    P = gc_input.P
+    Y_B31 = gc_input.Y_B31
+    E = gc_input.E
+    RSF_a = gc_input.RSF_a
+    MA = gc_input.MA
+    t_sl = gc_input.t_sl
+    LOSS = gc_input.LOSS
+    FCA = gc_input.FCA
+    FCA_ml = gc_input.FCA_ml
+    NDE_type = gc_input.NDE_type
+    t_mm = gc_input.t_mm
+    t_amS = gc_input.t_amS
+    t_amC = gc_input.t_amC
 
-    P = 30
-    S = 137.9
-    D_0 = 150
-    E = 1
-    Y_B31 = 0.4
-    MA = 0
-    t_sl = 0
-    t_amS = 3.13
-    t_amC = 3.13
 
-    input_data_text = ""
-    short_report_text = ""
-    short_report_list = list()
+    input_data_text = f""" 
+    Input Data:
+    Asset: {asset}
+    Line number: {line_number}
+    Corrosion Monitoring Location: {monitoring_location}
+    Type of wall loss: {type_of_wall_loss}
+    Material: {material}
+    steel_type: {steel_type}
+    temperature: {temperature} [°C]
+    S: {S} [MPa]
+    nominal_pipe_size: {nominal_pipe_size}
+    D_0: {D_0} [mm]
+    schedule: {schedule}
+    Wall thickness, t: {t} [mm]
+    pipe_type: {pipe_type}
+    M_ut: {M_ut}
+    Internal design pressure, P: {P} [bar]
+    Y_B31: {Y_B31}
+    E: {E}
+    RSF_a: {RSF_a}
+    MA: {MA} [mm]
+    t_sl: {t_sl} [mm]
+    LOSS: {LOSS} [mm]
+    FCA: {FCA} [mm]
+    FCA_ml: {FCA_ml} [mm]
+    NDE_type: {NDE_type}
+    t_mm: {t_mm} [mm]
+    t_amS: {t_amS} [mm]
+    t_amC: {t_amC} [mm]
+    """
 
     document.add_paragraph(input_data_text)
 
@@ -207,6 +262,8 @@ def gc_algorithm():
     return short_report_text, document
 
 if __name__ == '__main__':
+    directory = r"..\reports"
+
     short_report_text, document = gc_algorithm()
     save_new_report_file(directory, document, gc_or_lc = 'GC')
     print(short_report_text)
