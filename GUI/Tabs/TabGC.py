@@ -1,7 +1,7 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QComboBox, QVBoxLayout, QHBoxLayout, QLineEdit, QPushButton
 from PyQt5 import QtCore
-from Tabs.CommonObjects import CommonObjects
+from GUI.Tabs.CommonObjects import CommonObjects
 
 class TabGC(CommonObjects):
     def __init__(self):
