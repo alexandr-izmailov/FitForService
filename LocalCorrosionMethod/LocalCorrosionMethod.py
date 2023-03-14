@@ -9,11 +9,11 @@ class LocalCorrosionClass:
         """
         if pipe_type.lower() in ('seamless %', 'user defined %'):
             t_nom = t * (1 - M_ut / 100)
-            text = f't_nom = t * (1 - M_ut / 100) = {round(t,2)} * (1 - {round(M_ut,2)} / 100) = {round(t_nom,2)}'
+            text = f't_nom = t * (1 - M_ut / 100) = {round(t,2)} * (1 - {round(M_ut,2)} / 100) = {round(t_nom,2)}  [mm]'
             data = DataCalculated(t_nom, text)
         elif pipe_type.lower() in ('welded mm', 'user defined mm'):
             t_nom = t - M_ut
-            text = f't_nom = t - M_ut = {round(t,2)} - {round(M_ut,2)} = {round(t_nom,2)}'
+            text = f't_nom = t - M_ut = {round(t,2)} - {round(M_ut,2)} = {round(t_nom,2)}  [mm]'
             data = DataCalculated(t_nom, text)
         return data
 
@@ -26,7 +26,7 @@ class LocalCorrosionClass:
         t_c - Future corroded wall thickness away from the damage area, [mm]
         """
         t_c = t_nom - LOSS - FCA
-        text = f't_c = t_nom - LOSS - FCA = {round(t_nom,2)} - {round(LOSS,2)} - {round(FCA,2)} = {round(t_c,2)}'
+        text = f't_c = t_nom - LOSS - FCA = {round(t_nom,2)} - {round(LOSS,2)} - {round(FCA,2)} = {round(t_c,2)}  [mm]'
         data = DataCalculated(t_c, text)
         return data
 
@@ -39,7 +39,7 @@ class LocalCorrosionClass:
         D - Inside diameter of the cylinder, cone (at the location of the flaw), [mm]
         """
         D = D_0 - 2 * t_nom
-        text = f'D = D_0 - 2 * t_nom = {round(D_0,2)} - 2 * {round(t_nom,2)} = {round(D,2)}'
+        text = f'D = D_0 - 2 * t_nom = {round(D_0,2)} - 2 * {round(t_nom,2)} = {round(D,2)}  [mm]'
         data = DataCalculated(D, text)
         return data
 
@@ -118,7 +118,7 @@ class LocalCorrosionClass:
         Maximum allowable working pressure based on circumferential stress, [bar]
         """
         MAWP_C = 10 * (2 * S * E * (t_c - MA)) / (D_0 - 2 * Y_B31 * (t_c - MA))
-        text = f'MAWP_C = (2 * S * E * (t_c - MA)) / (D_0 - 2 * Y_B31 * (t_c - MA)) = 10 * (2 * {round(S,2)} * {round(E,2)} * ({round(t_c,2)} - {round(MA,2)})) / ({round(D_0,2)} - 2 * {round(Y_B31,2)} * ({round(t_c,2)} - {round(MA,2)})) = {round(MAWP_C,2)}'
+        text = f'MAWP_C = (2 * S * E * (t_c - MA)) / (D_0 - 2 * Y_B31 * (t_c - MA)) = 10 * (2 * {round(S,2)} * {round(E,2)} * ({round(t_c,2)} - {round(MA,2)})) / ({round(D_0,2)} - 2 * {round(Y_B31,2)} * ({round(t_c,2)} - {round(MA,2)})) = {round(MAWP_C,2)}  [bar]'
         data = DataCalculated(MAWP_C, text,)
         return data
 
@@ -130,7 +130,7 @@ class LocalCorrosionClass:
         Maximum allowable working pressure based on longitudinal stress, [bar]
         """
         MAWP_L = 10 * (4 * S * E * (t_c - t_sl - MA)) / (D_0 - 4 * Y_B31 * (t_c - t_sl - MA))
-        text = f'MAWP_L = (4 * S * E * (t_c - t_c - t_sl - MA)) / (D_0 - 4 * Y_B31 * (t_c - t_sl - MA)) = 10 * (4 * {round(S,2)} * {round(E,2)} * ({round(t_c,2)} - {round(t_sl,2)} - {round(MA,2)})) / ({round(D_0,2)} - 4 * {round(Y_B31,2)} * ({round(t_c,2)} - {round(t_sl,2)} - {round(MA,2)})) = {round(MAWP_L,2)}'
+        text = f'MAWP_L = (4 * S * E * (t_c - t_c - t_sl - MA)) / (D_0 - 4 * Y_B31 * (t_c - t_sl - MA)) = 10 * (4 * {round(S,2)} * {round(E,2)} * ({round(t_c,2)} - {round(t_sl,2)} - {round(MA,2)})) / ({round(D_0,2)} - 4 * {round(Y_B31,2)} * ({round(t_c,2)} - {round(t_sl,2)} - {round(MA,2)})) = {round(MAWP_L,2)}  [bar]'
         data = DataCalculated(MAWP_L, text)
         return data
 
@@ -142,7 +142,7 @@ class LocalCorrosionClass:
         Maximum allowable working pressure, [bar]
         """
         MAWP = min(MAWP_C, MAWP_L)
-        text = f'MAWP = min(MAWP_C; MAWP_L) = min({round(MAWP_C,2)}; {round(MAWP_L,2)}) = {round(MAWP,2)}'
+        text = f'MAWP = min(MAWP_C; MAWP_L) = min({round(MAWP_C,2)}; {round(MAWP_L,2)}) = {round(MAWP,2)}  [bar]'
         data = DataCalculated(MAWP, text)
         return data
 
@@ -209,10 +209,10 @@ class LocalCorrosionClass:
         """
         if RSF < RSF_a:
             MAWPr = MAWP * (RSF / RSF_a)
-            text = f'As RSF < RSF_a ---> {round(RSF,2)} < {round(RSF_a,2)} \nMAWPr = MAWP * (RSF / RSF_a) =  {round(MAWP,2)} * ({round(RSF,2)} / {round(RSF_a,2)}) = {round(MAWPr,2)}'
+            text = f'As RSF < RSF_a ---> {round(RSF,2)} < {round(RSF_a,2)} \nMAWPr = MAWP * (RSF / RSF_a) =  {round(MAWP,2)} * ({round(RSF,2)} / {round(RSF_a,2)}) = {round(MAWPr,2)} [bar]'
         elif RSF >= RSF_a:
             MAWPr = MAWP
-            text = f'As RSF >= RSF_a ---> {round(RSF,2)} >= {round(RSF_a,2)} \nMAWPr = MAWP = {round(MAWPr,2)}'
+            text = f'As RSF >= RSF_a ---> {round(RSF,2)} >= {round(RSF_a,2)} \nMAWPr = MAWP = {round(MAWPr,2)} [bar]'
         data = DataCalculated(MAWPr, text)
         return data
 
@@ -237,10 +237,10 @@ class LocalCorrosionClass:
     def f_t_minL(self, MAWPr, D_0, S, E, P, Y_B31, t_sl, MA):
         """
         Minimum required thickness for the component based on equipment design pressure or
-        equipment MAWP for longitudinal stresses
+        equipment MAWP for longitudinal stresses [mm]
         """
         t_minL = MAWPr * (D_0/10) / (4 * (S * E + P * (Y_B31/10))) + t_sl + MA
-        text = f't_minL = MAWPr * D_0 / (4 * (S * E + P * Y_B31)) + t_sl + MA = {round(MAWPr,2)} * ({round(D_0,2)}/10) / (4 * ({round(S,2)} * {round(E,2)} + {round(P,2)} * ({round(Y_B31,2)}/10))) + {round(t_sl,2)} + {round(MA,2)} = {round(t_minL,2)}'
+        text = f't_minL = MAWPr * D_0 / (4 * (S * E + P * Y_B31)) + t_sl + MA = {round(MAWPr,2)} * ({round(D_0,2)}/10) / (4 * ({round(S,2)} * {round(E,2)} + {round(P,2)} * ({round(Y_B31,2)}/10))) + {round(t_sl,2)} + {round(MA,2)} = {round(t_minL,2)}  [mm]'
         data = DataCalculated(t_minL, text)
         return data
 
@@ -265,7 +265,7 @@ class LocalCorrosionClass:
         MAWRr reduction, [bar]
         """
         MAWPr_new = MAWPr * (t_mm - FCA_ml) / t_minL
-        text = f'MAWPr_new = MAWPr * (t_mm - FCA_ml) / t_minL = {round(MAWPr,2)} * ({round(t_mm,2)} - {round(FCA_ml,2)}) / {round(t_minL,2)} = {round(MAWPr_new,2)}'
+        text = f'MAWPr_new = MAWPr * (t_mm - FCA_ml) / t_minL = {round(MAWPr,2)} * ({round(t_mm,2)} - {round(FCA_ml,2)}) / {round(t_minL,2)} = {round(MAWPr_new,2)}  [bar]'
         data = DataCalculated(MAWPr_new, text)
         return data
 

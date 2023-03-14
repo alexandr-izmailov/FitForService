@@ -9,11 +9,11 @@ class GeneralCorrosionClass:
         """
         if pipe_type.lower() in ('seamless %', 'user defined %'):
             t_nom = t * (1 - M_ut / 100)
-            text = f't_nom = t * (1 - M_ut / 100) = {round(t,2)} * (1 - {round(round(M_ut, 2),2)} / 100) = {round(round(t_nom,2),2)}'
+            text = f't_nom = t * (1 - M_ut / 100) = {round(t,2)} * (1 - {round(round(M_ut, 2),2)} / 100) = {round(round(t_nom,2),2)} [mm]'
             data = DataCalculated(t_nom, text)
         elif pipe_type.lower() in ('welded mm', 'user defined mm'):
             t_nom = t - M_ut
-            text = f't_nom = t - M_ut = {round(t,2)} - {round(M_ut,2)} = {round(t_nom,2)}'
+            text = f't_nom = t - M_ut = {round(t,2)} - {round(M_ut,2)} = {round(t_nom,2)} [mm]'
             data = DataCalculated(t_nom, text)
         return data
 
@@ -28,7 +28,7 @@ class GeneralCorrosionClass:
         t_ml - Nominal thickness in the region of corrosion corrected FCA_ml, [mm]
         """
         t_ml = t_nom - FCA_ml
-        text = f't_ml = t_nom - FCA_ml = {round(t_nom,2)} - {round(FCA_ml,2)} = {round(t_ml,2)}'
+        text = f't_ml = t_nom - FCA_ml = {round(t_nom,2)} - {round(FCA_ml,2)} = {round(t_ml,2)} [mm]'
         data = DataCalculated(t_ml, text)
         return data
 
@@ -43,7 +43,7 @@ class GeneralCorrosionClass:
         t_c - Future corroded wall thickness away from the damage area, [mm]
         """
         t_c = t_nom - LOSS - FCA
-        text = f't_c = t_nom - LOSS - FCA = {round(t_nom,2)} - {round(LOSS,2)} - {round(FCA,2)} = {round(t_c,2)}'
+        text = f't_c = t_nom - LOSS - FCA = {round(t_nom,2)} - {round(LOSS,2)} - {round(FCA,2)} = {round(t_c,2)} [mm]'
         data = DataCalculated(t_c, text)
         return data
 
@@ -58,7 +58,7 @@ class GeneralCorrosionClass:
         D - Inside diameter of the cylinder, cone (at the location of the flaw), [mm]
         """
         D = D_0 - 2 * t_nom
-        text = f'D = D_0 - 2 * t_nom = {round(D_0,2)} - 2 * {round(t_nom,2)} = {round(D,2)}'
+        text = f'D = D_0 - 2 * t_nom = {round(D_0,2)} - 2 * {round(t_nom,2)} = {round(D,2)} [mm]'
         data = DataCalculated(D, text)
         return data
 
@@ -74,11 +74,11 @@ class GeneralCorrosionClass:
         """
         if type_of_wall_loss == 'internal':
             D_ml = D + 2 * FCA_ml
-            text = f'D_ml = D + 2 * FCA_ml = {round(D,2)} + 2 * {round(FCA_ml,2)} = {round(D_ml,2)}'
+            text = f'D_ml = D + 2 * FCA_ml = {round(D,2)} + 2 * {round(FCA_ml,2)} = {round(D_ml,2)} [mm]'
             data = DataCalculated(D_ml, text)
         elif type_of_wall_loss == 'external':
             D_ml = D
-            text = f'D_ml = D = {round(D,2)} = {round(D_ml,2)}'
+            text = f'D_ml = D = {round(D,2)} = {round(D_ml,2)} [mm]'
             data = DataCalculated(D_ml, text)
         return data
 
@@ -131,7 +131,7 @@ class GeneralCorrosionClass:
         Length for thickness averaging L, [mm]
         """
         L = Q * (D_ml * t_ml) ** 0.5
-        text = f'L = Q * (D_ml * t_ml) ^ 0.5 = {round(Q,2)} * ({round(D_ml,2)} * {round(t_ml,2)}) ^ 0.5 = {round(L,2)}'
+        text = f'L = Q * (D_ml * t_ml) ^ 0.5 = {round(Q,2)} * ({round(D_ml,2)} * {round(t_ml,2)}) ^ 0.5 = {round(L,2)} [mm]'
         data = DataCalculated(L, text)
         return data
 
@@ -145,7 +145,7 @@ class GeneralCorrosionClass:
         circumferential stress, [mm]
         """
         t_minC = (P * D_0 / 10) / (2 * (S * E + P / 10 * Y_B31)) + MA
-        text = f't_minC = (P * D_0) / (2 * (S * E + P * Y_B31)) + MA = ({round(P,2)} * {round(D_0,2)} / 10) / (2 * ({round(S,2)} * {round(E,2)} + {round(P,2)} / 10 * {round(Y_B31,2)})) + {round(MA,2)} = {round(P,2)}'
+        text = f't_minC = (P * D_0) / (2 * (S * E + P * Y_B31)) + MA = ({round(P,2)} * {round(D_0,2)} / 10) / (2 * ({round(S,2)} * {round(E,2)} + {round(P,2)} / 10 * {round(Y_B31,2)})) + {round(MA,2)} = {round(P,2)} [mm]'
         data = DataCalculated(t_minC, text)
         return data
 
@@ -160,7 +160,7 @@ class GeneralCorrosionClass:
         longitudinal stress, [mm]
         """
         t_minL = (P * D_0 / 10) / (4 * (S * E + P / 10 * Y_B31)) + t_sl + MA
-        text = f't_minL = (P * D_0) / (4 * (S * E + P * Y_B31)) + t_sl + MA = ({round(P,2)} * {round(D_0,2)} / 10) / (4 * ({round(S,2)} * {round(E,2)} + {round(P,2)} / 10 * {round(Y_B31,2)})) + {round(t_minL,2)} = {round(t_minL,2)}'
+        text = f't_minL = (P * D_0) / (4 * (S * E + P * Y_B31)) + t_sl + MA = ({round(P,2)} * {round(D_0,2)} / 10) / (4 * ({round(S,2)} * {round(E,2)} + {round(P,2)} / 10 * {round(Y_B31,2)})) + {round(t_minL,2)} = {round(t_minL,2)} [mm]'
         data = DataCalculated(t_minL, text)
         return data
 
@@ -174,7 +174,7 @@ class GeneralCorrosionClass:
         Minimum required thickness , [mm]
         """
         t_min = max(t_minC, t_minL)
-        text = f't_min = max(t_minC; t_minL) = max({round(t_minC,2)}; {round(t_minL,2)}) = {round(t_min,2)}'
+        text = f't_min = max(t_minC; t_minL) = max({round(t_minC,2)}; {round(t_minL,2)}) = {round(t_min,2)} [mm]'
         data = DataCalculated(t_min, text)
         return data
 
@@ -189,7 +189,7 @@ class GeneralCorrosionClass:
         Maximum allowable working pressure based on circumferential stress, [bar]
         """
         MAWP_C = 10 * (2 * S * E * (t_c - MA)) / (D_0 - 2 * Y_B31 * (t_c - MA))
-        text = f'MAWP_C = (2 * S * E * (t_c - MA)) / (D_0 - 2 * Y_B31 * (t_c - MA)) = 10 * (2 * {round(S,2)} * {round(E,2)} * ({round(t_c,2)} - {round(MA,2)})) / ({round(D_0,2)} - 2 * {round(Y_B31,2)} * ({round(t_c,2)} - {round(MA,2)})) = {round(MAWP_C,2)}'
+        text = f'MAWP_C = (2 * S * E * (t_c - MA)) / (D_0 - 2 * Y_B31 * (t_c - MA)) = 10 * (2 * {round(S,2)} * {round(E,2)} * ({round(t_c,2)} - {round(MA,2)})) / ({round(D_0,2)} - 2 * {round(Y_B31,2)} * ({round(t_c,2)} - {round(MA,2)})) = {round(MAWP_C,2)} [bar]'
         data = DataCalculated(MAWP_C, text,)
         return data
 
@@ -203,7 +203,7 @@ class GeneralCorrosionClass:
         Maximum allowable working pressure based on longitudinal stress, [bar]
         """
         MAWP_L = 10 * (4 * S * E * (t_c - t_sl - MA)) / (D_0 - 4 * Y_B31 * (t_c - t_sl - MA))
-        text = f'MAWP_L = (4 * S * E * (t_c - t_c - t_sl - MA)) / (D_0 - 4 * Y_B31 * (t_c - t_sl - MA)) = 10 * (4 * {round(S,2)} * {round(E,2)} * ({round(t_c,2)} - {round(t_sl,2)} - {round(MA,2)})) / ({round(D_0,2)} - 4 * {round(Y_B31,2)} * ({round(t_c,2)} - {round(t_sl,2)} - {round(MA,2)})) = {round(MAWP_L,2)}'
+        text = f'MAWP_L = (4 * S * E * (t_c - t_c - t_sl - MA)) / (D_0 - 4 * Y_B31 * (t_c - t_sl - MA)) = 10 * (4 * {round(S,2)} * {round(E,2)} * ({round(t_c,2)} - {round(t_sl,2)} - {round(MA,2)})) / ({round(D_0,2)} - 4 * {round(Y_B31,2)} * ({round(t_c,2)} - {round(t_sl,2)} - {round(MA,2)})) = {round(MAWP_L,2)} [bar]'
         data = DataCalculated(MAWP_L, text)
         return data
 
@@ -217,7 +217,7 @@ class GeneralCorrosionClass:
         Maximum allowable working pressure, [bar]
         """
         MAWP = min(MAWP_C, MAWP_L)
-        text = f'MAWP = min(MAWP_C; MAWP_L) = min({round(MAWP_C,2)}; {round(MAWP_L,2)}) = {round(MAWP,2)}'
+        text = f'MAWP = min(MAWP_C; MAWP_L) = min({round(MAWP_C,2)}; {round(MAWP_L,2)}) = {round(MAWP,2)} [bar]'
         data = DataCalculated(MAWP, text)
         return data
 
@@ -261,7 +261,7 @@ class GeneralCorrosionClass:
         circumferential or hoop direction, [bar]
         """
         MAWP_rC = 10 * (2 * S * E * (t_amS - FCA_ml)) / (D_0 - 2 * Y_B31 * (t_amS - FCA_ml))
-        text = f'MAWP_rC = (2 * S * E * (t_amS - FCA_ml)) / (D_0 - 2 * Y_B31 * (t_amS - FCA_ml)) = 10 * (2 * {round(S,2)} * {round(E,2)} * ({round(t_amS,2)} - {round(FCA_ml,2)})) / ({round(D_0,2)} - 2 * {round(Y_B31,2)} * ({round(t_amS,2)} - {round(FCA_ml,2)})) = {round(MAWP_rC,2)}'
+        text = f'MAWP_rC = (2 * S * E * (t_amS - FCA_ml)) / (D_0 - 2 * Y_B31 * (t_amS - FCA_ml)) = 10 * (2 * {round(S,2)} * {round(E,2)} * ({round(t_amS,2)} - {round(FCA_ml,2)})) / ({round(D_0,2)} - 2 * {round(Y_B31,2)} * ({round(t_amS,2)} - {round(FCA_ml,2)})) = {round(MAWP_rC,2)} [bar]'
         data = DataCalculated(MAWP_rC, text)
         return data
 
@@ -275,7 +275,7 @@ class GeneralCorrosionClass:
         longitudinal direction, [bar]
         """
         MAWP_rL = 10 * (4 * S * E * (t_amC - FCA_ml)) / (D_0 - 4 * Y_B31 * (t_amC - FCA_ml))
-        text = f'MAWP_rL = (4 * S * E * (t_amC - FCA_ml )) / (D_0 - 4 * Y_B31 * (t_amC - FCA_ml)) = 10 * (4 * {round(S,2)} * {round(E,2)} * ({round(t_amC,2)} - {round(FCA_ml,2)})) / ({round(D_0,2)} - 4 * {round(Y_B31,2)} * ({round(t_amC,2)} - {round(FCA_ml,2)})) = {round(MAWP_rL,2)}'
+        text = f'MAWP_rL = (4 * S * E * (t_amC - FCA_ml )) / (D_0 - 4 * Y_B31 * (t_amC - FCA_ml)) = 10 * (4 * {round(S,2)} * {round(E,2)} * ({round(t_amC,2)} - {round(FCA_ml,2)})) / ({round(D_0,2)} - 4 * {round(Y_B31,2)} * ({round(t_amC,2)} - {round(FCA_ml,2)})) = {round(MAWP_rL,2)} [bar]'
         data = DataCalculated(MAWP_rL, text)
         return data
 
@@ -305,10 +305,10 @@ class GeneralCorrosionClass:
         """
         if (0.2 * t_nom) > 1.3:
             t_lim = 0.2 * t_nom
-            text = f't_lim  = max(0.2  *  t_nom; 1.3) |---> t_lim = max(0.2  *  {round(t_nom,2)}; 1.3) |---> t_lim = {round(t_lim,2)}'
+            text = f't_lim  = max(0.2  *  t_nom; 1.3) |---> t_lim = max(0.2  *  {round(t_nom,2)}; 1.3) |---> t_lim = {round(t_lim,2)} [mm]'
         else:
             t_lim = 1.3
-            text = f't_lim  = max(0.2  *  t_nom; 1.3) |---> t_lim = max(0.2  *  {round(t_nom,2)}; 1.3) |---> t_lim = {round(t_lim,2)}'
+            text = f't_lim  = max(0.2  *  t_nom; 1.3) |---> t_lim = max(0.2  *  {round(t_nom,2)}; 1.3) |---> t_lim = {round(t_lim,2)} [mm]'
         data = DataCalculated(t_lim, text)
         return data
 
