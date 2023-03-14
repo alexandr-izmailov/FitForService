@@ -12,8 +12,9 @@ class ShortReportWindow(QMainWindow):
         # Set the window icon
         self.setWindowIcon(QIcon('Icons\icon_240_240.png'))
         self.setWindowTitle('Calculations')
-        self.resize(1200, 400)
-        self.setMaximumSize(1300, 1000)
+        self.resize(900, 400)
+        self.setMaximumSize(1100, 700)
+        self.setMinimumSize(700, 300)
 
         # Create a central widget for the main window
         central_widget = QWidget(self)
