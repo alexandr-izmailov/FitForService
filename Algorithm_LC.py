@@ -38,7 +38,6 @@ def lc_algorithm(lc_input):
     asset = lc_input.asset
     line_number = lc_input.line_number
     monitoring_location = lc_input.monitoring_location
-    type_of_wall_loss = lc_input.wall_loss_type
     material = lc_input.material
     steel_type = lc_input.steel_type
     temperature = lc_input.temperature
@@ -72,7 +71,6 @@ def lc_algorithm(lc_input):
 Asset: {asset}
 Line number: {line_number}
 Corrosion Monitoring Location: {monitoring_location}
-Type of wall loss: {type_of_wall_loss}
 Material: {material}
 steel_type: {steel_type}
 temperature: {temperature} [°C]
