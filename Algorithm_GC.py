@@ -1,7 +1,17 @@
-import GeneralCorrosionMethod as g
-from Document.DocumentProccess import adjust_document, save_new_report_file
+from  GeneralCorrosionMethod.GeneralCorrosionMethod import GeneralCorrosionClass
+from Document.DocumentProccess import adjust_document
+
+
+# def f_test(self):
+#     t = 3.7592
+#     pipe_type = 'user defined %'
+#     M_ut = 0
+#     g = GeneralCorrosionClass()
+#     return g.f_t_nom(pipe_type, t, M_ut).result
 
 def gc_algorithm(gc_input):
+
+    g = GeneralCorrosionClass()
     document = adjust_document()
 
     passing_text_line = 'Fitness for Service Level 1 criteria passed'
@@ -59,35 +69,34 @@ def gc_algorithm(gc_input):
     t_amC = gc_input.t_amC
 
 
-    input_data_text = f""" 
-    Input Data:
-    Asset: {asset}
-    Line number: {line_number}
-    Corrosion Monitoring Location: {monitoring_location}
-    Type of wall loss: {type_of_wall_loss}
-    Material: {material}
-    steel_type: {steel_type}
-    temperature: {temperature} [°C]
-    S: {S} [MPa]
-    nominal_pipe_size: {nominal_pipe_size}
-    D_0: {D_0} [mm]
-    schedule: {schedule}
-    Wall thickness, t: {t} [mm]
-    pipe_type: {pipe_type}
-    M_ut: {M_ut}
-    Internal design pressure, P: {P} [bar]
-    Y_B31: {Y_B31}
-    E: {E}
-    RSF_a: {RSF_a}
-    MA: {MA} [mm]
-    t_sl: {t_sl} [mm]
-    LOSS: {LOSS} [mm]
-    FCA: {FCA} [mm]
-    FCA_ml: {FCA_ml} [mm]
-    NDE_type: {NDE_type}
-    t_mm: {t_mm} [mm]
-    t_amS: {t_amS} [mm]
-    t_amC: {t_amC} [mm]
+    input_data_text = f"""Input Data:
+Asset: {asset}
+Line number: {line_number}
+Corrosion Monitoring Location: {monitoring_location}
+Type of wall loss: {type_of_wall_loss}
+Material: {material}
+steel_type: {steel_type}
+temperature: {temperature} [°C]
+S: {S} [MPa]
+nominal_pipe_size: {nominal_pipe_size}
+D_0: {D_0} [mm]
+schedule: {schedule}
+Wall thickness, t: {t} [mm]
+pipe_type: {pipe_type}
+M_ut: {M_ut}
+Internal design pressure, P: {P} [bar]
+Y_B31: {Y_B31}
+E: {E}
+RSF_a: {RSF_a}
+MA: {MA} [mm]
+t_sl: {t_sl} [mm]
+LOSS: {LOSS} [mm]
+FCA: {FCA} [mm]
+FCA_ml: {FCA_ml} [mm]
+NDE_type: {NDE_type}
+t_mm: {t_mm} [mm]
+t_amS: {t_amS} [mm]
+t_amC: {t_amC} [mm]
     """
 
     document.add_paragraph(input_data_text)
@@ -97,7 +106,7 @@ def gc_algorithm(gc_input):
     # step 1 ----------------------------------------------------------------
     document.add_paragraph('STEP 1')
 
-    # Nominal or furnished thickness of the component adjusted for mill undertolerance as applicable, [mm]
+    # Nominal or furnished thickness of the component adjusted for mill under tolerance as applicable, [mm]
     t_nom = g.f_t_nom(pipe_type, t, M_ut).result
     document.add_paragraph(g.f_t_nom(pipe_type, t, M_ut).text)
 
@@ -263,7 +272,9 @@ def gc_algorithm(gc_input):
 
 if __name__ == '__main__':
     directory = r"..\reports"
+    # print(f_test())
+    #
+    # short_report_text, document = gc_algorithm({None:None})
+    # save_new_report_file(directory, document, gc_or_lc = 'GC')
+    # print(short_report_text)
 
-    short_report_text, document = gc_algorithm()
-    save_new_report_file(directory, document, gc_or_lc = 'GC')
-    print(short_report_text)

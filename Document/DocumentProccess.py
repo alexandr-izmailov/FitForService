@@ -17,7 +17,9 @@ def adjust_document():
 def save_new_report_file(directory, document:Document(), gc_or_lc = ''):
     # Find all docx files in the directory
     any_files = os.listdir(directory)
+    print('any files are ', any_files)
     files = [f for f in any_files if f.endswith('.docx') and f.startswith(f'report_{gc_or_lc}')]
+    print('files are ',files)
 
     # If no files found, create new file with v0001 suffix
     if not files:

@@ -1,12 +1,19 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QComboBox, QVBoxLayout, QHBoxLayout
-from Classes.DataLayer import DataLayer, InputDataStaging, LatestInputData
+from PyQt5.QtWidgets import QApplication, QWidget, QFileDialog
+from PyQt5.QtGui import QIcon
 from GUI.UI import UI
+from GUI.ShortReportWindow import ShortReportWindow
 from GUI.WarningDialog import WarningDialog
+from Classes.DataLayer import DataLayer, InputDataStaging, LatestInputData
+from Algorithm_GC import gc_algorithm
+from Algorithm_LC import lc_algorithm
+from Document.DocumentProccess import save_new_report_file
 
 class App(QWidget):
     def __init__(self):
         super().__init__()
+
+        self.directory_for_report = ''
 
         # LOADING DATA
         # =================================================================
@@ -15,8 +22,10 @@ class App(QWidget):
         # FULFILLING comboBoxes initially
         # =================================================================
         self.ui = UI()
-        self.add_items()
+        self.ui.setWindowIcon(QIcon('Icons\icon_240_240.png'))
         self.warning_dialog = WarningDialog()
+        # self.gc_algorithm = Algorithm_GC.gc_algorithm
+        self.add_items()
 
         # HANDLING comboBoxes
         # =================================================================
@@ -75,8 +84,28 @@ class App(QWidget):
         self.ui.tab_gc.pb_load_latest_input.clicked.connect(self.load_latest_input_data)
         self.ui.tab_lc.pb_load_latest_input.clicked.connect(self.load_latest_input_data)
 
+        # self.short_report_window = ShortReportWindow('')
+        #
+        # self.short_report_window.pb_full_report.clicked.connect(self.show_file_dialog)
 
         self.ui.show()
+
+    def show_file_dialog(self):
+        # Create a file dialog to let the user select a directory
+        file_dialog = QFileDialog(self, 'Select Directory')
+
+        # file_dialog.show()
+
+        # Open the file dialog and get the selected directory
+        self.directory_for_report = file_dialog.getExistingDirectory()
+
+        if self.directory_for_report != '':
+            # save_new_report_file(self.directory_for_report, self.gc_document, gc_or_lc='GC')
+            print('print from show_file_dialog: directory is: ', self.directory_for_report)
+            save_new_report_file(self.directory_for_report, self.document, gc_or_lc = self.gc_or_lc_report)
+            print('report saved to directory ', self.directory_for_report)
+        else:
+            print('directory was not chosen')
 
     def pb_calculate_clicked(self):
         if self.ui.tab.currentIndex() == 0:
@@ -88,8 +117,45 @@ class App(QWidget):
                     self.warning_dialog.show_warning_dialog("RSF_a parameter can't be 0")
                 else:
                     self.gc_latest.save_input_data_dict_to_file(input_data_dict)
-                    for key, value in input_data_dict.items():
-                        self.gc_input.setup_input(parameter_name=key, parameter_value=value)
+
+                    self.gc_input.asset = input_data_dict['asset']
+                    self.gc_input.line_number = input_data_dict['line_number']
+                    self.gc_input.monitoring_location = input_data_dict['monitoring_location']
+                    self.gc_input.wall_loss_type = input_data_dict['wall_loss_type']
+                    self.gc_input.material = input_data_dict['material']
+                    self.gc_input.steel_type = input_data_dict['steel_type']
+                    self.gc_input.temperature = input_data_dict['temperature']
+                    self.gc_input.stress = float(input_data_dict['stress'])
+                    self.gc_input.nominal_pipe_size = input_data_dict['nominal_pipe_size']
+                    self.gc_input.outside_diameter = float(input_data_dict['outside_diameter'])
+                    self.gc_input.schedule = input_data_dict['schedule']
+                    self.gc_input.thickness = float(input_data_dict['thickness'])
+                    self.gc_input.pipe_type = input_data_dict['pipe_type']
+                    self.gc_input.mill_under_tolerance = float(input_data_dict['mill_under_tolerance'])
+                    self.gc_input.P = float(input_data_dict['P'])
+                    self.gc_input.Y_B31 = float(input_data_dict['Y_B31'])
+                    self.gc_input.E = float(input_data_dict['E'])
+                    self.gc_input.RSF_a = float(input_data_dict['RSF_a'])
+                    self.gc_input.MA = float(input_data_dict['MA'])
+                    self.gc_input.t_sl = float(input_data_dict['t_sl'])
+                    self.gc_input.LOSS = float(input_data_dict['LOSS'])
+                    self.gc_input.FCA = float(input_data_dict['FCA'])
+                    self.gc_input.FCA_ml = float(input_data_dict['FCA_ml'])
+                    self.gc_input.NDE_type = input_data_dict['NDE_type']
+                    self.gc_input.t_mm = float(input_data_dict['t_mm'])
+                    self.gc_input.t_amS = float(input_data_dict['t_amS'])
+                    self.gc_input.t_amC = float(input_data_dict['t_amC'])
+
+                    self.short_report_text, self.document = gc_algorithm(self.gc_input)
+
+                    self.gc_or_lc_report = 'gc'
+
+                    print(self.short_report_text)
+
+                    self.short_report_window = ShortReportWindow(self.short_report_text)
+
+                    self.short_report_window.pb_full_report.clicked.connect(self.show_file_dialog)
+
             else:
                 self.warning_dialog.show_warning_dialog("Please, enter all the input data\nto calculate Fitness-For-Service")
         else:
@@ -101,8 +167,50 @@ class App(QWidget):
                     self.warning_dialog.show_warning_dialog("RSF_a parameter can't be 0")
                 else:
                     self.lc_latest.save_input_data_dict_to_file(input_data_dict)
-                    for key, value in input_data_dict.items():
-                        self.lc_input.setup_input(parameter_name=key, parameter_value=value)
+
+                    self.lc_input.asset = input_data_dict['asset']
+                    self.lc_input.line_number = input_data_dict['line_number']
+                    self.lc_input.monitoring_location = input_data_dict['monitoring_location']
+                    self.lc_input.wall_loss_type = input_data_dict['wall_loss_type']
+                    self.lc_input.material = input_data_dict['material']
+                    self.lc_input.steel_type = input_data_dict['steel_type']
+                    self.lc_input.temperature = input_data_dict['temperature']
+                    self.lc_input.stress = float(input_data_dict['stress'])
+                    self.lc_input.nominal_pipe_size = input_data_dict['nominal_pipe_size']
+                    self.lc_input.outside_diameter = float(input_data_dict['outside_diameter'])
+                    self.lc_input.schedule = input_data_dict['schedule']
+                    self.lc_input.thickness = float(input_data_dict['thickness'])
+                    self.lc_input.pipe_type = input_data_dict['pipe_type']
+                    self.lc_input.mill_under_tolerance = float(input_data_dict['mill_under_tolerance'])
+                    self.lc_input.P = float(input_data_dict['P'])
+                    self.lc_input.Y_B31 = float(input_data_dict['Y_B31'])
+                    self.lc_input.E = float(input_data_dict['E'])
+                    self.lc_input.EC = float(input_data_dict['EC'])
+                    self.lc_input.EL = float(input_data_dict['EL'])
+                    self.lc_input.RSF_a = float(input_data_dict['RSF_a'])
+                    self.lc_input.MA = float(input_data_dict['MA'])
+                    self.lc_input.t_sl = float(input_data_dict['t_sl'])
+                    self.lc_input.LOSS = float(input_data_dict['LOSS'])
+                    self.lc_input.FCA = float(input_data_dict['FCA'])
+                    self.lc_input.FCA_ml = float(input_data_dict['FCA_ml'])
+                    self.lc_input.NDE_type = input_data_dict['NDE_type']
+                    self.lc_input.t_mm = float(input_data_dict['t_mm'])
+                    self.lc_input.defect_type = input_data_dict['defect_type']
+                    self.lc_input.g_r = float(input_data_dict['g_r'])
+                    self.lc_input.s = float(input_data_dict['s'])
+                    self.lc_input.c = float(input_data_dict['c'])
+                    self.lc_input.L_msd = float(input_data_dict['L_msd'])
+
+                    self.short_report_text, self.document = lc_algorithm(self.lc_input)
+
+                    self.gc_or_lc_report = 'lc'
+
+                    print(self.short_report_text)
+
+                    self.short_report_window = ShortReportWindow(self.short_report_text)
+
+                    self.short_report_window.pb_full_report.clicked.connect(self.show_file_dialog)
+
             else:
                 self.warning_dialog.show_warning_dialog(
                     "Please, enter all the input data\nto calculate Fitness-For-Service")
@@ -169,7 +277,7 @@ class App(QWidget):
             input_data_dict['FCA_ml'] = self.ui.tab_lc.line_FCA_ml.text()
             input_data_dict['NDE_type'] = self.ui.tab_lc.line_NDE_type.text()
             input_data_dict['t_mm'] = self.ui.tab_lc.line_t_mm.text()
-            input_data_dict['defect type'] = self.ui.tab_lc.comboBox_defect_type.currentText()
+            input_data_dict['defect_type'] = self.ui.tab_lc.comboBox_defect_type.currentText()
             input_data_dict['g_r'] = self.ui.tab_lc.line_g_r.text()
             input_data_dict['s'] = self.ui.tab_lc.line_s.text()
             input_data_dict['c'] = self.ui.tab_lc.line_c.text()
@@ -421,4 +529,5 @@ if __name__ == '__main__':
     ex = App()
     diff = time.time() - start_time
     print(f'Длительность запуска всей программы - {diff}')
+    # ex.setWindowIcon(QIcon(r'C:\Users\a.izmailov\PycharmProjects\FitForService\Icons\icon_main_window.png'))
     sys.exit(app.exec_())

@@ -1,7 +1,9 @@
-import LocalCorrosionMethod as lc
+from  LocalCorrosionMethod.LocalCorrosionMethod import LocalCorrosionClass
 from Document.DocumentProccess import adjust_document, save_new_report_file
 
 def lc_algorithm(lc_input):
+    lc = LocalCorrosionClass()
+
     document = adjust_document()
 
     passing_text_line = 'Fitness for Service Level 1 criteria passed'
@@ -66,41 +68,40 @@ def lc_algorithm(lc_input):
     c = lc_input.c
     L_msd = lc_input.L_msd
 
-    input_data_text = f""" 
-        Input Data:
-        Asset: {asset}
-        Line number: {line_number}
-        Corrosion Monitoring Location: {monitoring_location}
-        Type of wall loss: {type_of_wall_loss}
-        Material: {material}
-        steel_type: {steel_type}
-        temperature: {temperature} [°C]
-        S: {S} [MPa]
-        nominal_pipe_size: {nominal_pipe_size}
-        D_0: {D_0} [mm]
-        schedule: {schedule}
-        Wall thickness, t: {t} [mm]
-        pipe_type: {pipe_type}
-        M_ut: {M_ut}
-        Internal design pressure, P: {P} [bar]
-        Y_B31: {Y_B31}
-        E: {E}
-        EC: {EC}
-        EL: {EL}
-        RSF_a: {RSF_a}
-        MA: {MA} [mm]
-        t_sl: {t_sl} [mm]
-        LOSS: {LOSS} [mm]
-        FCA: {FCA} [mm]
-        FCA_ml: {FCA_ml} [mm]
-        NDE_type: {NDE_type}
-        t_mm: {t_mm} [mm]
-        defect type = {defect_type}
-        g_r = {g_r} [mm]
-        s = {s} [mm]
-        c = {c} [mm]
-        L_msd = {L_msd} [mm]
-        """
+    input_data_text = f""" Input Data:
+Asset: {asset}
+Line number: {line_number}
+Corrosion Monitoring Location: {monitoring_location}
+Type of wall loss: {type_of_wall_loss}
+Material: {material}
+steel_type: {steel_type}
+temperature: {temperature} [°C]
+S: {S} [MPa]
+nominal_pipe_size: {nominal_pipe_size}
+D_0: {D_0} [mm]
+schedule: {schedule}
+Wall thickness, t: {t} [mm]
+pipe_type: {pipe_type}
+M_ut: {M_ut}
+Internal design pressure, P: {P} [bar]
+Y_B31: {Y_B31}
+E: {E}
+EC: {EC}
+EL: {EL}
+RSF_a: {RSF_a}
+MA: {MA} [mm]
+t_sl: {t_sl} [mm]
+LOSS: {LOSS} [mm]
+FCA: {FCA} [mm]
+FCA_ml: {FCA_ml} [mm]
+NDE_type: {NDE_type}
+t_mm: {t_mm} [mm]
+defect type = {defect_type}
+g_r = {g_r} [mm]
+s = {s} [mm]
+c = {c} [mm]
+L_msd = {L_msd} [mm]
+    """
 
     document.add_paragraph(input_data_text)
 
@@ -262,6 +263,9 @@ def lc_algorithm(lc_input):
                             short_report_list.append(lc.check_minimum_thickness_required_criteria(t_minL, t_mm, FCA_ml).text)
                             print('all steps are passed')
 
+    short_report_text = '\n'.join(short_report_list)
+
+    return short_report_text, document
 
 # Save the document
 # document.save(os.path.join(directory, "test_report_LC.docx"))

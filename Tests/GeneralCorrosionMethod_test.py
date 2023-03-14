@@ -1,4 +1,3 @@
-import pytest
 from GeneralCorrosionMethod.GeneralCorrosionMethod import *
 
 # input data

@@ -46,10 +46,49 @@ class DataLayer:
         return f'{self.df_material} \n{self.df_stress} \n{self.df_pipe} \n{self.df_wall_loss_type} \n{self.df_mill_under_tolerance} \n{self.df_thickness} \n{self.df_schedule}  \n{self.df_defect_type}'
 
 class InputDataStaging:
-    def setup_input(self, parameter_name, parameter_value):
-        self.parameter_name = parameter_value
-        print(parameter_name, parameter_value)
-        return
+    def __init__(self):
+        self.asset = None
+        self.line_number = None
+        self.monitoring_location = None
+        self.wall_loss_type = None
+        self.material = None
+        self.steel_type = None
+        self.temperature = None
+        self.stress = None
+        self.nominal_pipe_size = None
+        self.outside_diameter = None
+        self.schedule = None
+        self.thickness = None
+        self.pipe_type = None
+        self.mill_under_tolerance = None
+        self.P = None
+        self.Y_B31 = None
+        self.E = None
+        self.RSF_a = None
+        self.MA = None
+        self.t_sl = None
+        self.LOSS = None
+        self.FCA = None
+        self.FCA_ml = None
+        self.NDE_type = None
+        self.t_mm = None
+        self.t_amS = None
+        self.t_amC = None
+
+        self.EC = None
+        self.EL = None
+        self.defect_type = None
+        self.g_r = None
+        self.s = None
+        self.c = None
+        self.L_msd = None
+
+    # def setup_input(self, input_data_dict):
+    #     for key, value in input_data_dict.items():
+    #         self.key = value
+        # self.parameter_name = parameter_value
+        # print(self.parameter_name)
+        # return
 
 class LatestInputData:
     def __init__(self, gc_or_lc):
