@@ -6,7 +6,7 @@ from GUI.Tabs.CommonObjects import CommonObjects
 class TabGC(CommonObjects):
     def __init__(self):
         super().__init__()
-        self.setup_layout_objects()
+        self.setup_layout_objects(add_wall_loss_type=True)
 
         # DEFINING of Layout objects
         # =================================================================

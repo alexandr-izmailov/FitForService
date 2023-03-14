@@ -33,7 +33,7 @@ class CommonObjects(QWidget):
         self.pb_max_h = 33
         self.pb_min_h = self.pb_max_h
 
-    def setup_layout_objects(self, add_EL_EC = False):
+    def setup_layout_objects(self, add_EL_EC = False, add_wall_loss_type = False):
         # DEFINING of Layout objects
         # =================================================================
         self.vlayout = QVBoxLayout()
@@ -86,10 +86,11 @@ class CommonObjects(QWidget):
         self.line_monitoring_location.setMinimumSize(320, self.line_min_h)
         self.line_monitoring_location.setMaximumSize(320, self.line_max_h)
 
-        self.label_wall_loss_type = QLabel('Type of wall loss:')
-        self.comboBox_wall_loss_type = QComboBox()
-        self.comboBox_wall_loss_type.setMinimumSize(320, self.combo_box_min_h)
-        self.comboBox_wall_loss_type.setMaximumSize(320, self.combo_box_max_h)
+        if add_wall_loss_type:
+            self.label_wall_loss_type = QLabel('Type of wall loss:')
+            self.comboBox_wall_loss_type = QComboBox()
+            self.comboBox_wall_loss_type.setMinimumSize(320, self.combo_box_min_h)
+            self.comboBox_wall_loss_type.setMaximumSize(320, self.combo_box_max_h)
 
         self.label_design_parameters = QLabel('Design parameters')
         self.label_design_parameters.setAlignment(QtCore.Qt.AlignCenter)
@@ -269,9 +270,10 @@ class CommonObjects(QWidget):
         self.hlayout_monitoring_location.addWidget(self.line_monitoring_location)
         self.vlayout.addLayout(self.hlayout_monitoring_location)
 
-        self.hlayout_wall_loss_type.addWidget(self.label_wall_loss_type)
-        self.hlayout_wall_loss_type.addWidget(self.comboBox_wall_loss_type)
-        self.vlayout.addLayout(self.hlayout_wall_loss_type)
+        if add_wall_loss_type:
+            self.hlayout_wall_loss_type.addWidget(self.label_wall_loss_type)
+            self.hlayout_wall_loss_type.addWidget(self.comboBox_wall_loss_type)
+            self.vlayout.addLayout(self.hlayout_wall_loss_type)
 
         self.vlayout.addWidget(self.label_design_parameters)
 

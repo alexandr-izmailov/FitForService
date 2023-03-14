@@ -171,7 +171,6 @@ class App(QWidget):
                     self.lc_input.asset = input_data_dict['asset']
                     self.lc_input.line_number = input_data_dict['line_number']
                     self.lc_input.monitoring_location = input_data_dict['monitoring_location']
-                    self.lc_input.wall_loss_type = input_data_dict['wall_loss_type']
                     self.lc_input.material = input_data_dict['material']
                     self.lc_input.steel_type = input_data_dict['steel_type']
                     self.lc_input.temperature = input_data_dict['temperature']
@@ -253,7 +252,6 @@ class App(QWidget):
             input_data_dict['asset'] = self.ui.tab_lc.line_asset.text()
             input_data_dict['line_number'] = self.ui.tab_lc.line_line_number.text()
             input_data_dict['monitoring_location'] = self.ui.tab_lc.line_monitoring_location.text()
-            input_data_dict['wall_loss_type'] = self.ui.tab_lc.comboBox_wall_loss_type.currentText()
             input_data_dict['material'] = self.ui.tab_lc.comboBox_material.currentText()
             input_data_dict['steel_type'] = self.ui.tab_lc.comboBox_steel_type.currentText()
             input_data_dict['temperature'] = self.ui.tab_lc.comboBox_temperature.currentText()
@@ -334,7 +332,6 @@ class App(QWidget):
                 self.ui.tab_lc.line_asset.setText(lc_latest_input_data_dict.get('asset'))
                 self.ui.tab_lc.line_line_number.setText(lc_latest_input_data_dict.get('line_number'))
                 self.ui.tab_lc.line_monitoring_location.setText(lc_latest_input_data_dict.get('monitoring_location'))
-                self.ui.tab_lc.comboBox_wall_loss_type.setCurrentText(lc_latest_input_data_dict.get('wall_loss_type'))
                 self.ui.tab_lc.comboBox_material.setCurrentText(lc_latest_input_data_dict.get('material'))
                 self.ui.tab_lc.comboBox_steel_type.setCurrentText(lc_latest_input_data_dict.get('steel_type'))
                 self.ui.tab_lc.comboBox_temperature.setCurrentText(lc_latest_input_data_dict.get('temperature'))
@@ -390,7 +387,6 @@ class App(QWidget):
         self.ui.tab_lc.comboBox_thickness.addItems(self.filter_thickness(self.dl.df_thickness)['wall thickness'])
 
         self.ui.tab_gc.comboBox_wall_loss_type.addItems(self.dl.df_wall_loss_type['type of wall loss'])
-        self.ui.tab_lc.comboBox_wall_loss_type.addItems(self.dl.df_wall_loss_type['type of wall loss'])
 
         self.ui.tab_gc.comboBox_pipe_type.addItems(self.dl.df_mill_under_tolerance['pipe type'])
         self.ui.tab_lc.comboBox_pipe_type.addItems(self.dl.df_mill_under_tolerance['pipe type'])
