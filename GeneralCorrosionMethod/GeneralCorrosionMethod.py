@@ -9,11 +9,11 @@ class GeneralCorrosionClass:
         """
         if pipe_type.lower() in ('seamless %', 'user defined %'):
             t_nom = t * (1 - M_ut / 100)
-            text = f't_nom = t * (1 - M_ut / 100) = {t} * (1 - {M_ut} / 100) = {t_nom}'
+            text = f't_nom = t * (1 - M_ut / 100) = {round(t,2)} * (1 - {round(round(M_ut, 2),2)} / 100) = {round(round(t_nom,2),2)}'
             data = DataCalculated(t_nom, text)
         elif pipe_type.lower() in ('welded mm', 'user defined mm'):
             t_nom = t - M_ut
-            text = f't_nom = t - M_ut = {t} - {M_ut} = {t_nom}'
+            text = f't_nom = t - M_ut = {round(t,2)} - {round(M_ut,2)} = {round(t_nom,2)}'
             data = DataCalculated(t_nom, text)
         return data
 
@@ -28,7 +28,7 @@ class GeneralCorrosionClass:
         t_ml - Nominal thickness in the region of corrosion corrected FCA_ml, [mm]
         """
         t_ml = t_nom - FCA_ml
-        text = f't_ml = t_nom - FCA_ml = {t_nom} - {FCA_ml} = {t_ml}'
+        text = f't_ml = t_nom - FCA_ml = {round(t_nom,2)} - {round(FCA_ml,2)} = {round(t_ml,2)}'
         data = DataCalculated(t_ml, text)
         return data
 
@@ -43,7 +43,7 @@ class GeneralCorrosionClass:
         t_c - Future corroded wall thickness away from the damage area, [mm]
         """
         t_c = t_nom - LOSS - FCA
-        text = f't_c = t_nom - LOSS - FCA = {t_nom} - {LOSS} - {FCA} = {t_c}'
+        text = f't_c = t_nom - LOSS - FCA = {round(t_nom,2)} - {round(LOSS,2)} - {round(FCA,2)} = {round(t_c,2)}'
         data = DataCalculated(t_c, text)
         return data
 
@@ -58,7 +58,7 @@ class GeneralCorrosionClass:
         D - Inside diameter of the cylinder, cone (at the location of the flaw), [mm]
         """
         D = D_0 - 2 * t_nom
-        text = f'D = D_0 - 2 * t_nom = {D_0} - 2 * {t_nom} = {D}'
+        text = f'D = D_0 - 2 * t_nom = {round(D_0,2)} - 2 * {round(t_nom,2)} = {round(D,2)}'
         data = DataCalculated(D, text)
         return data
 
@@ -74,11 +74,11 @@ class GeneralCorrosionClass:
         """
         if type_of_wall_loss == 'internal':
             D_ml = D + 2 * FCA_ml
-            text = f'D_ml = D + 2 * FCA_ml = {D} + 2 * {FCA_ml} = {D_ml}'
+            text = f'D_ml = D + 2 * FCA_ml = {round(D,2)} + 2 * {round(FCA_ml,2)} = {round(D_ml,2)}'
             data = DataCalculated(D_ml, text)
         elif type_of_wall_loss == 'external':
             D_ml = D
-            text = f'D_ml = D = {D} = {D_ml}'
+            text = f'D_ml = D = {round(D,2)} = {round(D_ml,2)}'
             data = DataCalculated(D_ml, text)
         return data
 
@@ -93,7 +93,7 @@ class GeneralCorrosionClass:
         Remaining thickness ratio R_t, [-]
         """
         R_t = (t_mm - FCA_ml) / t_ml
-        text = f'R_t = (t_mm - FCA_ml) / t_ml = ({t_mm} - {FCA_ml}) / {t_ml} = {R_t}'
+        text = f'R_t = (t_mm - FCA_ml) / t_ml = ({round(t_mm,2)} - {round(FCA_ml,2)}) / {round(t_ml,2)} = {round(R_t,2)}'
         data = DataCalculated(R_t,text)
         return data
 
@@ -113,10 +113,10 @@ class GeneralCorrosionClass:
         """
         if R_t < RSF_a:
             Q = 1.123 * (((1 - R_t) / (1 - R_t / RSF_a)) ** 2 - 1) ** (0.5)
-            text = f'Q = 1.123 * (((1 - R_t) / (1 - R_t  /  RSF_a))^2 - 1)^0.5 = 1.123 * (((1 - {R_t}) / (1 - {R_t}  /  {RSF_a}))^2 - 1)^0.5 = {Q}'
+            text = f'Q = 1.123 * (((1 - R_t) / (1 - R_t  /  RSF_a))^2 - 1)^0.5 = 1.123 * (((1 - {round(R_t,2)}) / (1 - {round(R_t,2)}  /  {round(RSF_a,2)}))^2 - 1)^0.5 = {round(Q,2)}'
         elif R_t >= RSF_a:
             Q = 50
-            text = f'Q = {Q}'
+            text = f'Q = {round(Q,2)}'
         data = DataCalculated(Q, text)
         return data
 
@@ -131,7 +131,7 @@ class GeneralCorrosionClass:
         Length for thickness averaging L, [mm]
         """
         L = Q * (D_ml * t_ml) ** 0.5
-        text = f'L = Q * (D_ml * t_ml) ^ 0.5 = {Q} * ({D_ml} * {t_ml}) ^ 0.5 = {L}'
+        text = f'L = Q * (D_ml * t_ml) ^ 0.5 = {round(Q,2)} * ({round(D_ml,2)} * {round(t_ml,2)}) ^ 0.5 = {round(L,2)}'
         data = DataCalculated(L, text)
         return data
 
@@ -145,7 +145,7 @@ class GeneralCorrosionClass:
         circumferential stress, [mm]
         """
         t_minC = (P * D_0 / 10) / (2 * (S * E + P / 10 * Y_B31)) + MA
-        text = f't_minC = (P * D_0) / (2 * (S * E + P * Y_B31)) + MA = ({P} * {D_0} / 10) / (2 * ({S} * {E} + {P} / 10 * {Y_B31})) + {MA} = {P}'
+        text = f't_minC = (P * D_0) / (2 * (S * E + P * Y_B31)) + MA = ({round(P,2)} * {round(D_0,2)} / 10) / (2 * ({round(S,2)} * {round(E,2)} + {round(P,2)} / 10 * {round(Y_B31,2)})) + {round(MA,2)} = {round(P,2)}'
         data = DataCalculated(t_minC, text)
         return data
 
@@ -160,7 +160,7 @@ class GeneralCorrosionClass:
         longitudinal stress, [mm]
         """
         t_minL = (P * D_0 / 10) / (4 * (S * E + P / 10 * Y_B31)) + t_sl + MA
-        text = f't_minL = (P * D_0) / (4 * (S * E + P * Y_B31)) + t_sl + MA = ({P} * {D_0} / 10) / (4 * ({S} * {E} + {P} / 10 * {Y_B31})) + {t_minL} = {t_minL}'
+        text = f't_minL = (P * D_0) / (4 * (S * E + P * Y_B31)) + t_sl + MA = ({round(P,2)} * {round(D_0,2)} / 10) / (4 * ({round(S,2)} * {round(E,2)} + {round(P,2)} / 10 * {round(Y_B31,2)})) + {round(t_minL,2)} = {round(t_minL,2)}'
         data = DataCalculated(t_minL, text)
         return data
 
@@ -174,7 +174,7 @@ class GeneralCorrosionClass:
         Minimum required thickness , [mm]
         """
         t_min = max(t_minC, t_minL)
-        text = f't_min = max(t_minC; t_minL) = max({t_minC}; {t_minL}) = {t_min}'
+        text = f't_min = max(t_minC; t_minL) = max({round(t_minC,2)}; {round(t_minL,2)}) = {round(t_min,2)}'
         data = DataCalculated(t_min, text)
         return data
 
@@ -189,7 +189,7 @@ class GeneralCorrosionClass:
         Maximum allowable working pressure based on circumferential stress, [bar]
         """
         MAWP_C = 10 * (2 * S * E * (t_c - MA)) / (D_0 - 2 * Y_B31 * (t_c - MA))
-        text = f'MAWP_C = (2 * S * E * (t_c - MA)) / (D_0 - 2 * Y_B31 * (t_c - MA)) = 10 * (2 * {S} * {E} * ({t_c} - {MA})) / ({D_0} - 2 * {Y_B31} * ({t_c} - {MA})) = {MAWP_C}'
+        text = f'MAWP_C = (2 * S * E * (t_c - MA)) / (D_0 - 2 * Y_B31 * (t_c - MA)) = 10 * (2 * {round(S,2)} * {round(E,2)} * ({round(t_c,2)} - {round(MA,2)})) / ({round(D_0,2)} - 2 * {round(Y_B31,2)} * ({round(t_c,2)} - {round(MA,2)})) = {round(MAWP_C,2)}'
         data = DataCalculated(MAWP_C, text,)
         return data
 
@@ -203,7 +203,7 @@ class GeneralCorrosionClass:
         Maximum allowable working pressure based on longitudinal stress, [bar]
         """
         MAWP_L = 10 * (4 * S * E * (t_c - t_sl - MA)) / (D_0 - 4 * Y_B31 * (t_c - t_sl - MA))
-        text = f'MAWP_L = (4 * S * E * (t_c - t_c - t_sl - MA)) / (D_0 - 4 * Y_B31 * (t_c - t_sl - MA)) = 10 * (4 * {S} * {E} * ({t_c} - {t_sl} - {MA})) / ({D_0} - 4 * {Y_B31} * ({t_c} - {t_sl} - {MA})) = {MAWP_L}'
+        text = f'MAWP_L = (4 * S * E * (t_c - t_c - t_sl - MA)) / (D_0 - 4 * Y_B31 * (t_c - t_sl - MA)) = 10 * (4 * {round(S,2)} * {round(E,2)} * ({round(t_c,2)} - {round(t_sl,2)} - {round(MA,2)})) / ({round(D_0,2)} - 4 * {round(Y_B31,2)} * ({round(t_c,2)} - {round(t_sl,2)} - {round(MA,2)})) = {round(MAWP_L,2)}'
         data = DataCalculated(MAWP_L, text)
         return data
 
@@ -217,7 +217,7 @@ class GeneralCorrosionClass:
         Maximum allowable working pressure, [bar]
         """
         MAWP = min(MAWP_C, MAWP_L)
-        text = f'MAWP = min(MAWP_C; MAWP_L) = min({MAWP_C}; {MAWP_L}) = {MAWP}'
+        text = f'MAWP = min(MAWP_C; MAWP_L) = min({round(MAWP_C,2)}; {round(MAWP_L,2)}) = {round(MAWP,2)}'
         data = DataCalculated(MAWP, text)
         return data
 
@@ -232,10 +232,10 @@ class GeneralCorrosionClass:
         """
         if (t_amS - FCA_ml) >= t_minC:
             average_longitudinal_thickness_criteria = 'passed'
-            text = f'(t_amS - FCA_ml) >= t_minL |---> ({t_amS} - {FCA_ml}) >= {t_minC} \nAverage longitudinal thickness criteria is {average_longitudinal_thickness_criteria}'
+            text = f'(t_amS - FCA_ml) >= t_minL |---> ({round(t_amS,2)} - {round(FCA_ml,2)}) >= {round(t_minC,2)} \nAverage longitudinal thickness criteria is {average_longitudinal_thickness_criteria}'
         elif (t_amS - FCA_ml) < t_minC:
             average_longitudinal_thickness_criteria = 'failed'
-            text = f'(t_amS - FCA_ml) < t_minL |---> ({t_amS} - {FCA_ml}) < {t_minC} \nAverage longitudinal thickness criteria is {average_longitudinal_thickness_criteria}'
+            text = f'(t_amS - FCA_ml) < t_minL |---> ({round(t_amS,2)} - {round(FCA_ml,2)}) < {round(t_minC,2)} \nAverage longitudinal thickness criteria is {average_longitudinal_thickness_criteria}'
         data = DataCalculated(average_longitudinal_thickness_criteria, text)
         return data
 
@@ -247,10 +247,10 @@ class GeneralCorrosionClass:
         """
         if (t_amC - FCA_ml) >= t_minL:
             average_circumferential_thickness_criteria = 'passed'
-            text = f'(t_amC - FCA_ml) >= t_minL |---> ({t_amC} - {FCA_ml}) >= {t_minL} \nAverage circumferential thickness criteria is {average_circumferential_thickness_criteria}'
+            text = f'(t_amC - FCA_ml) >= t_minL |---> ({round(t_amC,2)} - {round(FCA_ml,2)}) >= {round(t_minL,2)} \nAverage circumferential thickness criteria is {average_circumferential_thickness_criteria}'
         elif (t_amC - FCA_ml) < t_minL:
             average_circumferential_thickness_criteria = 'failed'
-            text = f'(t_amC - FCA_ml) < t_minL |---> ({t_amC} - {FCA_ml}) < {t_minL} \n> Average circumferential thickness criteria is {average_circumferential_thickness_criteria}'
+            text = f'(t_amC - FCA_ml) < t_minL |---> ({round(t_amC,2)} - {round(FCA_ml,2)}) < {round(t_minL,2)} \n> Average circumferential thickness criteria is {average_circumferential_thickness_criteria}'
         data = DataCalculated(average_circumferential_thickness_criteria, text)
         return data
 
@@ -261,7 +261,7 @@ class GeneralCorrosionClass:
         circumferential or hoop direction, [bar]
         """
         MAWP_rC = 10 * (2 * S * E * (t_amS - FCA_ml)) / (D_0 - 2 * Y_B31 * (t_amS - FCA_ml))
-        text = f'MAWP_rC = (2 * S * E * (t_amS - FCA_ml)) / (D_0 - 2 * Y_B31 * (t_amS - FCA_ml)) = 10 * (2 * {S} * {E} * ({t_amS} - {FCA_ml})) / ({D_0} - 2 * {Y_B31} * ({t_amS} - {FCA_ml})) = {MAWP_rC}'
+        text = f'MAWP_rC = (2 * S * E * (t_amS - FCA_ml)) / (D_0 - 2 * Y_B31 * (t_amS - FCA_ml)) = 10 * (2 * {round(S,2)} * {round(E,2)} * ({round(t_amS,2)} - {round(FCA_ml,2)})) / ({round(D_0,2)} - 2 * {round(Y_B31,2)} * ({round(t_amS,2)} - {round(FCA_ml,2)})) = {round(MAWP_rC,2)}'
         data = DataCalculated(MAWP_rC, text)
         return data
 
@@ -275,7 +275,7 @@ class GeneralCorrosionClass:
         longitudinal direction, [bar]
         """
         MAWP_rL = 10 * (4 * S * E * (t_amC - FCA_ml)) / (D_0 - 4 * Y_B31 * (t_amC - FCA_ml))
-        text = f'MAWP_rL = (4 * S * E * (t_amC - FCA_ml )) / (D_0 - 4 * Y_B31 * (t_amC - FCA_ml)) = 10 * (4 * {S} * {E} * ({t_amC} - {FCA_ml})) / ({D_0} - 4 * {Y_B31} * ({t_amC} - {FCA_ml})) = {MAWP_rL}'
+        text = f'MAWP_rL = (4 * S * E * (t_amC - FCA_ml )) / (D_0 - 4 * Y_B31 * (t_amC - FCA_ml)) = 10 * (4 * {round(S,2)} * {round(E,2)} * ({round(t_amC,2)} - {round(FCA_ml,2)})) / ({round(D_0,2)} - 4 * {round(Y_B31,2)} * ({round(t_amC,2)} - {round(FCA_ml,2)})) = {round(MAWP_rL,2)}'
         data = DataCalculated(MAWP_rL, text)
         return data
 
@@ -290,10 +290,10 @@ class GeneralCorrosionClass:
         """
         if min(MAWP_rC, MAWP_rL) > P:
             MAWP_criteria = 'passed'
-            text = f'min(MAWP_rC,MAWP_rL) > P |---> min({MAWP_rC},{MAWP_rL}) > {P} \nMAWP criteria is {MAWP_criteria}'
+            text = f'min(MAWP_rC,MAWP_rL) > P |---> min({round(MAWP_rC,2)},{round(MAWP_rL,2)}) > {round(P,2)} \nMAWP criteria is {MAWP_criteria}'
         elif min(MAWP_rC, MAWP_rL) <= P:
             MAWP_criteria = 'failed'
-            text = f'min(MAWP_rC,MAWP_rL) <= P |---> min({MAWP_rC},{MAWP_rL}) <= {P} \nMAWP criteria is {MAWP_criteria}'
+            text = f'min(MAWP_rC,MAWP_rL) <= P |---> min({round(MAWP_rC,2)},{round(MAWP_rL,2)}) <= {round(P,2)} \nMAWP criteria is {MAWP_criteria}'
         data = DataCalculated(MAWP_criteria, text)
         return data
 
@@ -305,10 +305,10 @@ class GeneralCorrosionClass:
         """
         if (0.2 * t_nom) > 1.3:
             t_lim = 0.2 * t_nom
-            text = f't_lim  = max(0.2  *  t_nom; 1.3) |---> t_lim = max(0.2  *  {t_nom}; 1.3) |---> t_lim = {t_lim}'
+            text = f't_lim  = max(0.2  *  t_nom; 1.3) |---> t_lim = max(0.2  *  {round(t_nom,2)}; 1.3) |---> t_lim = {round(t_lim,2)}'
         else:
             t_lim = 1.3
-            text = f't_lim  = max(0.2  *  t_nom; 1.3) |---> t_lim = max(0.2  *  {t_nom}; 1.3) |---> t_lim = {t_lim}'
+            text = f't_lim  = max(0.2  *  t_nom; 1.3) |---> t_lim = max(0.2  *  {round(t_nom,2)}; 1.3) |---> t_lim = {round(t_lim,2)}'
         data = DataCalculated(t_lim, text)
         return data
 
@@ -320,10 +320,10 @@ class GeneralCorrosionClass:
     def check_minimum_thickness_criteria(self, t_mm, FCA_ml, t_min, t_lim):
         if (t_mm - FCA_ml) >= max((0.5 * t_min), t_lim):
             minimum_thickness_criteria = 'passed'
-            text = f'(t_mm - FCA_ml) >= max((0.5 * t_min), t_lim) |---> ({t_mm} - {FCA_ml}) >= max((0.5 * {t_min}, {t_lim})) |---> ({t_mm - FCA_ml}) >= ({max((0.5 * t_min), t_lim)}) \nMinimum thickness criteria is {minimum_thickness_criteria}'
+            text = f'(t_mm - FCA_ml) >= max((0.5 * t_min), t_lim) |---> ({round(t_mm,2)} - {round(FCA_ml,2)}) >= max((0.5 * {round(t_min,2)}, {round(t_lim,2)})) |---> ({round(t_mm - FCA_ml,2)}) >= ({round(max((0.5 * t_min), t_lim),2)}) \nMinimum thickness criteria is {minimum_thickness_criteria}'
         else:
             minimum_thickness_criteria = 'failed'
-            text = f'(t_mm - FCA_ml) < max((0.5 * t_min), t_lim) |---> ({t_mm} - {FCA_ml}) < max((0.5 * {t_min}, {t_lim})) |---> ({t_mm - FCA_ml}) < ({max((0.5 * t_min), t_lim)}) \nMinimum thickness criteria is {minimum_thickness_criteria}'
+            text = f'(t_mm - FCA_ml) < max((0.5 * t_min), t_lim) |---> ({round(t_mm,2)} - {round(FCA_ml,2)}) < max((0.5 * {round(t_min,2)}, {round(t_lim,2)})) |---> ({round(t_mm - FCA_ml,2)}) < ({round(max((0.5 * t_min), t_lim),2)}) \nMinimum thickness criteria is {minimum_thickness_criteria}'
         data = DataCalculated(minimum_thickness_criteria, text)
         return data
 
@@ -358,22 +358,22 @@ class GeneralCorrosionClass:
 #     print('MAWP = ', f_MAWP(MAWP_C, MAWP_L))
 #     print('')
 #     print(
-#         f'(t_amS - FCA_ml) >= t_minC |---> ({t_amS} - {FCA_ml}) >= {t_minC} |---> Average longitudinal thickness criteria is ',
+#         f'(t_amS - FCA_ml) >= t_minC |---> ({round(t_amS,2)} - {round(FCA_ml,2)}) >= {round(t_minC,2)} |---> Average longitudinal thickness criteria is ',
 #         check_average_longitudinal_thickness_criteria(t_amS, FCA_ml, t_minC))
 #     print('')
 #     print(
-#         f'(t_amC - FCA_ml) >= t_minL |---> ({t_amC} - {FCA_ml}) >= {t_minL} |---> Average circumferential thickness criteria is ',
+#         f'(t_amC - FCA_ml) >= t_minL |---> ({round(t_amC,2)} - {round(FCA_ml,2)}) >= {round(t_minL,2)} |---> Average circumferential thickness criteria is ',
 #         check_average_circumferential_thickness_criteria(t_amC, FCA_ml, t_minL))
 #     print('')
 #     print(
-#         f'MAWP_rC = (2 * S * E * (t_amS - FCA_ml)) / (D_0 - 2 * Y_B31 * (t_amS - FCA_ml)) = 10 * (2 * {S} * {E} * ({t_amS} - {FCA_ml})) / ({D_0} - 2 * {Y_B31} * ({t_amS} - {FCA_ml})) = ',
+#         f'MAWP_rC = (2 * S * E * (t_amS - FCA_ml)) / (D_0 - 2 * Y_B31 * (t_amS - FCA_ml)) = 10 * (2 * {round(S,2)} * {round(E,2)} * ({round(t_amS,2)} - {round(FCA_ml,2)})) / ({round(D_0,2)} - 2 * {round(Y_B31,2)} * ({round(t_amS,2)} - {round(FCA_ml,2)})) = ',
 #         f_MAWP_rC(S, E, t_amS, FCA_ml, D_0, Y_B31))
 #     print('')
 #     print(
-#         f'MAWP_rL = (4 * S * E * (t_amC - FCA_ml )) / (D_0 - 4 * Y_B31 * (t_amC - FCA_ml)) = 10 * (4 * {S} * {E} * ({t_amC} - {FCA_ml})) / ({D_0} - 4 * {Y_B31} * ({t_amC} - {FCA_ml})) = ',
+#         f'MAWP_rL = (4 * S * E * (t_amC - FCA_ml )) / (D_0 - 4 * Y_B31 * (t_amC - FCA_ml)) = 10 * (4 * {round(S,2)} * {round(E,2)} * ({round(t_amC,2)} - {round(FCA_ml,2)})) / ({round(D_0,2)} - 4 * {round(Y_B31,2)} * ({round(t_amC,2)} - {round(FCA_ml,2)})) = ',
 #         f_MAWP_rL(S, E, t_amC, FCA_ml, D_0, Y_B31))
 #     print('')
-#     print(f'min(MAWP_rC,MAWP_rL) > P |---> min({MAWP_rC},{MAWP_rL}) > {P} |---> MAWP criteria is ',
+#     print(f'min(MAWP_rC,MAWP_rL) > P |---> min({round(MAWP_rC,2)},{round(MAWP_rL,2)}) > {round(P,2)} |---> MAWP criteria is ',
 #           check_MAWP_criteria(MAWP_rC, MAWP_rL, P))
 #     print('')
 #     print(f't_lim =  ', f_t_lim(t_nom))
