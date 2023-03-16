@@ -98,18 +98,12 @@ class TabLC(CommonObjects):
         self.hlayout_L_msd.addWidget(self.line_L_msd)
         self.vlayout.addLayout(self.hlayout_L_msd)
 
-        # self.vlayout.addWidget(self.pb_calculate, alignment=QtCore.Qt.AlignCenter)
-
         self.hlayout_pb.addWidget(self.pb_load_latest_input)
         self.hlayout_pb.addWidget(self.pb_calculate)
         self.vlayout.addLayout(self.hlayout_pb)
 
         self.setLayout(self.vlayout)
 
-        try:
-            4/0
-        except ZeroDivisionError:
-            print('dont divide by zero!')
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

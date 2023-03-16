@@ -83,12 +83,7 @@ class InputDataStaging:
         self.c = None
         self.L_msd = None
 
-    # def setup_input(self, input_data_dict):
-    #     for key, value in input_data_dict.items():
-    #         self.key = value
-        # self.parameter_name = parameter_value
-        # print(self.parameter_name)
-        # return
+
 
 class LatestInputData:
     def __init__(self, gc_or_lc):
