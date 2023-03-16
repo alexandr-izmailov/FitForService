@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QApplication, QWidget, QFileDialog
 from PyQt5.QtGui import QIcon
 from GUI.UI import UI
 from GUI.ShortReportWindow import ShortReportWindow
+from GUI.AdditionalInfo import AdditionalInfoWindow
 from GUI.WarningDialog import WarningDialog
 from Classes.DataLayer import DataLayer, InputDataStaging, LatestInputData
 from Algorithm_GC import gc_algorithm
@@ -84,9 +85,10 @@ class App(QWidget):
         self.ui.tab_gc.pb_load_latest_input.clicked.connect(self.load_latest_input_data)
         self.ui.tab_lc.pb_load_latest_input.clicked.connect(self.load_latest_input_data)
 
-        # self.short_report_window = ShortReportWindow('')
-        #
-        # self.short_report_window.pb_full_report.clicked.connect(self.show_file_dialog)
+        self.ui.tab_lc.pb_s_info.clicked.connect(self.show_s_or_c_info)
+        self.ui.tab_lc.pb_c_info.clicked.connect(self.show_s_or_c_info)
+
+        self.ui.tab_lc.pb_L_msd_info.clicked.connect(self.show_L_msd_info)
 
         self.ui.show()
 
@@ -106,6 +108,13 @@ class App(QWidget):
             print('report saved to directory ', self.directory_for_report)
         else:
             print('directory was not chosen')
+
+
+    def show_s_or_c_info(self):
+        self.s_or_c_info_window = AdditionalInfoWindow(image_path='Images/image_s_c.png', logo_path='Icons/logo_api.png')
+
+    def show_L_msd_info(self):
+        self.L_msd_info_window = AdditionalInfoWindow(image_path='Images/image_L_msd.png', logo_path='Icons/logo_api.png')
 
     def pb_calculate_clicked(self):
         if self.ui.tab.currentIndex() == 0:

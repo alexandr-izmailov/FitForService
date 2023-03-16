@@ -1,6 +1,6 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QComboBox, QVBoxLayout, QHBoxLayout, QLineEdit, QPushButton
-from PyQt5 import QtCore
+from PyQt5.QtWidgets import QApplication, QLabel, QComboBox, QHBoxLayout, QLineEdit, QPushButton
+from PyQt5.QtGui import QIcon
 from GUI.Tabs.CommonObjects import CommonObjects
 
 class TabLC(CommonObjects):
@@ -38,6 +38,10 @@ class TabLC(CommonObjects):
         self.label_s.setToolTip("Longitudinal extent or length of the region of local metal loss based on future corroded thickness t_c, s")
         self.line_s.setValidator(self.d_validator)
 
+        self.pb_s_info =  QPushButton()
+        self.pb_s_info.setFixedSize(27,25)
+        self.pb_s_info.setIcon(QIcon(r'C:\Users\a.izmailov\PycharmProjects\FitForService\Icons\icon_question.png'))
+
         self.label_c = QLabel('Circumferential extent of local metal loss region, c [mm]:')
         self.line_c = QLineEdit()
         self.line_c.setMinimumSize(self.line_min_w, self.line_min_h)
@@ -45,12 +49,20 @@ class TabLC(CommonObjects):
         self.label_c.setToolTip("Circumferential extent or length of the region of local metal loss based on future corroded thickness  t_c, c")
         self.line_c.setValidator(self.d_validator)
 
-        self.label_L_msd = QLabel('Distance to nearest major structural discontinuity, L_msd [mm]:')
+        self.pb_c_info = QPushButton()
+        self.pb_c_info.setFixedSize(27, 25)
+        self.pb_c_info.setIcon(QIcon(r'C:\Users\a.izmailov\PycharmProjects\FitForService\Icons\icon_question.png'))
+
+        self.label_L_msd = QLabel('Distance to major structural discontinuity, L_msd [mm]:')
         self.line_L_msd = QLineEdit()
         self.line_L_msd.setMinimumSize(self.line_min_w, self.line_min_h)
         self.line_L_msd.setMaximumSize(self.line_max_w, self.line_max_h)
         self.label_L_msd.setToolTip("Distance to the nearest major structural discontinuity, L_msd")
         self.line_L_msd.setValidator(self.d_validator)
+
+        self.pb_L_msd_info = QPushButton()
+        self.pb_L_msd_info.setFixedSize(27, 25)
+        self.pb_L_msd_info.setIcon(QIcon(r'C:\Users\a.izmailov\PycharmProjects\FitForService\Icons\icon_question.png'))
 
         self.pb_load_latest_input = QPushButton("Load Latest Input")
         self.pb_load_latest_input.setMinimumSize(280, self.pb_min_h)
@@ -72,14 +84,17 @@ class TabLC(CommonObjects):
         self.vlayout.addLayout(self.hlayout_g_r)
 
         self.hlayout_s.addWidget(self.label_s)
+        self.hlayout_s.addWidget(self.pb_s_info)
         self.hlayout_s.addWidget(self.line_s)
         self.vlayout.addLayout(self.hlayout_s)
 
         self.hlayout_c.addWidget(self.label_c)
+        self.hlayout_c.addWidget(self.pb_c_info)
         self.hlayout_c.addWidget(self.line_c)
         self.vlayout.addLayout(self.hlayout_c)
 
         self.hlayout_L_msd.addWidget(self.label_L_msd)
+        self.hlayout_L_msd.addWidget(self.pb_L_msd_info)
         self.hlayout_L_msd.addWidget(self.line_L_msd)
         self.vlayout.addLayout(self.hlayout_L_msd)
 
@@ -90,6 +105,11 @@ class TabLC(CommonObjects):
         self.vlayout.addLayout(self.hlayout_pb)
 
         self.setLayout(self.vlayout)
+
+        try:
+            4/0
+        except ZeroDivisionError:
+            print('dont divide by zero!')
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
