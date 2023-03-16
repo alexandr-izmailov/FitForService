@@ -7,8 +7,6 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QTextBrowser, QP
 class ShortReportWindow(QMainWindow):
     def __init__(self, short_report_text):
         super().__init__()
-        self.directory_for_report = ''
-
         # Set the window icon
         self.setWindowIcon(QIcon('Icons\icon_240_240.png'))
         self.setWindowTitle('Calculations')
@@ -39,10 +37,6 @@ class ShortReportWindow(QMainWindow):
 
         # Add the button layout to the grid layout
         layout.addLayout(hlayout_pb_full_report, 1, 0)
-
-        # Handling pushButton the button's clicked signal to a slot that opens a file dialog
-        # =================================================================================
-        # self.pb_full_report.clicked.connect(self.show_file_dialog)
 
         self.show()
 
