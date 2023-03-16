@@ -1,4 +1,5 @@
 import sys
+from loguru import logger
 from PyQt5.QtWidgets import QApplication, QWidget, QFileDialog
 from PyQt5.QtGui import QIcon
 from GUI.UI import UI
@@ -527,12 +528,22 @@ class App(QWidget):
             self.ui.tab_lc.comboBox_mill_under_tolerance.clear()
             self.ui.tab_lc.comboBox_mill_under_tolerance.addItems(df_mill_under_tolerance_filtered['mill under tolerance'])
 
+# if __name__ == '__main__':
+#     import time
+#     start_time = time.time()
+#     app = QApplication(sys.argv)
+#     ex = App()
+#     diff = time.time() - start_time
+#     print(f'Длительность запуска всей программы - {diff}')
+#     sys.exit(app.exec_())
+
+def logging_excepthook(type_, value, traceback):
+    logger.opt(exception=(type_, value, traceback)).error("Unhandled Qt error")
+
+logger.add('logger_logs.log', rotation="5 MB", compression="zip")
+
 if __name__ == '__main__':
-    import time
-    start_time = time.time()
+    sys.excepthook = logging_excepthook
     app = QApplication(sys.argv)
     ex = App()
-    diff = time.time() - start_time
-    print(f'Длительность запуска всей программы - {diff}')
-    # ex.setWindowIcon(QIcon(r'C:\Users\a.izmailov\PycharmProjects\FitForService\Icons\icon_main_window.png'))
     sys.exit(app.exec_())
