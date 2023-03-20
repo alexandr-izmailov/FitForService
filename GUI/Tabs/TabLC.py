@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QLabel, QComboBox, QHBoxLayout, QLineEdit, QPushButton
+from PyQt5.QtWidgets import QApplication, QLabel, QComboBox, QHBoxLayout, QLineEdit, QPushButton, QWidget
 from PyQt5.QtGui import QIcon
 from GUI.Tabs.CommonObjects import CommonObjects
 
@@ -40,7 +40,7 @@ class TabLC(CommonObjects):
 
         self.pb_s_info =  QPushButton()
         self.pb_s_info.setFixedSize(27,25)
-        self.pb_s_info.setIcon(QIcon(r'C:\Users\a.izmailov\PycharmProjects\FitForService\Icons\icon_question.png'))
+        self.pb_s_info.setIcon(QIcon(r'Icons\icon_question.png'))
 
         self.label_c = QLabel('Circumferential extent of local metal loss region, c [mm]:')
         self.line_c = QLineEdit()
@@ -51,7 +51,7 @@ class TabLC(CommonObjects):
 
         self.pb_c_info = QPushButton()
         self.pb_c_info.setFixedSize(27, 25)
-        self.pb_c_info.setIcon(QIcon(r'C:\Users\a.izmailov\PycharmProjects\FitForService\Icons\icon_question.png'))
+        self.pb_c_info.setIcon(QIcon(r'Icons\icon_question.png'))
 
         self.label_L_msd = QLabel('Distance to major structural discontinuity, L_msd [mm]:')
         self.line_L_msd = QLineEdit()
@@ -62,7 +62,7 @@ class TabLC(CommonObjects):
 
         self.pb_L_msd_info = QPushButton()
         self.pb_L_msd_info.setFixedSize(27, 25)
-        self.pb_L_msd_info.setIcon(QIcon(r'C:\Users\a.izmailov\PycharmProjects\FitForService\Icons\icon_question.png'))
+        self.pb_L_msd_info.setIcon(QIcon(r'Icons\icon_question.png'))
 
         self.pb_load_latest_input = QPushButton("Load Latest Input")
         self.pb_load_latest_input.setMinimumSize(280, self.pb_min_h)
@@ -100,10 +100,16 @@ class TabLC(CommonObjects):
 
         self.hlayout_pb.addWidget(self.pb_load_latest_input)
         self.hlayout_pb.addWidget(self.pb_calculate)
-        self.vlayout.addLayout(self.hlayout_pb)
 
-        self.setLayout(self.vlayout)
+        widget = QWidget()
+        widget.setLayout(self.vlayout)
 
+        self.scroll_area.setWidget(widget)
+
+        self.vlayout_main.addWidget(self.scroll_area)
+        self.vlayout_main.addLayout(self.hlayout_pb)
+
+        self.setLayout(self.vlayout_main)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QComboBox, QVBoxLayout, QHBoxLayout, QLineEdit, QPushButton
+from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QComboBox, QVBoxLayout, QHBoxLayout, QLineEdit, QPushButton, QScrollArea
 from PyQt5 import QtCore
 from PyQt5.QtGui import QDoubleValidator,QRegExpValidator
 
@@ -37,6 +37,7 @@ class CommonObjects(QWidget):
         # DEFINING of Layout objects
         # =================================================================
         self.vlayout = QVBoxLayout()
+        self.vlayout_main = QVBoxLayout()
 
         self.hlayout_asset = QHBoxLayout()
         self.hlayout_line_number = QHBoxLayout()
@@ -71,6 +72,8 @@ class CommonObjects(QWidget):
 
         # ADJUSTING of Label, ComboBox and lineEdit
         # =================================================================
+        self.scroll_area = QScrollArea()
+
         self.label_asset = QLabel('Asset:')
         self.line_asset = QLineEdit()
         self.line_asset.setMinimumSize(320, self.line_min_h)
@@ -91,6 +94,8 @@ class CommonObjects(QWidget):
             self.comboBox_wall_loss_type = QComboBox()
             self.comboBox_wall_loss_type.setMinimumSize(320, self.combo_box_min_h)
             self.comboBox_wall_loss_type.setMaximumSize(320, self.combo_box_max_h)
+
+
 
         self.label_design_parameters = QLabel('Design parameters')
         self.label_design_parameters.setAlignment(QtCore.Qt.AlignCenter)

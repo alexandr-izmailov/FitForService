@@ -50,14 +50,20 @@ class TabGC(CommonObjects):
         self.hlayout_t_amC.addWidget(self.line_t_amC)
         self.vlayout.addLayout(self.hlayout_t_amC)
 
-        # self.vlayout.addWidget(self.pb_calculate, alignment=QtCore.Qt.AlignCenter)
-
         self.hlayout_pb.addWidget(self.pb_load_latest_input)
         self.hlayout_pb.addWidget(self.pb_calculate)
-        self.vlayout.addLayout(self.hlayout_pb)
 
-        self.setLayout(self.vlayout)
+        widget = QWidget()
+        widget.setLayout(self.vlayout)
 
+
+        self.scroll_area.setWidget(widget)
+
+
+        self.vlayout_main.addWidget(self.scroll_area)
+        self.vlayout_main.addLayout(self.hlayout_pb)
+
+        self.setLayout(self.vlayout_main)
 
 
 if __name__ == '__main__':

@@ -542,8 +542,7 @@ def logging_excepthook(type_, value, traceback):
 
 logger.add('logger_logs.log', rotation="5 MB", compression="zip")
 
-if __name__ == '__main__':
-    sys.excepthook = logging_excepthook
-    app = QApplication(sys.argv)
-    ex = App()
-    sys.exit(app.exec_())
+sys.excepthook = logging_excepthook
+app = QApplication(sys.argv)
+ex = App()
+sys.exit(app.exec_())
