@@ -72,11 +72,11 @@ class GeneralCorrosionClass:
         """
         D_ml - Inside diameter of the cylinder corrected for FCA_ml, [mm]
         """
-        if type_of_wall_loss == 'internal':
+        if type_of_wall_loss.lower == 'internal':
             D_ml = D + 2 * FCA_ml
             text = f'D_ml = D + 2 * FCA_ml = {round(D,2)} + 2 * {round(FCA_ml,2)} = {round(D_ml,2)} [mm]'
             data = DataCalculated(D_ml, text)
-        elif type_of_wall_loss == 'external':
+        elif type_of_wall_loss.lower == 'external':
             D_ml = D
             text = f'D_ml = D = {round(D,2)} = {round(D_ml,2)} [mm]'
             data = DataCalculated(D_ml, text)
