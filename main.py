@@ -79,6 +79,10 @@ class App(QWidget):
 
         self.ui.tab_lc.comboBox_defect_type.currentIndexChanged.connect(self.update_line_g_r)
 
+        self.ui.tab_gc.comboBox_schedule.currentIndexChanged.connect(self.thickness_locker)
+        self.ui.tab_lc.comboBox_schedule.currentIndexChanged.connect(self.thickness_locker)
+
+
 
         # HANDLING pushButtons
         # =================================================================
@@ -94,13 +98,30 @@ class App(QWidget):
 
         self.ui.show()
 
+    def thickness_locker(self):
+        if self.ui.tab.currentIndex() == 0:
+            if self.ui.tab_gc.comboBox_schedule.currentText().lower() == 'user defined':
+                self.ui.tab_gc.comboBox_thickness.setEditable(True)
+                self.ui.tab_gc.comboBox_thickness.clear()
+                self.ui.tab_gc.comboBox_thickness.setValidator(self.ui.tab_gc.d_validator)
+            else:
+                self.ui.tab_gc.comboBox_thickness.setEditable(False)
+        else:
+            if self.ui.tab_lc.comboBox_schedule.currentText().lower() == 'user defined':
+                self.ui.tab_lc.comboBox_thickness.setEditable(True)
+                print('HI*10')
+                self.ui.tab_lc.comboBox_thickness.clear()
+                self.ui.tab_lc.comboBox_thickness.setValidator(self.ui.tab_lc.d_validator)
+            else:
+                self.ui.tab_lc.comboBox_thickness.setEditable(False)
+
     def update_line_g_r(self):
         if self.ui.tab_lc.comboBox_defect_type.currentText().lower() == 'groove':
             self.ui.tab_lc.line_g_r.setValidator(self.ui.tab_lc.d_validator)
             self.ui.tab_lc.line_g_r.clear()
             self.ui.tab_lc.line_g_r.setEnabled(True)
         elif self.ui.tab_lc.comboBox_defect_type.currentText().lower() == 'local metal loss':
-            self.ui.tab_lc.line_g_r.setValidator(self.ui.tab_lc.t_validator)
+            self.ui.tab_lc.line_g_r.setValidator(self.ui.tab_lc.d_validator)
             self.ui.tab_lc.line_g_r.setText('Not required')
             self.ui.tab_lc.line_g_r.setEnabled(False)
 
@@ -150,7 +171,7 @@ class App(QWidget):
                     self.gc_input.nominal_pipe_size = input_data_dict['nominal_pipe_size']
                     self.gc_input.outside_diameter = float(input_data_dict['outside_diameter'])
                     self.gc_input.schedule = input_data_dict['schedule']
-                    self.gc_input.thickness = float(input_data_dict['thickness'])
+                    self.gc_input.thickness = float(input_data_dict['thickness'].strip())
                     self.gc_input.pipe_type = input_data_dict['pipe_type']
                     self.gc_input.mill_under_tolerance = float(input_data_dict['mill_under_tolerance'])
                     self.gc_input.P = float(input_data_dict['P'])
@@ -198,7 +219,7 @@ class App(QWidget):
                     self.lc_input.nominal_pipe_size = input_data_dict['nominal_pipe_size']
                     self.lc_input.outside_diameter = float(input_data_dict['outside_diameter'])
                     self.lc_input.schedule = input_data_dict['schedule']
-                    self.lc_input.thickness = float(input_data_dict['thickness'])
+                    self.lc_input.thickness = float(input_data_dict['thickness'].strip())
                     self.lc_input.pipe_type = input_data_dict['pipe_type']
                     self.lc_input.mill_under_tolerance = float(input_data_dict['mill_under_tolerance'])
                     self.lc_input.P = float(input_data_dict['P'])
@@ -407,6 +428,8 @@ class App(QWidget):
 
         self.ui.tab_gc.comboBox_thickness.addItems(self.filter_thickness(self.dl.df_thickness)['wall thickness'])
         self.ui.tab_lc.comboBox_thickness.addItems(self.filter_thickness(self.dl.df_thickness)['wall thickness'])
+        self.ui.tab_gc.comboBox_thickness.setEditable(False)
+        self.ui.tab_lc.comboBox_thickness.setEditable(False)
 
         self.ui.tab_gc.comboBox_wall_loss_type.addItems(self.dl.df_wall_loss_type['type of wall loss'])
 
