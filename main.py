@@ -346,7 +346,10 @@ class App(QWidget):
                 self.ui.tab_gc.comboBox_nominal_pipe_size.setCurrentText(gc_latest_input_data_dict.get('nominal_pipe_size'))
                 self.ui.tab_gc.comboBox_outside_diameter.setCurrentText(gc_latest_input_data_dict.get('outside_diameter'))
                 self.ui.tab_gc.comboBox_schedule.setCurrentText(gc_latest_input_data_dict.get('schedule'))
+
+                self.ui.tab_gc.comboBox_thickness.setEditable(True)
                 self.ui.tab_gc.comboBox_thickness.setCurrentText(gc_latest_input_data_dict.get('thickness'))
+
                 self.ui.tab_gc.comboBox_pipe_type.setCurrentText(gc_latest_input_data_dict.get('pipe_type'))
                 self.ui.tab_gc.comboBox_mill_under_tolerance.setCurrentText(gc_latest_input_data_dict.get('mill_under_tolerance'))
                 self.ui.tab_gc.line_P.setText(gc_latest_input_data_dict.get('P'))
@@ -379,14 +382,8 @@ class App(QWidget):
                 self.ui.tab_lc.comboBox_outside_diameter.setCurrentText(lc_latest_input_data_dict.get('outside_diameter'))
                 self.ui.tab_lc.comboBox_schedule.setCurrentText(lc_latest_input_data_dict.get('schedule'))
 
-                print('382 ',self.ui.tab_lc.comboBox_thickness.isEditable())
                 self.ui.tab_lc.comboBox_thickness.setEditable(True)
-                print('384 ', self.ui.tab_lc.comboBox_thickness.isEditable())
                 self.ui.tab_lc.comboBox_thickness.setCurrentText(lc_latest_input_data_dict.get('thickness'))
-                print(self.ui.tab_lc.comboBox_thickness.currentText())
-                if self.ui.tab_lc.comboBox_schedule.currentText().lower() != 'user defined':
-                    # self.ui.tab_lc.comboBox_thickness.setEditable(False)
-                    print('388 ', self.ui.tab_lc.comboBox_thickness.isEditable())
 
                 self.ui.tab_lc.comboBox_pipe_type.setCurrentText(lc_latest_input_data_dict.get('pipe_type'))
                 self.ui.tab_lc.comboBox_mill_under_tolerance.setCurrentText(lc_latest_input_data_dict.get('mill_under_tolerance'))
@@ -595,13 +592,11 @@ class App(QWidget):
 
             if self.ui.tab_lc.comboBox_schedule.currentText().lower() == 'user defined':
                 self.ui.tab_lc.comboBox_thickness.setEditable(True)
-                print('597', self.ui.tab_lc.comboBox_thickness.isEditable())
             else:
                 self.ui.tab_lc.comboBox_thickness.setEditable(True)
-                print('600', self.ui.tab_lc.comboBox_thickness.isEditable())
                 self.ui.tab_lc.comboBox_thickness.addItems(df_thickness_filtered['wall thickness'])
                 self.ui.tab_lc.comboBox_thickness.setEditable(False)
-                print(' 603', self.ui.tab_lc.comboBox_thickness.isEditable())
+
 
     def update_comboBox_mill_under_tolerance(self):
         # Filter mill under tolerance data based on the selected pipe type
@@ -614,14 +609,6 @@ class App(QWidget):
             self.ui.tab_lc.comboBox_mill_under_tolerance.clear()
             self.ui.tab_lc.comboBox_mill_under_tolerance.addItems(df_mill_under_tolerance_filtered['mill under tolerance'])
 
-# if __name__ == '__main__':
-#     import time
-#     start_time = time.time()
-#     app = QApplication(sys.argv)
-#     ex = App()
-#     diff = time.time() - start_time
-#     print(f'Длительность запуска всей программы - {diff}')
-#     sys.exit(app.exec_())
 
 def logging_excepthook(type_, value, traceback):
     logger.opt(exception=(type_, value, traceback)).error("Unhandled Qt error")

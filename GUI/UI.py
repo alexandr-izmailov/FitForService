@@ -13,8 +13,8 @@ class UI(QWidget):
         # =================================================================
         self.setWindowTitle('FitForService')
         self.setGeometry(700, 40, 640, 800)
-        self.setMaximumSize(640, 1200)
-        self.setMinimumSize(640, 800)
+        self.setMaximumSize(640, 1050)
+        self.setMinimumSize(640, 600)
 
         self.tab_gc = TabGC()
         self.tab_lc = TabLC()
