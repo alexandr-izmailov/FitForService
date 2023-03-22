@@ -1,4 +1,5 @@
 import sys
+import re
 from loguru import logger
 from PyQt5.QtWidgets import QApplication, QWidget, QFileDialog
 from PyQt5.QtGui import QIcon
@@ -156,6 +157,8 @@ class App(QWidget):
             if  is_all_input_entered:
                 if input_data_dict['RSF_a'] == '0':
                     self.warning_dialog.show_warning_dialog("RSF_a parameter can't be 0")
+                elif (not re.match("^(?!0\d)\d{1,11}(?:\.\d{1,4})?$", input_data_dict['thickness'])) or input_data_dict['thickness'] == '0.':
+                    self.warning_dialog.show_warning_dialog("Enter correct value for wall thickness")
                 else:
                     self.gc_latest.save_input_data_dict_to_file(input_data_dict)
 
@@ -205,6 +208,8 @@ class App(QWidget):
             if is_all_input_entered:
                 if input_data_dict['RSF_a'] == '0':
                     self.warning_dialog.show_warning_dialog("RSF_a parameter can't be 0")
+                elif (not re.match("^(?!0\d)\d{1,11}(?:\.\d{1,4})?$", input_data_dict['thickness'])) or input_data_dict['thickness'] == '0.':
+                    self.warning_dialog.show_warning_dialog("Enter correct value for wall thickness")
                 else:
                     self.lc_latest.save_input_data_dict_to_file(input_data_dict)
 
