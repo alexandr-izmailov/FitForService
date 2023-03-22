@@ -87,7 +87,6 @@ class App(QWidget):
         self.ui.tab_lc.pb_load_latest_input.clicked.connect(self.load_latest_input_data)
 
         self.ui.tab_lc.pb_s_info.clicked.connect(self.show_s_or_c_info)
-        self.ui.tab_lc.pb_c_info.clicked.connect(self.show_s_or_c_info)
 
         self.ui.tab_lc.pb_L_msd_info.clicked.connect(self.show_L_msd_info)
 
@@ -151,7 +150,6 @@ class App(QWidget):
                     self.gc_input.LOSS = float(input_data_dict['LOSS'])
                     self.gc_input.FCA = float(input_data_dict['FCA'])
                     self.gc_input.FCA_ml = float(input_data_dict['FCA_ml'])
-                    self.gc_input.NDE_type = input_data_dict['NDE_type']
                     self.gc_input.t_mm = float(input_data_dict['t_mm'])
                     self.gc_input.t_amS = float(input_data_dict['t_amS'])
                     self.gc_input.t_amC = float(input_data_dict['t_amC'])
@@ -202,7 +200,6 @@ class App(QWidget):
                     self.lc_input.LOSS = float(input_data_dict['LOSS'])
                     self.lc_input.FCA = float(input_data_dict['FCA'])
                     self.lc_input.FCA_ml = float(input_data_dict['FCA_ml'])
-                    self.lc_input.NDE_type = input_data_dict['NDE_type']
                     self.lc_input.t_mm = float(input_data_dict['t_mm'])
                     self.lc_input.defect_type = input_data_dict['defect_type']
                     self.lc_input.g_r = float(input_data_dict['g_r'])
@@ -254,7 +251,6 @@ class App(QWidget):
             input_data_dict['LOSS'] = self.ui.tab_gc.line_LOSS.text()
             input_data_dict['FCA'] = self.ui.tab_gc.line_FCA.text()
             input_data_dict['FCA_ml'] = self.ui.tab_gc.line_FCA_ml.text()
-            input_data_dict['NDE_type'] = self.ui.tab_gc.line_NDE_type.text()
             input_data_dict['t_mm'] = self.ui.tab_gc.line_t_mm.text()
             input_data_dict['t_amS'] = self.ui.tab_gc.line_t_amS.text()
             input_data_dict['t_amC'] = self.ui.tab_gc.line_t_amC.text()
@@ -283,7 +279,6 @@ class App(QWidget):
             input_data_dict['LOSS'] = self.ui.tab_lc.line_LOSS.text()
             input_data_dict['FCA'] = self.ui.tab_lc.line_FCA.text()
             input_data_dict['FCA_ml'] = self.ui.tab_lc.line_FCA_ml.text()
-            input_data_dict['NDE_type'] = self.ui.tab_lc.line_NDE_type.text()
             input_data_dict['t_mm'] = self.ui.tab_lc.line_t_mm.text()
             input_data_dict['defect_type'] = self.ui.tab_lc.comboBox_defect_type.currentText()
             input_data_dict['g_r'] = self.ui.tab_lc.line_g_r.text()
@@ -328,7 +323,6 @@ class App(QWidget):
                 self.ui.tab_gc.line_LOSS.setText(gc_latest_input_data_dict.get('LOSS'))
                 self.ui.tab_gc.line_FCA.setText(gc_latest_input_data_dict.get('FCA'))
                 self.ui.tab_gc.line_FCA_ml.setText(gc_latest_input_data_dict.get('FCA_ml'))
-                self.ui.tab_gc.line_NDE_type.setText(gc_latest_input_data_dict.get('NDE_type'))
                 self.ui.tab_gc.line_t_mm.setText(gc_latest_input_data_dict.get('t_mm'))
                 self.ui.tab_gc.line_t_amS.setText(gc_latest_input_data_dict.get('t_amS'))
                 self.ui.tab_gc.line_t_amC.setText(gc_latest_input_data_dict.get('t_amC'))
@@ -363,7 +357,6 @@ class App(QWidget):
                 self.ui.tab_lc.line_LOSS.setText(lc_latest_input_data_dict.get('LOSS'))
                 self.ui.tab_lc.line_FCA.setText(lc_latest_input_data_dict.get('FCA'))
                 self.ui.tab_lc.line_FCA_ml.setText(lc_latest_input_data_dict.get('FCA_ml'))
-                self.ui.tab_lc.line_NDE_type.setText(lc_latest_input_data_dict.get('NDE_type'))
                 self.ui.tab_lc.line_t_mm.setText(lc_latest_input_data_dict.get('t_mm'))
                 self.ui.tab_lc.comboBox_defect_type.setCurrentText(lc_latest_input_data_dict.get('defect type'))
                 self.ui.tab_lc.line_g_r.setText(lc_latest_input_data_dict.get('g_r'))

@@ -67,7 +67,6 @@ class CommonObjects(QWidget):
         self.hlayout_FCA = QHBoxLayout()
         self.hlayout_FCA_ml = QHBoxLayout()
 
-        self.hlayout_NDE_type = QHBoxLayout()
         self.hlayout_t_mm = QHBoxLayout()
 
         # ADJUSTING of Label, ComboBox and lineEdit
@@ -249,11 +248,6 @@ class CommonObjects(QWidget):
         self.label_wall_thickness_measurements.setMaximumHeight(self.label_max_h)
         self.label_wall_thickness_measurements.setMinimumHeight(self.label_min_h)
 
-        self.label_NDE_type = QLabel('Type of NDE:')
-        self.line_NDE_type = QLineEdit()
-        self.line_NDE_type.setMinimumSize(self.line_min_w, self.line_min_h)
-        self.line_NDE_type.setMaximumSize(self.line_max_w, self.line_max_h)
-
         self.label_t_mm = QLabel('Min measured thickness, t_mm [mm]:')
         self.line_t_mm = QLineEdit()
         self.line_t_mm.setMinimumSize(self.line_min_w, self.line_min_h)
@@ -370,10 +364,6 @@ class CommonObjects(QWidget):
         self.vlayout.addLayout(self.hlayout_FCA_ml)
 
         self.vlayout.addWidget(self.label_wall_thickness_measurements)
-
-        self.hlayout_NDE_type.addWidget(self.label_NDE_type)
-        self.hlayout_NDE_type.addWidget(self.line_NDE_type)
-        self.vlayout.addLayout(self.hlayout_NDE_type)
 
         self.hlayout_t_mm.addWidget(self.label_t_mm)
         self.hlayout_t_mm.addWidget(self.line_t_mm)

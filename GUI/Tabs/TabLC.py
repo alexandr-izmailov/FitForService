@@ -49,10 +49,6 @@ class TabLC(CommonObjects):
         self.label_c.setToolTip("Circumferential extent or length of the region of local metal loss based on future corroded thickness  t_c, c")
         self.line_c.setValidator(self.d_validator)
 
-        self.pb_c_info = QPushButton()
-        self.pb_c_info.setFixedSize(27, 25)
-        self.pb_c_info.setIcon(QIcon(r'Icons\icon_question.png'))
-
         self.label_L_msd = QLabel('Distance to major structural discontinuity, L_msd [mm]:')
         self.line_L_msd = QLineEdit()
         self.line_L_msd.setMinimumSize(self.line_min_w, self.line_min_h)
@@ -89,7 +85,6 @@ class TabLC(CommonObjects):
         self.vlayout.addLayout(self.hlayout_s)
 
         self.hlayout_c.addWidget(self.label_c)
-        self.hlayout_c.addWidget(self.pb_c_info)
         self.hlayout_c.addWidget(self.line_c)
         self.vlayout.addLayout(self.hlayout_c)
 

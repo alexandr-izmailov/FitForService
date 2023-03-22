@@ -59,7 +59,6 @@ def lc_algorithm(lc_input):
     LOSS = lc_input.LOSS
     FCA = lc_input.FCA
     FCA_ml = lc_input.FCA_ml
-    NDE_type = lc_input.NDE_type
     t_mm = lc_input.t_mm
     defect_type = lc_input.defect_type
     g_r = lc_input.g_r
@@ -72,7 +71,6 @@ Asset: {asset}
 Line number: {line_number}
 Corrosion Monitoring Location: {monitoring_location}
 Material: {material}
-steel_type: {steel_type}
 temperature: {temperature} [°C]
 S: {S} [MPa]
 nominal_pipe_size: {nominal_pipe_size}
@@ -92,7 +90,6 @@ t_sl: {t_sl} [mm]
 LOSS: {LOSS} [mm]
 FCA: {FCA} [mm]
 FCA_ml: {FCA_ml} [mm]
-NDE_type: {NDE_type}
 t_mm: {t_mm} [mm]
 defect type = {defect_type}
 g_r = {g_r} [mm]

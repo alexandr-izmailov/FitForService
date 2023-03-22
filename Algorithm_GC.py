@@ -45,7 +45,6 @@ def gc_algorithm(gc_input):
     monitoring_location = gc_input.monitoring_location
     type_of_wall_loss = gc_input.wall_loss_type
     material = gc_input.material
-    steel_type = gc_input.steel_type
     temperature = gc_input.temperature
     S = gc_input.stress
     nominal_pipe_size = gc_input.nominal_pipe_size
@@ -63,7 +62,6 @@ def gc_algorithm(gc_input):
     LOSS = gc_input.LOSS
     FCA = gc_input.FCA
     FCA_ml = gc_input.FCA_ml
-    NDE_type = gc_input.NDE_type
     t_mm = gc_input.t_mm
     t_amS = gc_input.t_amS
     t_amC = gc_input.t_amC
@@ -75,7 +73,6 @@ Line number: {line_number}
 Corrosion Monitoring Location: {monitoring_location}
 Type of wall loss: {type_of_wall_loss}
 Material: {material}
-steel_type: {steel_type}
 temperature: {temperature} [°C]
 S: {S} [MPa]
 nominal_pipe_size: {nominal_pipe_size}
@@ -93,7 +90,6 @@ t_sl: {t_sl} [mm]
 LOSS: {LOSS} [mm]
 FCA: {FCA} [mm]
 FCA_ml: {FCA_ml} [mm]
-NDE_type: {NDE_type}
 t_mm: {t_mm} [mm]
 t_amS: {t_amS} [mm]
 t_amC: {t_amC} [mm]
