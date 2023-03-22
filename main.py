@@ -399,6 +399,34 @@ class App(QWidget):
 
         self.ui.tab_lc.comboBox_defect_type.addItems(self.dl.df_defect_type['defect type'])
 
+        self.ui.tab_gc.line_Y_B31.setText('0.4')
+        self.ui.tab_lc.line_Y_B31.setText('0.4')
+
+        self.ui.tab_gc.line_E.setText('1.0')
+        self.ui.tab_lc.line_E.setText('1.0')
+
+        self.ui.tab_gc.line_RSF_a.setText('0.9')
+        self.ui.tab_lc.line_RSF_a.setText('0.9')
+
+        self.ui.tab_gc.line_MA.setText('0')
+        self.ui.tab_lc.line_MA.setText('0')
+
+        self.ui.tab_gc.line_t_sl.setText('0')
+        self.ui.tab_lc.line_t_sl.setText('0')
+
+        self.ui.tab_gc.line_LOSS.setText('0')
+        self.ui.tab_lc.line_LOSS.setText('0')
+
+        self.ui.tab_gc.line_FCA.setText('0')
+        self.ui.tab_lc.line_FCA.setText('0')
+
+        self.ui.tab_lc.line_EC.setText('1.0')
+
+        self.ui.tab_lc.line_EL.setText('1.0')
+
+
+
+
     # FILTERING of DataFrames
     # =================================================================
     def filter_material(self, df_material):
