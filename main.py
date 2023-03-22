@@ -79,8 +79,8 @@ class App(QWidget):
 
         self.ui.tab_lc.comboBox_defect_type.currentIndexChanged.connect(self.update_line_g_r)
 
-        self.ui.tab_gc.comboBox_schedule.currentIndexChanged.connect(self.thickness_locker)
-        self.ui.tab_lc.comboBox_schedule.currentIndexChanged.connect(self.thickness_locker)
+        # self.ui.tab_gc.comboBox_schedule.currentIndexChanged.connect(self.thickness_locker)
+        # self.ui.tab_lc.comboBox_schedule.currentIndexChanged.connect(self.thickness_locker)
 
 
 
@@ -109,7 +109,6 @@ class App(QWidget):
         else:
             if self.ui.tab_lc.comboBox_schedule.currentText().lower() == 'user defined':
                 self.ui.tab_lc.comboBox_thickness.setEditable(True)
-                print('HI*10')
                 self.ui.tab_lc.comboBox_thickness.clear()
                 self.ui.tab_lc.comboBox_thickness.setValidator(self.ui.tab_lc.d_validator)
             else:
@@ -379,7 +378,16 @@ class App(QWidget):
                 self.ui.tab_lc.comboBox_nominal_pipe_size.setCurrentText(lc_latest_input_data_dict.get('nominal_pipe_size'))
                 self.ui.tab_lc.comboBox_outside_diameter.setCurrentText(lc_latest_input_data_dict.get('outside_diameter'))
                 self.ui.tab_lc.comboBox_schedule.setCurrentText(lc_latest_input_data_dict.get('schedule'))
+
+                print('382 ',self.ui.tab_lc.comboBox_thickness.isEditable())
+                self.ui.tab_lc.comboBox_thickness.setEditable(True)
+                print('384 ', self.ui.tab_lc.comboBox_thickness.isEditable())
                 self.ui.tab_lc.comboBox_thickness.setCurrentText(lc_latest_input_data_dict.get('thickness'))
+                print(self.ui.tab_lc.comboBox_thickness.currentText())
+                if self.ui.tab_lc.comboBox_schedule.currentText().lower() != 'user defined':
+                    # self.ui.tab_lc.comboBox_thickness.setEditable(False)
+                    print('388 ', self.ui.tab_lc.comboBox_thickness.isEditable())
+
                 self.ui.tab_lc.comboBox_pipe_type.setCurrentText(lc_latest_input_data_dict.get('pipe_type'))
                 self.ui.tab_lc.comboBox_mill_under_tolerance.setCurrentText(lc_latest_input_data_dict.get('mill_under_tolerance'))
                 self.ui.tab_lc.line_P.setText(lc_latest_input_data_dict.get('P'))
@@ -575,10 +583,25 @@ class App(QWidget):
 
         if self.ui.tab.currentIndex() == 0:
             self.ui.tab_gc.comboBox_thickness.clear()
-            self.ui.tab_gc.comboBox_thickness.addItems(df_thickness_filtered['wall thickness'])
+
+            if self.ui.tab_gc.comboBox_schedule.currentText().lower() == 'user defined':
+                self.ui.tab_gc.comboBox_thickness.setEditable(True)
+            else:
+                self.ui.tab_gc.comboBox_thickness.setEditable(True)
+                self.ui.tab_gc.comboBox_thickness.addItems(df_thickness_filtered['wall thickness'])
+                self.ui.tab_gc.comboBox_thickness.setEditable(False)
         else:
             self.ui.tab_lc.comboBox_thickness.clear()
-            self.ui.tab_lc.comboBox_thickness.addItems(df_thickness_filtered['wall thickness'])
+
+            if self.ui.tab_lc.comboBox_schedule.currentText().lower() == 'user defined':
+                self.ui.tab_lc.comboBox_thickness.setEditable(True)
+                print('597', self.ui.tab_lc.comboBox_thickness.isEditable())
+            else:
+                self.ui.tab_lc.comboBox_thickness.setEditable(True)
+                print('600', self.ui.tab_lc.comboBox_thickness.isEditable())
+                self.ui.tab_lc.comboBox_thickness.addItems(df_thickness_filtered['wall thickness'])
+                self.ui.tab_lc.comboBox_thickness.setEditable(False)
+                print(' 603', self.ui.tab_lc.comboBox_thickness.isEditable())
 
     def update_comboBox_mill_under_tolerance(self):
         # Filter mill under tolerance data based on the selected pipe type
