@@ -11,7 +11,7 @@ class DataLayer:
         self.df_pipe = None
         self.df_schedule = None
         self.df_thickness = None
-        self.df_wall_loss_type = pd.DataFrame({'type of wall loss': ('external', 'internal')})
+        self.df_wall_loss_type = pd.DataFrame({'type of wall loss': ('Internal', 'External')})
         self.df_mill_under_tolerance = pd.DataFrame(
             {'pipe type': ('seamless %', 'welded mm', 'user defined %', 'user defined mm'),
              'mill under tolerance': ('12.50', '0.25', '', '')})
@@ -106,6 +106,7 @@ class LatestInputData:
             with open(f"{self.gc_or_lc}_latest_input_data.txt", "r") as f:
                 latest_input_data_dict = json.load(f)
                 print("Info: the latest_input_data loaded to dictionary successfully")
+                print(latest_input_data_dict)
                 return latest_input_data_dict
         except FileNotFoundError:
             exception_text = f"Couldn't load the latest input data:\nFile with the latest input not found"
