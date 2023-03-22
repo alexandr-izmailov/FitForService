@@ -72,11 +72,11 @@ class GeneralCorrosionClass:
         """
         D_ml - Inside diameter of the cylinder corrected for FCA_ml, [mm]
         """
-        if type_of_wall_loss.lower == 'internal':
+        if type_of_wall_loss.lower() == 'internal':
             D_ml = D + 2 * FCA_ml
             text = f'D_ml = D + 2 * FCA_ml = {round(D,2)} + 2 * {round(FCA_ml,2)} = {round(D_ml,2)} [mm]'
             data = DataCalculated(D_ml, text)
-        elif type_of_wall_loss.lower == 'external':
+        elif type_of_wall_loss.lower() == 'external':
             D_ml = D
             text = f'D_ml = D = {round(D,2)} = {round(D_ml,2)} [mm]'
             data = DataCalculated(D_ml, text)
@@ -145,7 +145,7 @@ class GeneralCorrosionClass:
         circumferential stress, [mm]
         """
         t_minC = (P * D_0 / 10) / (2 * (S * E + P / 10 * Y_B31)) + MA
-        text = f't_minC = (P * D_0) / (2 * (S * E + P * Y_B31)) + MA = ({round(P,2)} * {round(D_0,2)} / 10) / (2 * ({round(S,2)} * {round(E,2)} + {round(P,2)} / 10 * {round(Y_B31,2)})) + {round(MA,2)} = {round(P,2)} [mm]'
+        text = f't_minC = (P * D_0) / (2 * (S * E + P * Y_B31)) + MA = ({round(P,2)} * {round(D_0,2)} / 10) / (2 * ({round(S,2)} * {round(E,2)} + {round(P,2)} / 10 * {round(Y_B31,2)})) + {round(MA,2)} = {round(t_minC,2)} [mm]'
         data = DataCalculated(t_minC, text)
         return data
 
