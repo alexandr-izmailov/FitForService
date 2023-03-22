@@ -20,8 +20,8 @@ class UI(QWidget):
         self.tab_lc = TabLC()
 
         self.tab = QtWidgets.QTabWidget()
-        self.tab.addTab(self.tab_gc, "General Corrosion Method")
-        self.tab.addTab(self.tab_lc, "Local Corrosion Method")
+        self.tab.addTab(self.tab_gc, "General Corrosion Assessment")
+        self.tab.addTab(self.tab_lc, "Local Corrosion Assessment")
 
         layout = QVBoxLayout()
         layout.addWidget(self.tab)

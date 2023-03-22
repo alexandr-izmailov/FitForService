@@ -230,11 +230,11 @@ class CommonObjects(QWidget):
         self.label_LOSS.setToolTip("Uniform metal loss away from the local metal loss, LOSS")
         self.line_LOSS.setValidator(self.d_validator)
 
-        self.label_FCA = QLabel('FCA away from the local metal loss area, FCA [mm]:')
+        self.label_FCA = QLabel('FCA away from local metal loss area, FCA [mm]:')
         self.line_FCA = QLineEdit()
         self.line_FCA.setMinimumSize(self.line_min_w, self.line_min_h)
         self.line_FCA.setMaximumSize(self.line_max_w, self.line_max_h)
-        self.label_FCA.setToolTip("Future corrosion allowance away from the local metal loss area, FCA [mm]")
+        self.label_FCA.setToolTip("Future corrosion allowance away from local metal loss area, FCA [mm]")
         self.line_FCA.setValidator(self.d_validator)
 
         self.label_FCA_ml = QLabel('FCA for local metal loss area, FCA_ml [mm]:')
