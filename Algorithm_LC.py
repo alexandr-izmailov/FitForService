@@ -39,7 +39,6 @@ def lc_algorithm(lc_input):
     line_number = lc_input.line_number
     monitoring_location = lc_input.monitoring_location
     material = lc_input.material
-    steel_type = lc_input.steel_type
     temperature = lc_input.temperature
     S = lc_input.stress
     nominal_pipe_size = lc_input.nominal_pipe_size
@@ -61,12 +60,18 @@ def lc_algorithm(lc_input):
     FCA_ml = lc_input.FCA_ml
     t_mm = lc_input.t_mm
     defect_type = lc_input.defect_type
-    g_r = lc_input.g_r
+
+    if defect_type.lower() != 'groove':
+        g_r_text = ''
+    else:
+        g_r = lc_input.g_r
+        g_r_text = f'g_r = {g_r} [mm]'
+
     s = lc_input.s
     c = lc_input.c
     L_msd = lc_input.L_msd
 
-    input_data_text = f""" Input Data:
+    input_data_text = f"""Input Data:
 Asset: {asset}
 Line number: {line_number}
 Corrosion Monitoring Location: {monitoring_location}
@@ -91,8 +96,7 @@ LOSS: {LOSS} [mm]
 FCA: {FCA} [mm]
 FCA_ml: {FCA_ml} [mm]
 t_mm: {t_mm} [mm]
-defect type = {defect_type}
-g_r = {g_r} [mm]
+defect type = {defect_type} {g_r_text}
 s = {s} [mm]
 c = {c} [mm]
 L_msd = {L_msd} [mm]

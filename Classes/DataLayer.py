@@ -15,7 +15,7 @@ class DataLayer:
         self.df_mill_under_tolerance = pd.DataFrame(
             {'pipe type': ('seamless %', 'welded mm', 'user defined %', 'user defined mm'),
              'mill under tolerance': ('12.50', '0.25', '', '')})
-        self.df_defect_type = pd.DataFrame({'defect type': ('Local metal loss','Groove')})
+        self.df_defect_type = pd.DataFrame({'defect type': ('Groove', 'Local metal loss')})
 
         self.load_data()
 

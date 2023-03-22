@@ -77,6 +77,8 @@ class App(QWidget):
         self.ui.tab_gc.comboBox_pipe_type.currentIndexChanged.connect(self.update_comboBox_mill_under_tolerance)
         self.ui.tab_lc.comboBox_pipe_type.currentIndexChanged.connect(self.update_comboBox_mill_under_tolerance)
 
+        self.ui.tab_lc.comboBox_defect_type.currentIndexChanged.connect(self.update_line_g_r)
+
 
         # HANDLING pushButtons
         # =================================================================
@@ -91,6 +93,16 @@ class App(QWidget):
         self.ui.tab_lc.pb_L_msd_info.clicked.connect(self.show_L_msd_info)
 
         self.ui.show()
+
+    def update_line_g_r(self):
+        if self.ui.tab_lc.comboBox_defect_type.currentText().lower() == 'groove':
+            self.ui.tab_lc.line_g_r.setValidator(self.ui.tab_lc.d_validator)
+            self.ui.tab_lc.line_g_r.clear()
+            self.ui.tab_lc.line_g_r.setEnabled(True)
+        elif self.ui.tab_lc.comboBox_defect_type.currentText().lower() == 'local metal loss':
+            self.ui.tab_lc.line_g_r.setValidator(self.ui.tab_lc.t_validator)
+            self.ui.tab_lc.line_g_r.setText('Not required')
+            self.ui.tab_lc.line_g_r.setEnabled(False)
 
     def show_file_dialog(self):
         # Create a file dialog to let the user select a directory
@@ -202,7 +214,10 @@ class App(QWidget):
                     self.lc_input.FCA_ml = float(input_data_dict['FCA_ml'])
                     self.lc_input.t_mm = float(input_data_dict['t_mm'])
                     self.lc_input.defect_type = input_data_dict['defect_type']
-                    self.lc_input.g_r = float(input_data_dict['g_r'])
+                    if self.lc_input.defect_type.lower() == 'local metal loss':
+                        pass
+                    else:
+                        self.lc_input.g_r = float(input_data_dict['g_r'])
                     self.lc_input.s = float(input_data_dict['s'])
                     self.lc_input.c = float(input_data_dict['c'])
                     self.lc_input.L_msd = float(input_data_dict['L_msd'])
@@ -358,8 +373,12 @@ class App(QWidget):
                 self.ui.tab_lc.line_FCA.setText(lc_latest_input_data_dict.get('FCA'))
                 self.ui.tab_lc.line_FCA_ml.setText(lc_latest_input_data_dict.get('FCA_ml'))
                 self.ui.tab_lc.line_t_mm.setText(lc_latest_input_data_dict.get('t_mm'))
-                self.ui.tab_lc.comboBox_defect_type.setCurrentText(lc_latest_input_data_dict.get('defect type'))
-                self.ui.tab_lc.line_g_r.setText(lc_latest_input_data_dict.get('g_r'))
+                self.ui.tab_lc.comboBox_defect_type.setCurrentText(lc_latest_input_data_dict.get('defect_type'))
+                if lc_latest_input_data_dict['defect_type'].lower() == 'local metal loss':
+                    # self.ui.tab_lc.line_g_r.setText('not required')
+                    pass
+                else:
+                    self.ui.tab_lc.line_g_r.setText(lc_latest_input_data_dict.get('g_r'))
                 self.ui.tab_lc.line_s.setText(lc_latest_input_data_dict.get('s'))
                 self.ui.tab_lc.line_c.setText(lc_latest_input_data_dict.get('c'))
                 self.ui.tab_lc.line_L_msd.setText(lc_latest_input_data_dict.get('L_msd'))

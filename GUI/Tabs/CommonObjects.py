@@ -12,6 +12,9 @@ class CommonObjects(QWidget):
         self.regex = QtCore.QRegExp("^(?!0\d)\d{1,11}(?:\.\d{1,4})?$")
         self.d_validator  = QRegExpValidator(self.regex)
 
+        self.regex_text = QtCore.QRegExp("[a-z]")
+        self.t_validator = QRegExpValidator(self.regex_text)
+
         # DEFINING of Size parameters
         # =================================================================
         self.combo_box_min_w = 160
