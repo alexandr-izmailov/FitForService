@@ -198,69 +198,83 @@ L_msd = {L_msd} [mm]
                     MAWP = lc.f_MAWP(MAWP_C, MAWP_L).result
                     document.add_paragraph(lc.f_MAWP(MAWP_C, MAWP_L).text)
 
-                    # step 6 --------------------------------------------------
-                    document.add_paragraph('STEP 6')
+                    if MAWP < P:
 
-                    # Folias factor based on the longitudinal extent of the LTA for a through-wall flaw, [-]
-                    M_t = lc.f_M_t(λ).result
-                    document.add_paragraph(lc.f_M_t(λ).text)
+                        document.add_paragraph(f'MAWP < P\n{round(MAWP, 2)} < {round(P, 2)}')
+                        short_report_list.append(f'MAWP < P\n{round(MAWP, 2)} < {round(P, 2)}')
 
-                    # !!!!!-- if not acceptable then additional calculation ow MAWPr is needed ---!!!!
-                    # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    if lc.check_screening_criteria(λ, R_t, RSF_a, M_t).result == 'NOT acceptable':
-
-                        document.add_paragraph(lc.check_screening_criteria(λ, R_t, RSF_a, M_t).text)
-                        short_report_list.append(lc.check_screening_criteria(λ, R_t, RSF_a, M_t).text)
-
-                        # Computed remaining strength factor based on the meridional extent of the LTA, [-]
-                        RSF = lc.f_RSF(R_t, M_t).result
-                        document.add_paragraph(lc.f_RSF(R_t, M_t).text)
-
-                        # Reduced maximum allowable working pressure of the damaged component, [bar]
-                        MAWPr = lc.f_MAWPr(MAWP, RSF, RSF_a).result
-                        document.add_paragraph(lc.f_MAWPr(MAWP, RSF, RSF_a).text)
-                        short_report_list.append(lc.f_MAWPr(MAWP, RSF, RSF_a).text)
+                        document.add_paragraph(failing_text_line)
+                        short_report_list.append(failing_text_line)
 
                     else:
-                        MAWPr = P
-                        document.add_paragraph(f'As λ and R_t are acceptable MAWPr = P')
-                        short_report_list.append(f'As λ and R_t are acceptable MAWPr = P')
+                        document.add_paragraph(f'MAWP >= P\n{round(MAWP, 2)} >= {round(P, 2)}')
 
-                    # step 7 --------------------------------------------------
-                    document.add_paragraph('STEP 7')
+                        # step 6 --------------------------------------------------
+                        document.add_paragraph('STEP 6')
 
-                    if lc.check_circumferential_extent_criteria(c, s, EL, EC).result == 'passed':
+                        # Folias factor based on the longitudinal extent of the LTA for a through-wall flaw, [-]
+                        M_t = lc.f_M_t(λ).result
+                        document.add_paragraph(lc.f_M_t(λ).text)
 
-                        document.add_paragraph(lc.check_circumferential_extent_criteria(c, s, EL, EC).text)
-                        short_report_list.append(lc.check_circumferential_extent_criteria(c, s, EL, EC).text)
+                        # !!!!!-- if not acceptable then additional calculation ow MAWPr is needed ---!!!!
+                        # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                        if lc.check_screening_criteria(λ, R_t, RSF_a, M_t).result == 'NOT acceptable':
 
-                        document.add_paragraph(passing_text_line)
-                        short_report_list.append(passing_text_line)
+                            document.add_paragraph(lc.check_screening_criteria(λ, R_t, RSF_a, M_t).text)
+                            short_report_list.append(lc.check_screening_criteria(λ, R_t, RSF_a, M_t).text)
 
-                    else:
+                            # Computed remaining strength factor based on the meridional extent of the LTA, [-]
+                            RSF = lc.f_RSF(R_t, M_t).result
+                            document.add_paragraph(lc.f_RSF(R_t, M_t).text)
 
-                        document.add_paragraph(lc.check_circumferential_extent_criteria(c, s, EL, EC).text)
-                        short_report_list.append(lc.check_circumferential_extent_criteria(c, s, EL, EC).text)
+                            # Reduced maximum allowable working pressure of the damaged component, [bar]
+                            MAWPr = lc.f_MAWPr(MAWP, RSF, RSF_a).result
+                            document.add_paragraph(lc.f_MAWPr(MAWP, RSF, RSF_a).text)
+                            short_report_list.append(lc.f_MAWPr(MAWP, RSF, RSF_a).text)
 
-                        #  Minimum required thickness for the component based on equipment design pressure or
-                        #  equipment MAWP for longitudinal stresses
-                        t_minL = lc.f_t_minL(MAWPr, D_0, S, E, P, Y_B31, t_sl, MA).result
-                        document.add_paragraph(lc.f_t_minL(MAWPr, D_0, S, E, P, Y_B31, t_sl, MA).text)
+                        else:
+                            MAWPr = P
+                            document.add_paragraph(lc.check_screening_criteria(λ, R_t, RSF_a, M_t).text)
+                            short_report_list.append(lc.check_screening_criteria(λ, R_t, RSF_a, M_t).text)
 
-                        if lc.check_minimum_thickness_required_criteria(t_minL, t_mm, FCA_ml).result == 'failed':
+                            document.add_paragraph(f'As λ and R_t are acceptable MAWPr = P')
+                            short_report_list.append(f'As λ and R_t are acceptable MAWPr = P')
 
-                            document.add_paragraph(lc.check_minimum_thickness_required_criteria(t_minL, t_mm, FCA_ml).text)
-                            short_report_list.append(lc.check_minimum_thickness_required_criteria(t_minL, t_mm, FCA_ml).text)
+                        # step 7 --------------------------------------------------
+                        document.add_paragraph('STEP 7')
 
-                            MAWPr_new = lc.f_MAWPr_new(MAWPr, t_mm, FCA_ml, t_minL).result
-                            document.add_paragraph(lc.f_MAWPr_new(MAWPr, t_mm, FCA_ml, t_minL).text)
-                            short_report_list.append(lc.f_MAWPr_new(MAWPr, t_mm, FCA_ml, t_minL).text)
+                        if lc.check_circumferential_extent_criteria(c, s, EL, EC).result == 'passed':
+
+                            document.add_paragraph(lc.check_circumferential_extent_criteria(c, s, EL, EC).text)
+                            short_report_list.append(lc.check_circumferential_extent_criteria(c, s, EL, EC).text)
+
+                            document.add_paragraph(passing_text_line)
+                            short_report_list.append(passing_text_line)
 
                         else:
 
-                            document.add_paragraph(lc.check_minimum_thickness_required_criteria(t_minL, t_mm, FCA_ml).text)
-                            short_report_list.append(lc.check_minimum_thickness_required_criteria(t_minL, t_mm, FCA_ml).text)
-                            print('all steps are passed')
+                            document.add_paragraph(lc.check_circumferential_extent_criteria(c, s, EL, EC).text)
+                            short_report_list.append(lc.check_circumferential_extent_criteria(c, s, EL, EC).text)
+
+                            #  Minimum required thickness for the component based on equipment design pressure or
+                            #  equipment MAWP for longitudinal stresses
+                            t_minL = lc.f_t_minL(MAWPr, D_0, S, E, P, Y_B31, t_sl, MA).result
+                            document.add_paragraph(lc.f_t_minL(MAWPr, D_0, S, E, P, Y_B31, t_sl, MA).text)
+
+                            if lc.check_minimum_thickness_required_criteria(t_minL, t_mm, FCA_ml).result == 'failed':
+
+                                document.add_paragraph(lc.check_minimum_thickness_required_criteria(t_minL, t_mm, FCA_ml).text)
+                                short_report_list.append(lc.check_minimum_thickness_required_criteria(t_minL, t_mm, FCA_ml).text)
+
+                                MAWPr_new = lc.f_MAWPr_new(MAWPr, t_mm, FCA_ml, t_minL).result
+                                document.add_paragraph(lc.f_MAWPr_new(MAWPr, t_mm, FCA_ml, t_minL).text)
+                                short_report_list.append(lc.f_MAWPr_new(MAWPr, t_mm, FCA_ml, t_minL).text)
+
+                            else:
+
+                                document.add_paragraph(lc.check_minimum_thickness_required_criteria(t_minL, t_mm, FCA_ml).text)
+                                short_report_list.append(lc.check_minimum_thickness_required_criteria(t_minL, t_mm, FCA_ml).text)
+
 
     short_report_text = '\n'.join(short_report_list)
 

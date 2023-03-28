@@ -180,87 +180,98 @@ t_amC: {t_amC} [mm]
     MAWP = g.f_MAWP(MAWP_C, MAWP_L).result
     document.add_paragraph(g.f_MAWP(MAWP_C, MAWP_L).text)
 
-    # step 9 ----------------------------------------------------------------
-    document.add_paragraph('STEP 9')
+    if MAWP < P:
 
-    # Average Measured Thickness from Critical Thickness Profiles based on the
-    # longitudinal CTP determined at the time of the inspection
-    if g.check_average_longitudinal_thickness_criteria(t_amS, FCA_ml, t_minC).result == 'failed':
-
-        document.add_paragraph(g.check_average_longitudinal_thickness_criteria(t_amS, FCA_ml, t_minC).text)
-        short_report_list.append(g.check_average_longitudinal_thickness_criteria(t_amS, FCA_ml, t_minC).text)
+        document.add_paragraph(f'MAWP < P\n{round(MAWP, 2)} < {round(P, 2)}')
+        short_report_list.append(f'MAWP < P\n{round(MAWP, 2)} < {round(P, 2)}')
 
         document.add_paragraph(failing_text_line)
         short_report_list.append(failing_text_line)
 
-    elif g.check_average_longitudinal_thickness_criteria(t_amS, FCA_ml, t_minC).result == 'passed':
+    else:
+        document.add_paragraph(f'MAWP >= P\n{round(MAWP,2)} >= {round(P, 2)}')
 
-        document.add_paragraph(g.check_average_longitudinal_thickness_criteria(t_amS, FCA_ml, t_minC).text)
-        short_report_list.append(g.check_average_longitudinal_thickness_criteria(t_amS, FCA_ml, t_minC).text)
+        # step 9 ----------------------------------------------------------------
+        document.add_paragraph('STEP 9')
 
         # Average Measured Thickness from Critical Thickness Profiles based on the
-        # circumferential CTP determined at the time of the inspection
-        if g.check_average_circumferential_thickness_criteria(t_amC, FCA_ml, t_minL).result == 'failed':
+        # longitudinal CTP determined at the time of the inspection
+        if g.check_average_longitudinal_thickness_criteria(t_amS, FCA_ml, t_minC).result == 'failed':
 
-            document.add_paragraph(g.check_average_circumferential_thickness_criteria(t_amC, FCA_ml, t_minL).text)
-            short_report_list.append(g.check_average_circumferential_thickness_criteria(t_amC, FCA_ml, t_minL).text)
+            document.add_paragraph(g.check_average_longitudinal_thickness_criteria(t_amS, FCA_ml, t_minC).text)
+            short_report_list.append(g.check_average_longitudinal_thickness_criteria(t_amS, FCA_ml, t_minC).text)
 
             document.add_paragraph(failing_text_line)
             short_report_list.append(failing_text_line)
 
-        elif g.check_average_circumferential_thickness_criteria(t_amC, FCA_ml, t_minL).result == 'passed':
+        elif g.check_average_longitudinal_thickness_criteria(t_amS, FCA_ml, t_minC).result == 'passed':
 
-            document.add_paragraph(g.check_average_circumferential_thickness_criteria(t_amC, FCA_ml, t_minL).text)
-            short_report_list.append(g.check_average_circumferential_thickness_criteria(t_amC, FCA_ml, t_minL).text)
+            document.add_paragraph(g.check_average_longitudinal_thickness_criteria(t_amS, FCA_ml, t_minC).text)
+            short_report_list.append(g.check_average_longitudinal_thickness_criteria(t_amS, FCA_ml, t_minC).text)
 
-            # step 10 ----------------------------------------------------------------
-            document.add_paragraph('STEP 10')
+            # Average Measured Thickness from Critical Thickness Profiles based on the
+            # circumferential CTP determined at the time of the inspection
+            if g.check_average_circumferential_thickness_criteria(t_amC, FCA_ml, t_minL).result == 'failed':
 
-            # Reduced MAWP of a conical or cylindrical shell based on the stresses in the circumferential or hoop direction, [bar]
-            MAWP_rC = g.f_MAWP_rC(S, E, t_amS, FCA_ml, D_0, Y_B31).result
-            document.add_paragraph(g.f_MAWP_rC(S, E, t_amS, FCA_ml, D_0, Y_B31).text)
-
-            # Reduced MAWP of a conical or cylindrical shell based on the stresses in the longitudinal direction, [bar]
-            MAWP_rL = g.f_MAWP_rL(S, E, t_amC, FCA_ml, D_0, Y_B31).result
-            document.add_paragraph(g.f_MAWP_rL(S, E, t_amC, FCA_ml, D_0, Y_B31).text)
-
-            #  MAWP criteria from Critical Thickness Profiles
-            if g.check_MAWP_criteria(MAWP_rC, MAWP_rL, P).result == 'failed':
-
-                document.add_paragraph(g.check_MAWP_criteria(MAWP_rC, MAWP_rL, P).text)
-                short_report_list.append(g.check_MAWP_criteria(MAWP_rC, MAWP_rL, P).text)
+                document.add_paragraph(g.check_average_circumferential_thickness_criteria(t_amC, FCA_ml, t_minL).text)
+                short_report_list.append(g.check_average_circumferential_thickness_criteria(t_amC, FCA_ml, t_minL).text)
 
                 document.add_paragraph(failing_text_line)
                 short_report_list.append(failing_text_line)
 
-            elif g.check_MAWP_criteria(MAWP_rC, MAWP_rL, P).result == 'passed':
+            elif g.check_average_circumferential_thickness_criteria(t_amC, FCA_ml, t_minL).result == 'passed':
 
-                document.add_paragraph(g.check_MAWP_criteria(MAWP_rC, MAWP_rL, P).text)
-                short_report_list.append(g.check_MAWP_criteria(MAWP_rC, MAWP_rL, P).text)
+                document.add_paragraph(g.check_average_circumferential_thickness_criteria(t_amC, FCA_ml, t_minL).text)
+                short_report_list.append(g.check_average_circumferential_thickness_criteria(t_amC, FCA_ml, t_minL).text)
 
-                # step 11 ----------------------------------------------------------------
-                document.add_paragraph('STEP 11')
+                # step 10 ----------------------------------------------------------------
+                document.add_paragraph('STEP 10')
 
-                # Parameter which is needed for Minimum measured thickness criteria, [mm]
-                t_lim = g.f_t_lim(t_nom).result
-                document.add_paragraph(g.f_t_lim(t_nom).text)
+                # Reduced MAWP of a conical or cylindrical shell based on the stresses in the circumferential or hoop direction, [bar]
+                MAWP_rC = g.f_MAWP_rC(S, E, t_amS, FCA_ml, D_0, Y_B31).result
+                document.add_paragraph(g.f_MAWP_rC(S, E, t_amS, FCA_ml, D_0, Y_B31).text)
 
-                # Minimum measured thickness criteria
-                if g.check_minimum_thickness_criteria(t_mm, FCA_ml, t_min, t_lim).result == 'failed':
+                # Reduced MAWP of a conical or cylindrical shell based on the stresses in the longitudinal direction, [bar]
+                MAWP_rL = g.f_MAWP_rL(S, E, t_amC, FCA_ml, D_0, Y_B31).result
+                document.add_paragraph(g.f_MAWP_rL(S, E, t_amC, FCA_ml, D_0, Y_B31).text)
 
-                    document.add_paragraph(g.check_minimum_thickness_criteria(t_mm, FCA_ml, t_min, t_lim).text)
-                    short_report_list.append(g.check_minimum_thickness_criteria(t_mm, FCA_ml, t_min, t_lim).text)
+                #  MAWP criteria from Critical Thickness Profiles
+                if g.check_MAWP_criteria(MAWP_rC, MAWP_rL, P).result == 'failed':
+
+                    document.add_paragraph(g.check_MAWP_criteria(MAWP_rC, MAWP_rL, P).text)
+                    short_report_list.append(g.check_MAWP_criteria(MAWP_rC, MAWP_rL, P).text)
 
                     document.add_paragraph(failing_text_line)
                     short_report_list.append(failing_text_line)
 
-                elif g.check_minimum_thickness_criteria(t_mm, FCA_ml, t_min, t_lim).result == 'passed':
+                elif g.check_MAWP_criteria(MAWP_rC, MAWP_rL, P).result == 'passed':
 
-                    document.add_paragraph(g.check_minimum_thickness_criteria(t_mm, FCA_ml, t_min, t_lim).text)
-                    short_report_list.append(g.check_minimum_thickness_criteria(t_mm, FCA_ml, t_min, t_lim).text)
+                    document.add_paragraph(g.check_MAWP_criteria(MAWP_rC, MAWP_rL, P).text)
+                    short_report_list.append(g.check_MAWP_criteria(MAWP_rC, MAWP_rL, P).text)
 
-                    document.add_paragraph(passing_text_line)
-                    short_report_list.append(passing_text_line)
+                    # step 11 ----------------------------------------------------------------
+                    document.add_paragraph('STEP 11')
+
+                    # Parameter which is needed for Minimum measured thickness criteria, [mm]
+                    t_lim = g.f_t_lim(t_nom).result
+                    document.add_paragraph(g.f_t_lim(t_nom).text)
+
+                    # Minimum measured thickness criteria
+                    if g.check_minimum_thickness_criteria(t_mm, FCA_ml, t_min, t_lim).result == 'failed':
+
+                        document.add_paragraph(g.check_minimum_thickness_criteria(t_mm, FCA_ml, t_min, t_lim).text)
+                        short_report_list.append(g.check_minimum_thickness_criteria(t_mm, FCA_ml, t_min, t_lim).text)
+
+                        document.add_paragraph(failing_text_line)
+                        short_report_list.append(failing_text_line)
+
+                    elif g.check_minimum_thickness_criteria(t_mm, FCA_ml, t_min, t_lim).result == 'passed':
+
+                        document.add_paragraph(g.check_minimum_thickness_criteria(t_mm, FCA_ml, t_min, t_lim).text)
+                        short_report_list.append(g.check_minimum_thickness_criteria(t_mm, FCA_ml, t_min, t_lim).text)
+
+                        document.add_paragraph(passing_text_line)
+                        short_report_list.append(passing_text_line)
 
     short_report_text = '\n'.join(short_report_list)
 

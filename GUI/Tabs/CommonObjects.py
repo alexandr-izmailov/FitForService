@@ -114,6 +114,12 @@ class CommonObjects(QWidget):
         self.comboBox_steel_type = QComboBox()
         self.comboBox_steel_type.setMinimumSize(self.combo_box_min_w, self.combo_box_min_h)
         self.comboBox_steel_type.setMaximumSize(self.combo_box_max_w, self.combo_box_max_h)
+        self.comboBox_steel_type.setStyleSheet('''
+                    QComboBox::drop-down {
+                        width: 0px;
+                        border-left-width: 0px;
+                    }
+                ''')
 
         self.label_temperature = QLabel('Designed temperature [°C]:')
         self.comboBox_temperature = QComboBox()
@@ -155,6 +161,12 @@ class CommonObjects(QWidget):
         self.comboBox_thickness.setMinimumSize(self.combo_box_min_w, self.combo_box_min_h)
         self.comboBox_thickness.setMaximumSize(self.combo_box_max_w, self.combo_box_max_h)
         self.comboBox_thickness.setValidator(self.d_validator)
+        self.comboBox_thickness.setStyleSheet('''
+                    QComboBox::drop-down {
+                        width: 0px;
+                        border-left-width: 0px;
+                    }
+                ''')
 
         self.label_pipe_type = QLabel('Pipe type:')
         self.comboBox_pipe_type = QComboBox()
