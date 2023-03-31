@@ -16,6 +16,7 @@ class App(QWidget):
     def __init__(self):
         super().__init__()
 
+
         self.directory_for_report = ''
 
         # LOADING DATA
