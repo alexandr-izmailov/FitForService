@@ -266,6 +266,9 @@ L_msd = {L_msd} [mm]
                                 document.add_paragraph(lc.check_minimum_thickness_required_criteria(t_minL, t_mm, FCA_ml).text)
                                 short_report_list.append(lc.check_minimum_thickness_required_criteria(t_minL, t_mm, FCA_ml).text)
 
+                                document.add_paragraph('Level 1 is failed. MAWRr reduction is required')
+                                short_report_list.append('Level 1 is failed. MAWRr reduction is required')
+
                                 MAWPr_new = lc.f_MAWPr_new(MAWPr, t_mm, FCA_ml, t_minL).result
                                 document.add_paragraph(lc.f_MAWPr_new(MAWPr, t_mm, FCA_ml, t_minL).text)
                                 short_report_list.append(lc.f_MAWPr_new(MAWPr, t_mm, FCA_ml, t_minL).text)
@@ -274,6 +277,9 @@ L_msd = {L_msd} [mm]
 
                                 document.add_paragraph(lc.check_minimum_thickness_required_criteria(t_minL, t_mm, FCA_ml).text)
                                 short_report_list.append(lc.check_minimum_thickness_required_criteria(t_minL, t_mm, FCA_ml).text)
+
+                                document.add_paragraph(passing_text_line)
+                                short_report_list.append(passing_text_line)
 
 
     short_report_text = '\n'.join(short_report_list)
